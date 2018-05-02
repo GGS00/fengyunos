@@ -1,0 +1,29 @@
+<div class="block-footer">
+	<div class="public-block-4" > 
+		<div class="footer-nomal" ui-sref-active="footer-achive" ui-sref=".home">
+			<i class="icon-th"></i>
+			<span>首页</span>
+		</div>
+	</div>
+
+	<div class="public-block-4" onclick="funpoint(6)">
+		<div class="footer-nomal">
+			<i class=" icon-briefcase"></i>
+			<span>市场</span>
+		</div>
+	</div>
+
+	<div class="public-block-4" onclick="javascript:window.location.href='view/splitAccount/view/home.html'">
+		<div class="footer-nomal">
+			<i class=" icon-money"></i>
+			<span>账簿</span>
+		</div>
+	</div>
+
+	<div class="public-block-4">
+		<div class="footer-nomal" ui-sref-active="footer-achive" ui-sref="home.center">
+			<i class=" icon-heart-empty"></i>
+			<span>我的</span>
+		</div>
+	</div>
+</div>

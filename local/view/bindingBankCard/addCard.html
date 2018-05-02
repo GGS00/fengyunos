@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>绑定银行卡</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/mui.min.css" rel="stylesheet">
+        <link href="css/mui.picker.css" rel="stylesheet">
+        <link href="css/mui.poppicker.css" rel="stylesheet">
+        <link href="css/bank.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="content">
+        <div class="mui-content">
+                <input id="account" type="text" class="radius input" placeholder="账户名称">
+            <div class="mui-input-row">
+                <input id="bankName" type="text" class="radius input" disabled="disabled" placeholder="银行名称">
+                <img class="bank" src="img/bank.png" id='showBank'>
+            </div>
+                <input id="branch" type="text" class="radius input" placeholder="开户行名称">
+                <input id="bankCode1" type="text" class="radius input" oninput="inputListener(this)" maxlength="27" placeholder="请输入银行卡号">
+                <input id="bankCode2" type="text" class="radius input" oninput="inputListener(this)" maxlength="27" placeholder="请再次输入银行卡号">
+            <button  type="button" style="background-color: #00ec3f;font-size: 137%" class="mui-btn mui-btn-success mui-btn-block height150 radius" onclick="addBankCard()" >确认
+            </button>
+
+        </div>
+    </div>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/mui.min.js"></script>
+    <script src="js/mui.picker.js"></script>
+    <script src="js/mui.poppicker.js"></script>
+    <script src="js/bank.js?2334"></script>
+    <script>
+        (function($, doc) {
+            $.init();
+            $.ready(function() {
+                //普通示例
+                var userPicker = new $.PopPicker();
+                userPicker.setData([{value: '中国银行',text: '中国银行',url:'http://static.51dh.com.cn/51yd/application/69/89/81d3d74f8d1dc336f68801ebdb245f7b005c.png'},
+                    {value: '中国工商银行',text: '中国工商银行',url:'http://static.51dh.com.cn/51yd/application/8d/ae/d874cdb2ad421985727a2566d050beb12616.png'},
+                    {value: '中国光大银行',text: '中国光大银行',url:'http://static.51dh.com.cn/51yd/application/14/12/7c00d7b49a770bdce9cf0883a7ab7cea40ee.png'},
+                    {value: '中国邮政储蓄银行',text: '中国邮政储蓄银行',url:'http://static.51dh.com.cn/51yd/application/84/79/c8cdd6c8b49f06bbb1949288fc5ab7713fd1.png'},
+                    {value: '中信银行',text: '中信银行', url:'http://static.51dh.com.cn/51yd/application/c6/03/97d1b2c782c0c8ec715347817d5543accc00.png' },
+                    {value: '浦发银行',text: '浦发银行',url:'http://static.51dh.com.cn/51yd/application/33/2f/b13702d925531ef5c248d846be2f7fa7a848.png'},
+                    {value: '中国建设银行',text: '中国建设银行', url:'http://static.51dh.com.cn/51yd/application/fd/49/80e3dd6dcc299e07e4b520017404252d14ee.png' },
+                    {value: '交通银行 ',text: '交通银行 ', url:'http://static.51dh.com.cn/51yd/application/f9/0e/0bfd6d4f8804a4681ba453ec32d312c5c822.png' },
+                    {value: '中国农业银行',text: '中国农业银行', url:'http://static.51dh.com.cn/51yd/application/81/d2/274020dffa6a041ce6f65e4dc9f2377102b5.png' },
+                    {value: '中国招商银行',text: '中国招商银行', url:'http://static.51dh.com.cn/51yd/application/72/1e/7b3da0a11a0875b5d63ad29dc6decc0ed37a.png' },
+                    {value: '华夏银行',text: '华夏银行', url:'http://static.51dh.com.cn/51yd/application/1e/58/918004c948b7b10d8ab4df2a04bb846c0b07.png' },
+                    {value: '中国民生银行',text: '中国民生银行', url:'http://static.51dh.com.cn/51yd/application/37/50/c98fac9fbfa106d199a2cbe748f61b58ca5f.png' },
+                    {value: '兴业银行',text: '兴业银行', url:'http://static.51dh.com.cn/51yd/application/58/51/b40de3674ad02cdcd31e1c0d52cc2200bbad.png' },
+                    {value: '平安银行',text: '平安银行', url:'http://static.51dh.com.cn/51yd/application/b0/d5/c98985e8a5fb6f75b795f148ebaf853c2509.png' }]);
+                var showUserPickerButton = doc.getElementById('showBank');
+                var userResult = doc.getElementById('bankName');
+                showUserPickerButton.addEventListener('tap', function(event) {
+                    userPicker.show(function(items) {
+                        userResult.value = items[0]["value"];
+                        chooseBank(items[0]["url"]);
+                    });
+                }, false);
+            });
+        })(mui, document);
+    </script>
+    </body>
+
+</html>

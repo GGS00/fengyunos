@@ -1,0 +1,145 @@
+<link href="css/old/ydyuan.css?09181736" rel="stylesheet">
+<link href="css/old/ydcmd.css?11131706" rel="stylesheet">
+<div ng-controller="StoreCtrl as store">
+	<div id="header" style="position: fixed;">
+		<div id="top-line"></div>
+		<div class="titlecontainer">
+			<span ng-repeat="list in store.areaList.slice(0,4)" style="color:{{list.seq == store.seq?'red':''}}" ng-click="store.seqChoice(list.seq)" class="every_item{{store.areaList.length<=4?'_full':''}} paritem">
+				{{list.name}}
+			</span> 
+			<span class="plusatt" ng-click="store.shaddow = !store.shaddow">
+				<i id="smallic" class="fa fa-angle-{{store.shaddow == false?'down':'up'}}"></i>
+			</span>
+		</div>
+	</div>
+	<div class="shaddow_back" ng-show="store.shaddow">
+		<span class="every_item_bottom paritem" style="color:{{list.seq == store.seq?'red':'#FFF'}}" ng-repeat="list in store.areaList.slice(4)" ng-click="store.seqChoice(list.seq)">{{list.name}}</span> 
+	</div>
+	<div id="goods_list_late" class="boxbox">
+		<div class="mei_item" ng-repeat="list in store.goodsList">
+			<div class="image_div">
+				<img ng-src="{{list.litpic}}" class="image_att">
+			</div>
+			<div class="content_div">
+				<div class="content_des">{{list.goods_name}}</div>
+				<session ui-sref="store.edit({baseid:list.base_id,litpic:list.litpic,goods_name:list.goods_name})">
+					<span class="text_att" style="float:left;">{{store.isRebate == 0?'进货价:':'返利:'}}</span>
+					<span class="text_att">￥{{store.isRebate == 0?list.wholesale_price.toFixed(2):list.rebate_money}}</span>
+					<span class="text_att" style="float:left">零售价:</span>
+					<span class="text_att_price">￥{{list.goods_price.toFixed(2)}}</span>
+				</session>
+				<div style="position:relative" ng-if="store.isRebate == 0">
+					<img ng-src="source/{{store.edit[$index] == false?'more_select.png':'close_icon.png'}}" ng-show="!store.checkBox" class="image_select" ng-click="store.baseId = list.base_id;store.showEdit($index)">
+                    <input style="margin-right:5px" class="check_select" ng-model="list.selected" type="checkbox" ng-show="store.checkBox">
+                    <div class="show_item_dialog" ng-show="store.edit[$index]">
+                        <div class="first_item_choice" ui-sref="store.edit({baseid:list.base_id,litpic:list.litpic,goods_name:list.goods_name})">
+	                        <div  class="fa fa-edit image_item_select">
+	                        	<span class="text_item_attr">编辑</span>
+	                        </div>
+	                    </div>    
+                        <div class="first_item_choice" ng-click="store.deleteGoods()">
+                            <div class="fa fa-trash image_item_select ">
+                            	<span class="text_item_attr ">移出云店</span>
+                            </div>
+                        </div>    
+                        <div class="first_item_choice" data-toggle="modal" data-target="#marketType ">
+                            <div class="fa fa-tag image_item_select ">
+                            	<span class="text_item_attr">标记</span>
+                            </div>
+                        </div>
+                    </div>
+		        </div>
+			</div>
+	</div>
+	<div class="blockclear"></div>
+
+	<div class="bottom_select" id="command_bottom" ng-show="!store.checkBox" ng-if="store.isRebate == 0">
+		<!-- <div class="manager_goods">
+			<div class="add_goods" ng-click="store.tounaddgoodslist()">添加商品到本专区</div>
+		</div> -->
+
+		<div class="manager_goods">
+			<div class="part_manager" ng-click="store.checkBox = true">批量管理</div>
+		</div>
+	</div>
+
+	<div class="bottom_select" id="delete_bottom" ng-show="store.checkBox" ng-if="store.isRebate == 0">
+		<div class="manager_goods">
+			<div class="add_goods" ng-click="store.deletelist()">移出云店</div>
+		</div>
+
+		<div class="manager_goods">
+			<div class="part_manager" ng-click="store.checkBox = false">返回</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="marketType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+				</div>
+				<div class="modal-body">
+					<div class="list-group" ng-click="store.marketType = 3">
+						<div class="radio">
+							<label>
+                                <input type="radio"  name="optionsRadios" checked> 特价<font style="color:blue">(例：当前设置零售价为：5000，输入降价300，那么在前端客户会看到<del>原价5300</del>，特价5000)</font>
+                            </label>
+						</div>
+						<a class="list-group-item" ng-show="store.marketType == 3">
+							<input type="text" ng-model="store.onSale" class="form-control" placeholder="请输入商品降价参数">	
+						</a>
+					</div>
+					<div class="list-group" ng-click="store.marketType = 0">
+						<div class="radio">
+							<label>
+                                    <input type="radio" name="optionsRadios" value="option2" >普通
+                                </label>
+						</div>
+					</div>
+					<div class="list-group" ng-click="store.marketType = 1">
+						<div class="radio">
+							<label>
+                                    <input type="radio" name="optionsRadios" value="option2" > 新品
+                                </label>
+						</div>
+					</div>
+					<div class="list-group" ng-click="store.marketType = 2">
+						<div class="radio">
+							<label>
+                                <input type="radio" name="optionsRadios" value="option2" > 品牌
+                            </label>
+						</div>
+					</div>
+					<div class="list-group" ng-click="store.marketType = 4">
+						<div class="radio">
+							<label>
+                                <input type="radio" name="optionsRadios" value="option2" > 热销
+                            </label>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">关闭
+                        </button>
+					<button type="button" class="btn btn-primary" ng-click="store.saveMark()">保存
+                        </button>
+
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+	<!--<script src="js/ydcmd.js?16022913"></script>
+	<script src="js/wxindex.js?1602291141"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			ydCmdInit();
+			scrollload(); //滚动加载
+		});
+	</script>-->
+</div>

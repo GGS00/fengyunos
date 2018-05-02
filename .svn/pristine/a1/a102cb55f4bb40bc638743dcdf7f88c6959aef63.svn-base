@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+    
+    body{
+        background-color: #EBEBEB;
+        overflow-x: hidden;
+      
+    }
+
+    .mui-content{
+        background-color: #EBEBEB;
+    }
+
+    .mui-preview-image.mui-fullscreen {
+        position: fixed;
+        z-index: 20;
+        background-color: #000;
+      }
+      .mui-preview-header,
+      .mui-preview-footer {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        z-index: 10;
+      }
+      .mui-preview-header {
+        height: 44px;
+        top: 0;
+      }
+      .mui-preview-footer {
+        height: 50px;
+        bottom: 0px;
+      }
+      .mui-preview-header .mui-preview-indicator {
+        display: block;
+        line-height: 25px;
+        color: #fff;
+        text-align: center;
+        margin: 15px auto 4;
+        width: 70px;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        font-size: 16px;
+      }
+      .mui-preview-image {
+        display: none;
+        -webkit-animation-duration: 0.5s;
+        animation-duration: 0.5s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+      }
+      .mui-preview-image.mui-preview-in {
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+      }
+      .mui-preview-image.mui-preview-out {
+        background: none;
+        -webkit-animation-name: fadeOut;
+        animation-name: fadeOut;
+      }
+      .mui-preview-image.mui-preview-out .mui-preview-header,
+      .mui-preview-image.mui-preview-out .mui-preview-footer {
+        display: none;
+      }
+      .mui-zoom-scroller {
+        position: absolute;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        -webkit-backface-visibility: hidden;
+      }
+      .mui-zoom {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+      }
+      .mui-slider .mui-slider-group .mui-slider-item img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+        width: 100%;
+      }
+      .mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+        display: inline-table;
+      }
+      .mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .mui-preview-loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      .mui-preview-loading.mui-active {
+        display: block;
+      }
+      .mui-preview-loading .mui-spinner-white {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -25px;
+        margin-top: -25px;
+        height: 50px;
+        width: 50px;
+      }
+      .mui-preview-image img.mui-transitioning {
+        -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+      }
+      @-webkit-keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .mui-popup-button.mui-popup-button-bold {
+          font-weight: 500;
+      }
+
+      .editPlace{
+        position:relative;
+      }
+      .editVersion{
+        position:relative;
+            width: 93%;
+      }
+       
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate" style="left:78px;color:#4D4D4D;width:56%">编辑</h1>
+    <h1 class="mui-title myRebate" style="left:63%;width:56%" onclick="saveFile()">完成</h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;"></span></button>
+</header>
+
+<div class="mui-content">
+
+   <div class="editHeader">
+     <div class="edit_hed">
+       <img src="img/1.jpg">
+
+       <div class="editTitle">
+        <div style="margin-top: 6px;height: 96px;">
+          <span class="setTitle" onclick="setTitle()">点击设置标题</span>
+          <i class="fa fa-pencil" style="margin-left: 2px;"></i>
+        </div>
+        <div class="setMusic" onclick="setMusic()">
+          <i class="fa  fa-music" style="margin-right: 8px;"></i>
+          <span class="musicName">无背景音乐</span>
+        </div>
+       </div>
+     </div>
+     
+   </div>
+
+   <div id="editBody" style="margin-top: 174px;">
+    <div class="editPlace">
+
+      <div class="editVersion" id="first">
+        <i class="fa fa-minus-square-o deletePic" onclick="deletePic()"></i>
+        <img class="thumbnail" src="img/1.jpg">
+        <textarea  class="editText" placeholder="点击添加文字"></textarea>
+        <i class="fa fa-angle-up moveup"></i>
+        <i class="fa fa-angle-down movedown"></i>
+      </div>
+
+      <div class="editVersion" id="second">
+        <i class="fa fa-minus-square-o deletePic" onclick="deletePic()"></i>
+        <img class="thumbnail" src="img/2.jpg">
+        <textarea  class="editText" placeholder="点击添加文字"></textarea>
+        <i class="fa fa-angle-up moveup"></i>
+        <i class="fa fa-angle-down movedown"></i>
+      </div>
+
+      <div class="editVersion" id="third">
+        <i class="fa fa-minus-square-o deletePic" onclick="deletePic()"></i>
+        <img class="thumbnail" src="img/3.jpg">
+        <textarea  class="editText" placeholder="点击添加文字"></textarea>
+        <i class="fa fa-angle-up moveup"></i>
+        <i class="fa fa-angle-down movedown"></i>
+      </div>
+
+      
+      <!-- <div class="editVersion">
+        <i class="fa fa-minus-square-o deletePic" onclick="deletePic()"></i>
+        <img class="thumbnail" src="img/1.jpg">
+       <textarea  class="editText" placeholder="点击添加文字"></textarea>
+      </div> -->
+    </div>
+
+    <i class="fa  fa-plus-square-o addPic" onclick="operate()"></i>
+
+    <div class="operateMenu" style="display:none">
+
+      <div class="operateDiv" onclick="addPic()">
+        <img src="img/text.png" class="operateImg">
+      </div>
+      <div  class="operateDiv" style="width:36%">
+        <img src="img/pic.png" class="operateImg">
+      </div>
+      <div  class="operateDiv">
+        <img src="img/video.png" class="operateImg">
+      </div>
+
+    </div>
+
+     
+    
+   </div>
+
+
+
+   <div class="editFooter">
+
+    
+   </div>
+ 
+    
+</div>
+
+<script src="http://cdn.bootcss.com/Sortable/1.4.2/Sortable.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.zoom.js"></script>
+<script src="js/mui.previewimage.js"></script>
+<script src="js/jquery.clickSort.js"></script>
+<script type="text/javascript">
+  /*mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });*/
+
+ /* function changeUpdown(){
+    $(".editVersion").first().find(".moveup").hide();
+    $(".editVersion").last().find(".movedown").hide();
+
+  }*/
+
+   [].forEach.call(editBody.getElementsByClassName('editPlace'), function (el){
+        new Sortable(el, { group: 'photo' });
+      });
+
+ $('.editPlace').clickSort();
+
+   mui.previewImage();
+
+   initial();
+
+   function initial(){
+      if(QueryString("musicId")){
+      var musicId = QueryString("musicId");
+      if(musicId){
+
+        $.ajax({
+           url: "music.php",  
+           type: "POST",
+           data:{id:musicId},
+           //dataType: "json",
+           error: function(){  
+               mui.alert('哎呀~网络好像出小差了'); 
+           },  
+           success: function(data,status){//如果调用php成功    
+                playMusic(unescape(data));//解码，显示汉字
+           }
+       }); 
+
+
+      }
+    }
+
+   }
+
+   function playMusic(data){
+      
+      var d = JSON.parse(data).songs;    
+      $(".musicName").html(d[0].name);
+                
+   }
+
+   function tomain(){
+      window.location.href="index.html";
+   }
+
+   function setMusic(){
+
+     window.location.href="musicSearch.html"
+
+   }
+
+   function setTitle(){
+
+      /*e.detail.gesture.preventDefault();*/
+      var btnArray = ['取消', '保存'];
+      mui.prompt('请输入标题：',' ', ' ', btnArray, function(e) {
+        if (e.index == 1) {
+          if(e.value ==""){
+            mui.alert("标题不能为空");
+          }else{
+            $(".setTitle").html(e.value);
+          }
+          
+        } 
+      })
+   }
+
+
+   function operate(){
+
+        
+
+        $(".operateMenu").toggle();
+
+        toBottom();
+    
+
+       
+
+        
+       /* $(".editPlace").append("<div class=\"editVersion\"><i class=\"fa fa-minus-square-o deletePic\"></i><img class=\"thumbnail\" src=\"img/1.jpg\"><textarea  class=\"editText\" placeholder=\"点击添加文字\"></textarea></div>"); */
+
+   }
+
+   function addPic(){
+        
+        $(".editPlace").append("<div class=\"editVersion\"><i class=\"fa fa-minus-square-o deletePic\"></i><img class=\"thumbnail\" src=\"img/1.jpg\"><textarea  class=\"editText\" placeholder=\"点击添加文字\"></textarea><i class=\"fa fa-angle-up\" onclick=\"up()\"></i><i class=\"fa fa-angle-down\" onclick=\"down()\"></i></div>"); 
+       
+         toBottom();
+   }
+
+
+  function saveFile(){
+     mui.alert("保存成功")
+  }
+
+
+  
+  function QueryString(val){
+
+      var uri = window.location.search;
+      var re = new RegExp("" +val+ "=([^&?]*)", "ig");
+      return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+  }
+
+
+  function toBottom(){
+        var h = $(document).height()-$(window).height();
+        $(document).scrollTop(h);
+  }
+  
+
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>添加商品</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/tallManager.css">
+		<style>
+			li, li > div {
+				width: 100%;
+				padding: 0px 10px !important;
+			}
+
+			.mui-left label {
+				padding-left: 21px !important;
+			}
+			.mui-left input {
+				left: 0px !important;
+				top: 17px !important;
+				font-size: 25%;
+			}
+
+			.mui-numbox {
+				padding: 0px 22px !important;
+				margin: 0px !important;
+				width: 78px;
+				height: 22px;
+				position: absolute;
+				right: 1px;
+				top: 24px;
+			}
+
+			.mui-numbox button {
+				width: 22px !important;
+			}
+
+			li img {
+				width: 39px;
+				height: 39px;
+				vertical-align: middle;
+				margin-right: 10px;
+			}
+			.xx{
+	            font-size: 16px;
+	            line-height: 34px;
+	            position: absolute;
+	            z-index: 1;
+	            top: 0;
+	            right: 0;
+	            bottom: 0;
+	            left: 0;
+	            display: inline-block;
+	            height: 34px;
+	            text-align: center;
+	            color: #999;
+	            border: 0;
+	            border-radius: 6px;
+	            background: 0 0;
+	        }
+	        .linemore{
+	        	width: 70%;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    white-space: nowrap;
+	        }
+	        .mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]{
+	        	top:16px;
+	        	left:4px;
+	        }
+	        .mui-bar-nav~.mui-content {
+			    padding-top: 10px;
+			}
+				            
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 id="title" class="mui-title">添加商品</h1>
+		    <a href="addSaleGoods.php" class="mui-icon mui-icon-plusempty mui-pull-right" style='font-weight:bolder;display:none'></a>
+		</header>
+		<div id="searchHeader" style='margin-top:54px;position:relative'>
+		    <div>
+		        <input type="search" class="xx" id="searchInput" placeholder="输入关键字查找本店商品" style='width:91%;background-color: #E8E8E8;'>
+		        <span class="mui-icon mui-icon-search" onclick="goodSearch()" style='float:right;margin-right: 6px;margin-top:6px;'></span>
+		    </div>
+		</div>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style='margin-bottom: 50px;margin-top:96px;'>
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul id="ai" class="mui-table-view mui-table-view-chevron">
+					
+				</ul>
+			</div>
+		</div>
+
+		<nav class="mui-bar mui-bar-tab" style='box-shadow: rgb(207, 203, 203) 0px -7px 10px;'>
+        <div class="total-price">已选择（<span id="goodNum" style='color:red'>0</span>）件</div>
+
+        <div class="ok" onclick="goodsConfirm()">确认</div>
+        </nav>
+		<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+		<script src="./../../commonJs/config.js?010716064"></script>
+		<script src="../js/mui.min.js"></script>
+		<script>
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					/*down: {
+						callback: pulldownRefresh
+					},*/
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+
+		    var Glob_SUPPLY;
+		    var Glob_aid;
+			var Glob_alias;
+		    var GLOB_localStorage = window.localStorage;
+		    var GLOB_sessionStorage = window.sessionStorage;
+		    Glob_SUPPLY = GLOB_localStorage["sessionSupply"];
+            Glob_aid = GLOB_localStorage["sessionAid"];
+            Glob_alias = GLOB_sessionStorage["sessionAlias"];
+			var page = 1;
+			var searchText = '';
+			var GLOB_NAME;
+			GLOB_NAME = request.QueryString("name");
+			if(GLOB_NAME){
+				GLOB_NAME = decodeURIComponent(GLOB_NAME);
+			}			
+			if(Glob_SUPPLY == 4){
+				$(".mui-pull-right").show();
+			}
+
+			function pullupRefresh()
+			{
+			    $.ajax({
+			        type: "POST",
+			        /*url: "../json/chooseGoods.json",*/
+			        url: "" + Comm_Config + "wx/getGoodsListBysupplyId.do",        
+			        data: {"supplyid":Glob_SUPPLY,"alias":Glob_alias,"page":page,"name":searchText,"agentid":Glob_aid},
+			        success: function(data) {			       
+			        	goodsDataHandel(data);
+			        }
+			    });
+			}
+
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function goodsDataHandel(data) {
+				var d = eval(data);
+				var pagecount=data.count;
+			    pagecount= Math.round(pagecount/9)+1;
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > pagecount)); //参数为true代表没有更多数据了。
+					/*var table = document.body.querySelector('.mui-table-view');*/
+					var table = $(".mui-table-view");
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = 0; i < d.resultValue.length; i++) {
+					/*for (var i = cells.length, len = i + 9; i < len; i++) {*/
+					 
+						table.append("<li class=\"mui-table-view-cell\"><div class=\"mui-input-row mui-checkbox mui-left\">\n\
+						<label><div>\n\
+						<div class=\"linemore\"><img src='"+ d.resultValue[i].litpic +"'><span id="+d.resultValue[i].goods_atom_id+" style='font-size: 15px;'>"+ d.resultValue[i].goods_name +"</span></div>\n\
+						<div class=\"mui-numbox\" data-numbox-min=\"0\">\n\
+						 <button rowId="+d.resultValue[i].goods_atom_id+" onclick=\"countSubtract(this,"+ d.resultValue[i].goods_atom_id+")\" class=\"mui-btn-numbox-minus\" type=\"button\">-</button>\n\
+						 <input  rowId="+d.resultValue[i].goods_atom_id+" class=\"mui-input-numbox\" type=\"number\" value='1' readonly=\"readonly\">\n\
+						 <button onclick=\"countAdd("+ d.resultValue[i].goods_atom_id+")\" class=\"mui-btn-numbox-plus\" type=\"button\">+</button>\n\
+					    </div></div></label>\n\
+						<input id="+d.resultValue[i].goods_atom_id+" suid="+d.resultValue[i].supply_id+" price="+d.resultValue[i].wholesale_price+" name=\"checkbox\" value=\"Item 1\" onclick=\"goodsAdd(this,"+  d.resultValue[i].goods_atom_id+")\"  type=\"checkbox\"></div></li>");
+					 
+				   }
+					mui('.mui-numbox').numbox();
+					$(".mui-btn-numbox-minus").attr("disabled","disabled");
+				}, 1500);
+                page++;
+			}			
+
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+			var goodsCount = 0;
+			var addCount = 0;
+			function goodsAdd(o,atomId){
+				var mang= $(".mui-input-row").find('input[rowId='+ atomId+']').val();
+				if(o.checked==true){
+					goodsCount++;
+			        addCount= Number(Number(addCount)+Number(mang));
+				}else{
+			        goodsCount--;
+			        addCount = Number(Number(addCount)-Number(mang));
+				}
+				$("#goodNum").html(''+ addCount +'');
+			}
+
+			function countAdd(atomId){
+				 var xx= $(".mui-input-row").find('input[rowId='+ atomId+']').val();
+			     var parentChecked=$(".mui-input-row").find('input[id='+ atomId+']').prop('checked');
+			     if(parentChecked==true){
+			         addCount= Number(Number(addCount)+1);
+			     }else{
+			     	addCount = Number(addCount);
+			     }
+				$("#goodNum").html(''+ addCount +'');
+			}
+
+			function countSubtract(o,atomId){
+				 var xxx= $(".mui-input-row").find('input[rowId='+ atomId+']').val();
+				 if(xxx==1){
+				 	$(".mui-input-row").find('button[rowId='+ atomId +']').attr('disabled','disabled');
+				 }
+			     var parentCheckeds=$(".mui-input-row").find('input[id='+ atomId+']').prop('checked');
+			     if(parentCheckeds==true){
+			         addCount= Number(Number(addCount)-1);
+			     }else{
+			     	addCount = Number(addCount);
+			     }
+				$("#goodNum").html(''+ addCount +'');
+			}
+
+			function goodSearch(){
+				searchText = $("#searchInput").val();    
+				page = 1;
+				$(".mui-table-view").html('');
+			    pullupRefresh();
+			}
+
+            var _baseidArray = new Array();
+            function goodsConfirm(){
+            	var j = 0;
+                var inputs = document.getElementsByTagName('input');//获取所有的input标签对象。
+                clearArray();
+            	/*var inputs = $("#ai").nextAll('input');*/
+			    for(var i=0;i<inputs.length;i++){
+			        var obj = inputs[i];
+			        if(obj.type=='checkbox'){
+			            if(obj.checked==true){
+			                _baseidArray[j] = obj.id;
+			                j++;
+			            }
+			        }
+			    }
+			    if(_baseidArray.length>0)
+			    {
+			        commitFun(_baseidArray);
+			    }
+			    else
+			    {
+			        mui.alert("您还未添加商品");
+			    }
+
+            	/*var xx= $("#ai").nextAll('li').find('div input:checked').attr('rowId');
+            	console.log(xx);*/
+	        	/*var result = "[";
+			    var jsonText = {};
+			    jsonText["atomid"] = MaintainableJS.arrayattr[MaintainableJS.editAttrIndex].goods_atom_id;
+			    jsonText["price"] = activeprice;
+			    result+=JSON.stringify(jsonText);
+			    result += "]";*/
+
+            }
+
+            function clearArray()
+			{
+			    for(i=0;i<_baseidArray.length;i++)
+			    {
+			        delete  _baseidArray[i];
+			    }
+			   /* for(i=0;i<_amountArray.length;i++)
+			    {
+			        delete  _amountArray[i];
+			    }*/
+			    _baseidArray.length=0;
+			    /*_amountArray.length=0;*/
+			}
+
+            /*var _amountArray = new Array();*/
+			function commitFun(data)
+			{     
+				var randomstr = GetRandomNum();
+				var result = "["
+				for(var i=0;i<data.length;i++){
+				  var price = $(".mui-input-row").find('input[id='+ data[i]+']').attr("price");
+				  var count = $(".mui-input-row").find('input[rowId='+ data[i]+']').val();
+				  var totalPrice = Number(price*count).toFixed(2);
+				  var jsonText = {};
+				  jsonText["price"] = price;
+				  jsonText["goodsAtomid"] = data[i];
+                  /* _amountArray[i]=$(".mui-input-row").find('input[rowId='+ data[i]+']').val(); */
+                  jsonText["totalNumber"] = count;
+                  jsonText["supplyid"] = $(".mui-input-row").find('input[id='+ data[i]+']').attr("suid");
+                  jsonText["totalPrice"] = totalPrice;
+                  jsonText["goodsName"] = $(".mui-input-row").find('span[id='+ data[i]+']').html();
+                  /*_amountArray.push(JSON.stringify(jsonText));*/
+                  if(i<(data.length-1)){
+                  	result+=JSON.stringify(jsonText)+",";
+                  }else{
+                  	result+=JSON.stringify(jsonText);
+                  }          
+				}
+				result += "]";
+				GLOB_localStorage['sessionAmout'] = result;
+				if(GLOB_NAME!=null){
+					window.location.href="addSale.html?name="+GLOB_NAME+"?"+randomstr;
+				}else{
+					window.location.href="addSale.html?"+randomstr;
+				}
+				
+				/*clearArray();*/
+			    
+			}
+
+		  function GetRandomNum() {   
+              var Min = 0;
+              var Max = 10000;
+              var Range = Max - Min;   
+              var Rand = Math.random();   
+              return(Min + Math.round(Rand * Range));   
+          } 
+              
+		</script>
+	</body>
+
+</html>

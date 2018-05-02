@@ -1,0 +1,4 @@
+<div>
+	<div ui-view></div>
+	<div ng-include="'view/home/footer.html'"></div>
+</div>

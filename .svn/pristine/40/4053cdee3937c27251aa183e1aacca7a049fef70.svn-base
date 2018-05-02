@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>云店商品价格修改</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link href="//cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        
+        <link href="css/indexphp.css?09181736" rel="stylesheet">
+        <link href="css/ydcmd.css?11131706" rel="stylesheet">
+        <link href="css/ydprice.css" rel="stylesheet">
+        
+
+
+    </head>
+    <body style="background-color: #E0E0E0" ng-app="myapp" ng-controller="publicController">
+<!--        <header class="bar bar-nav ">
+            <a href="javascript:history.go(-1);"><h4 style="position: absolute; float:left;height: 44px;line-height: 44px;margin:0px;color:#FFF">取消</h4></a>
+            <h4 style="height: 44px;line-height: 44px;margin:0px;text-align: center;color:#FFF">编辑</h4>      
+        </header>-->
+        <div class="table-view" >
+            <div class="table-view-cell">
+                <div class="goodsImg">
+                    <img class="media-object-little pull-left" ng-src="{{getLitpic}}">
+                </div>
+                <div class="goodsInfo">
+                    <h4 class="ellipsis" ng-bind="getGoodsName"></h4>
+                    <p class='ellipsis'>多个商家正在分销</p>
+                </div>
+            </div>
+        </div>
+        <div class="table-view" ng-repeat="list in infoItem" >
+            <div class="table-view-cell">
+                <p class="col-xs-6">规格</p>
+                <p class="col-xs-6 text-left" ng-bind="list.attr"></p>
+                <p class="col-xs-6">成本价</p>
+                <p class="col-xs-6 text-left" ng-bind="list.wholesale_price"></p>
+                <p class="col-xs-6">库存</p>
+                <p class="col-xs-6 text-left">暂无信息 </p>
+            </div>
+            <div  class="table-view-cell" style="background-color:#FFFFCC;padding:10px;margin-bottom:50px">
+                <div class="table-view-cell" ng-click="showPrice($index,list.goods_price)">
+                    <div style="margin: 0px;margin-bottom: 5px;" >
+                        <h5 class="col-xs-6"><i class="icon-hand-up"></i>&nbsp;设置售价</h5>
+                        <h4 class="col-xs-6 text-right" ng-bind="list.goods_price"></h4>
+                    </div>
+                </div>
+            </div>    
+        </div>
+
+
+
+
+        <div class="block-footer">
+            <div class='col-xs-6 text-right'>
+                <button class="btn btn-default" onclick="changeprice()">批量修改价格</button>
+            </div>
+            <div class='col-xs-6'>
+                <a href="javascript:history.go(-1);"><button class='btn btn-danger'>&nbsp;&nbsp;返回商品列表&nbsp;&nbsp;</button></a>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="alert-contailer" id="changepriceshow">
+            <div class="alert-contailer-bg" onclick="hidenChangePrice()"></div>
+            <div class="alert-changeprice-box">
+                <div class="alert-contailer-text" style="background-color: #FFF">
+                    <div id="pricetitle" class="pricetitle" ng-init="list = ['固定利润', '价格梯度系数']">
+                        <a ng-click="change($index)" ng-repeat="l in list" class="price-item {{show[$index]?'active':''}}">{{l}}</a>
+                    </div>
+                    <br>
+                    <div class="input-group" ng-show="show[0]">
+                        <input type="number" class="form-control" ng-model="allPrice" id="addareparam_input" placeholder="输入利润">
+                        <span class="input-group-addon">元</span>
+                    </div>
+                    <h4 ng-show="show[1]">确定按固定梯度系数还原价格吗？</4>
+                </div>
+                <div class="public-block-alert" style="background-color: #FFF" >
+                    <div class="col-xs-6" onclick="hidenChangePrice()">取消</div>
+                    <div class="col-xs-6" ng-show="show[0]" ng-click="changeBox()">确定</div>
+                    <div class="col-xs-6"  ng-show="show[1]" ng-click="saveCoefficient()">确定</div>
+                </div>    
+            </div>
+        </div>
+
+        <div class="alert-contailer" id="shopPrice">
+            <div class="alert-contailer-bg" onclick="hidenChangePrice()"></div>
+            <div class="alert-changeprice-box">
+                <div class="alert-contailer-text" style="background-color: #FFF">
+                    <div id="pricetitle" class="pricetitle">
+                        <a class="price-item active" href="#item3mobile">
+                            修改当前价格
+                        </a>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="nowPrice" placeholder="输入新价格">
+                        <span class="input-group-addon">元</span>
+                    </div>
+                </div>
+                <div class="public-block-alert" style="background-color: #FFF" >
+                    <div class="col-xs-6" ng-click="hidePrice()" style="border-right: 1px solid #ddd">取消</div>
+                    <div class="col-xs-6" ng-click="changeBox2()">确定</div>
+                </div>    
+            </div>
+        </div>
+
+
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script src="commonJs/config.js?11201111"></script>
+        <script src="//cdn.bootcss.com/angular.js/1.4.7/angular.min.js"></script>
+        <script>
+                                function changeprice() {
+                                    $("#changepriceshow").show();
+                                }
+                                function hidenChangePrice() {
+                                    $("#changepriceshow").hide();
+                                }
+        </script>
+        <script>
+                    var myapp = angular.module('myapp', []);
+                    myapp.config(['$httpProvider', function($httpProvider) {
+                        $httpProvider.defaults.withCredentials = true;
+                    }])
+                    myapp.controller('publicController', function($scope, $http) {
+                        var request =
+                            {
+                                QueryString : function(val)
+                                {
+                                    var uri = window.location.search;
+                                    var re = new RegExp("" +val+ "=([^&?]*)", "ig");
+                                    return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+                                }
+                            }
+                        $scope.base_id = request.QueryString("baseid"); 
+                        $scope.getLitpic = request.QueryString("litpic"); 
+                        $scope.getGoodsName = decodeURI(request.QueryString("goods_name")); 
+                        //登录判断
+                        var sessionStorage = window.sessionStorage;
+                        if (null == sessionStorage["sessionAid"]) {
+
+                        } else {
+                            var GLOB_ALIASID = sessionStorage ["sessionAid"];
+                            var GLOB_AID = sessionStorage ["sessionAlias"];
+                            var token = sessionStorage ["sessionistoken"];
+                        }
+
+                        //批量修改利润悬浮框的标签切换
+                        $scope.change = function(index) {
+                            $scope.show = [0, 0, 0];
+                            $scope.show[index] = 1
+                        }
+                        $scope.change(0)
+
+                        //获取详情列表
+                        $scope.infoList = function() {
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getGoodsDetailAttr.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "baseid": $scope.base_id,
+                                    "alias": GLOB_AID
+                                },
+                                xhrFields: {
+                                    withCredentials: true
+                                },
+                                crossDomain: true
+                            }).success(function(data) {
+                                var d = eval(data)
+                                if(d == null){
+                                    alert("请求错误，请稍后再试，或者联系云店管理")
+                                }else{
+                                    $scope.infoItem = d.resultValue;
+                                }
+                            })
+                        }
+                        $scope.infoList();
+
+                        //判断修改固定利润价格格式
+                        $scope.changeBox = function() {
+                            if (!/^[0-9]+(.[0-9]{1})?$/.test($scope.allPrice))
+                            {
+                                alert("请输入正确的价格");
+                                $("addareparam_input").focus();
+                            } else {
+                                $scope.fixProfit();
+                            }
+                        }
+                        //固定利润修改全部价格
+                        $scope.fixProfit = function() {
+                            var result = "[";
+                            for (var i = 0; i < $scope.infoItem.length; i++)
+                            {
+                                var jsonText = {};
+                                jsonText["atomid"] = $scope.infoItem[i].goods_atom_id;
+                                jsonText["profit"] = $scope.allPrice;
+                                result += JSON.stringify(jsonText);
+                                if (i != Number($scope.infoItem.length - 1))
+                                {
+                                    result += ",";
+                                }
+
+                            }
+                            result += "]";
+
+                            $http({
+                                method: "post",
+                                url: "" + Comm_Config + "wx/fixProfit.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "atomidprofit": result,
+                                    "alias": GLOB_AID,
+                                    "token": token
+                                }
+                            }).success(function(data) {
+                                $scope.infoList();
+                                $("#changepriceshow").hide();
+                            })
+                        }
+                        //还原梯度系数利润
+                        $scope.saveCoefficient = function() {
+                            $http({
+                                method: "post",
+                                url: "" + Comm_Config + "wx/recoveryBasicGoodsSysMode.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "baseid": $scope.base_id,
+                                    "alias": GLOB_AID,
+                                    "token": token
+                                }
+                            }).success(function(data) {
+                                $scope.infoList();
+                                $("#changepriceshow").hide();
+                            })
+                        }
+
+
+                        //弹出隐藏修改价格悬浮框
+                        $scope.showPrice = function(index,goods_price) {
+                            //标记要修改的是第几个价格
+                            $scope.nowFlag = index;
+                            $scope.nowPrice = goods_price;
+                            $("#shopPrice").show();
+                        }
+                        $scope.hidePrice = function() {
+                            $("#shopPrice").hide();
+                        }
+                        
+                        
+                        //判断修改自定义价格格式
+                        $scope.changeBox2 = function() {
+                            if (!/^[0-9]+(.[0-9]{1})?$/.test($scope.nowPrice))
+                            {
+                                alert("请输入正确的价格");
+                                $("addareparam_input").focus();
+                            } else {
+                                $scope.attrpricesubmit();
+                            }
+                        }
+                        
+                        //修改价格
+                        $scope.attrpricesubmit = function() {
+                            var result = "[";
+                            for (i = 0; i < $scope.infoItem.length; i++)
+                            {
+                                var jsonText = {};
+                                jsonText["atomid"] = $scope.infoItem[i].goods_atom_id;
+                                if (i == $scope.nowFlag) {
+                                    jsonText["price"] = $scope.nowPrice;
+                                } else {
+                                    jsonText["price"] = $scope.infoItem[i].goods_price;
+                                }
+                                result += JSON.stringify(jsonText);
+                                if (i != Number($scope.infoItem.length - 1))
+                                {
+                                    result += ",";
+                                }
+                            }
+                            result += "]";
+                            $http({
+                                method: "post",
+                                url: "" + Comm_Config + "wx/batchUpdateAtomGoodsPrice.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "baseid": $scope.base_id,
+                                    "atomidprice": result,
+                                    "alias": GLOB_AID,
+                                    "token": token
+                                }
+                            }).success(function(data) {
+                                $scope.infoList();
+                                $("#shopPrice").hide();
+                            })
+                        }
+                    })
+
+
+        </script>
+
+
+
+
+    </body>
+</html>

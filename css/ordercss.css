@@ -1,0 +1,76 @@
+
+
+.topline
+{
+    position: fixed;
+    top:0px;
+    width:100%;
+    height:50px;
+    z-index:9;
+    background: #fff;
+}
+.typeall
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+        
+}
+.typeallactive
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+    color:#436EEE;
+    border-bottom: 2px solid #436EEE;
+}
+.typeundo
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+}
+.typeundoactive
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+    color:#436EEE;
+    border-bottom: 2px solid #436EEE;
+}
+.typeredo
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+}
+.typeredoactive
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+    color:#436EEE;
+    border-bottom: 2px solid #436EEE;
+}
+.typecancel
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+}
+.typecancelactive
+{
+    float:left;
+    width: 25%;
+    text-align: center;
+    padding: 10px;
+    color:#436EEE;
+    border-bottom: 2px solid #436EEE;
+}

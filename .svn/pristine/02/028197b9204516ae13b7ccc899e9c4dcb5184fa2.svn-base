@@ -1,0 +1,914 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2015-6-1, 10:26:53
+    Author     : admin
+*/
+/*@font-face {
+     font-properties 
+    font-family: huakang;
+    src:url('huakangyuanti.TTF');
+}*/
+*
+{
+        /*max-width: 500px;*/
+        font-family: 微软雅黑;
+}
+body
+{
+    background: #e9e8e2;
+    max-width: 600px;
+    font-family: 微软雅黑;
+
+}
+
+
+ #owl-demo .item img{
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    #bar{
+      width: 0%;
+      max-width: 100%;
+      height: 4px;
+      background: #7fc242;
+    }
+    #progressBar{
+      width: 100%;
+      background: #EDEDED;
+    }
+    
+    
+.wshop-top
+{
+    position: relative;
+    width: 100%;
+    float: left;
+    padding: 5px;
+}
+.top-arealist
+{
+    float:left;
+    width:10%;
+    color:#aaa;
+    padding: 1px;
+    text-align: center;
+}
+.top-arealist span
+{
+    display: block;
+    font-size: 90%;
+}
+.top-arealist:hover
+{
+    float:left;
+    width:10%;
+    color:#000;
+    padding: 1px;
+    text-align: center;
+}
+
+.search-top
+{
+    float: left;
+    width:90%;
+}
+.search-top-shot
+{
+    float: left;
+    width:80%;
+}
+.shop-contain
+{
+
+    width:100%;
+    float:left;
+    min-height: 1000px;
+
+}
+.search-input
+{
+    width:100%;
+    background: #fff;
+    border-radius: 4px;
+    height: 33px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color:#aaa;
+    
+}
+.searchinput
+{
+    border: none;
+    width:70%;
+     height: 33px;
+     margin-left: 5px;
+     margin-right: 5px;
+}
+.voicerecod-block
+{
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height: 100%;
+    text-align: center;
+    color:#fff;
+    display: none;
+    background: palevioletred;
+}
+.span-isrecod
+{
+    position: absolute;
+    top:30%;
+    font-size: 240%;
+    color:#fff;
+}
+.speak-span
+{
+
+    font-size:180%;
+    margin-top: 30%;
+}
+.loadzoon
+{
+    position:absolute;
+    text-align: center;
+    width:100%;
+    top:60%;
+}
+.realbtndiv
+{
+    position: absolute;
+    width:100%;
+    top:80%;
+    
+
+}
+.realbtn
+{
+    position: absolute;
+    left:39%;
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    display: block;
+    background-color: #FF4040;
+    
+}
+.realbtn .line3
+{
+    width: 100px;
+    height: 100px;
+    position: absolute;left: 50%;top: 50%;
+    margin: -50px 0 0 -50px;
+    border:2px solid #fff;
+    border-radius: 120px 120px 120px 120px;
+    border-right-color: transparent;
+    
+}
+@-webkit-keyframes line3 {
+        0%{
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        20%{
+            -webkit-transform: rotate(720deg);
+            transform: rotate(720deg);
+        }
+        50%{
+            -webkit-transform: rotate(1080deg);
+            transform: rotate(1080deg);
+        }
+        75%{
+            -webkit-transform: rotate(1300deg);
+            transform: rotate(1300deg);
+        }
+        100%{
+            -webkit-transform: rotate(2500deg);
+            transform: rotate(2500deg);
+        }
+    }
+    @keyframes line3 {
+        0%{
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        20%{
+            -webkit-transform: rotate(720deg);
+            transform: rotate(720deg);
+        }
+        50%{
+            -webkit-transform: rotate(1080deg);
+            transform: rotate(1080deg);
+        }
+        75%{
+            -webkit-transform: rotate(1300deg);
+            transform: rotate(1300deg);
+        }
+        100%{
+            -webkit-transform: rotate(2500deg);
+            transform: rotate(2500deg);
+        }
+    }
+    .realbtn  .line3 {
+      -webkit-animation: line3 6s ease-in-out infinite;
+              animation: line3 6s ease-in-out infinite;
+    }
+    
+    .textlist
+    {
+        position: absolute;
+        top:10%;
+        left:5px;
+        font-size: 180%;
+        text-align: left;
+    }
+     .textlist span
+     {
+         display:block;
+         line-height: 50px;
+     }
+ .closediv
+{
+        position: absolute;
+        bottom:0px;
+        right:0px;
+        background:#ccc;
+        height:30px;
+        width: 30px;
+        border-radius: 50%;
+        padding:3px;
+        
+ }
+  .closediv:hover
+  {
+      position: absolute;
+        bottom:0px;
+        right:0px;
+        background:#ccc;
+        height:30px;
+        width: 30px;
+        border-radius: 50%;
+        padding:3px;
+        color:#000;
+        
+  }
+  
+  .storesectionclass
+  {
+      position: fixed;
+      width:100%;
+      top:0;
+      left:0;
+      display:none;
+  }
+  .sliderpage
+  {
+      position: absolute;
+      top:0px;
+      left:-100%;
+      width:100%;
+      min-height: 160%;
+      display: none;
+      z-index:99;
+      max-width: 600px;
+      
+  }
+    .sliderpage-recover
+    {
+        position: absolute;
+        width:100%;
+        height:100%;
+        filter:alpha(opacity=50); 
+        -moz-opacity:0.5; 
+        opacity:0.5;
+        background: #000;
+    }
+     .sliderpage-slider
+     {
+           position: absolute;
+            width:80%;
+            height:100%;
+            background: #47a3da;
+            color:#fff;
+     }
+ .sliderpage-tittle
+ {
+     position: absolute;
+     width:100%;
+     padding:8px;
+     font-size: 120%;
+     background: #0d77b6;
+     text-align: center;
+ }
+ .wxbugfix
+ {
+     width:100%;
+     padding:8px;
+     text-align: center;
+     min-height:4%;
+
+ }
+ .sliderpage-ul
+ {
+     position: absolute;
+     width:100%;
+     top:40px;
+     float:left;
+     text-align: center;
+     border-top: 1px solid #fff;
+     
+ }
+ .sliderpage-li
+ {
+
+     width:33.33%;
+     float:left;
+      border-bottom: 1px solid #fff;
+      padding: 5px;
+ }
+  .sliderpage-li:hover
+ {
+
+     width:33.33%;
+     float:left;
+      border-bottom: 1px solid #fff;
+      padding: 5px;
+      background:#0d77b6;
+ }
+  .sliderpage-li p
+  {
+      width:100%;
+      line-height: 20px;
+      height: 20px;
+      overflow: hidden;
+      padding: 0px;
+      margin: 0px;
+  }
+  .agent-shotshow
+  {
+      width:100%;
+      min-height: 50px;
+      background:#fff;
+      float:left;
+      padding:6px;
+      text-align: center;
+  }
+  .agent-shotshow img
+  {
+      width:20%;
+      float:left;
+      border-radius: 5px;
+  }
+    .agent-shtshow-text
+  {
+      width:75%;
+      margin-left: 2%;
+      margin-top: 1%;
+      float:left;
+      text-align: left;
+  }
+.agent-shotshow button
+  {
+      
+      margin-top: 3%;
+     
+  }
+  .boss-hot
+  {
+      margin-top: 2%;
+      float:left;
+      width:100%;
+      min-height:200px;
+      padding:3.34%;
+     
+  }
+  .boss-hot-tittle
+  {
+      font-size: 130%;
+      color:red;
+      display:block;
+      margin-bottom: 3%;
+  }
+  .boss-hotgoods-block-left
+  {
+      width:49%;
+      margin-right: 1%;
+      margin-bottom: 3%;
+      background:#fff;
+      float:left;
+  }
+    .boss-hotgoods-block-right
+  {
+      width:49%;
+      margin-left: 1%;
+       margin-bottom: 3%;
+      background:#fff;
+      float:right;
+  }
+  .boss-hotgoods-block-imgblock
+  {
+     position: relative;
+      float:left;
+      width: 100%;
+      margin-bottom: 2%;
+      overflow: hidden;
+  }
+  /**  iphone  3、4、5 **/  
+  @media (max-width:374px) {
+    .boss-hotgoods-block-img
+      {
+         width:100%;
+         height:140px;
+      }
+  
+.speciablock
+{
+    width:100%;
+    float:left;
+    background:#fff;
+    min-height:170px;
+    margin-top: 3%;
+}
+.speciablock-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:170px;
+}    
+.speciablock-right-top
+{
+    width:100%;
+    float:left;
+    min-height:70px;
+     border-bottom: 1px solid #ccc;
+}
+.speciablock-right-bottom-right
+{
+    width:50%;
+    float:left;
+    min-height:70px;
+}
+
+.speciablock-right-bottom-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:70px;
+}
+  }
+  @media (min-width:345px) and (max-width:400px) 
+  {
+      .boss-hotgoods-block-img
+      {
+         width:100%;
+         height:160px;
+      }
+ 
+.speciablock
+{
+    width:100%;
+    float:left;
+    background:#fff;
+    min-height:180px;
+    margin-top: 3%;
+}
+.speciablock-right-top
+{
+    width:100%;
+    float:left;
+    min-height:80px;
+     border-bottom: 1px solid #ccc;
+}
+.speciablock-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:180px;
+}
+.speciablock-right-bottom-right
+{
+    width:50%;
+    float:left;
+    min-height:80px;
+}
+.speciablock-right-bottom-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:80px;
+}
+
+  }
+@media (min-width:401px) and (max-width:500px) 
+  {
+      .boss-hotgoods-block-img
+      {
+         width:100%;
+         height:180px;
+      }
+ 
+.speciablock
+{
+    width:100%;
+    float:left;
+    background:#fff;
+    min-height:190px;
+    margin-top: 3%;
+}
+.speciablock-right-top
+{
+    width:100%;
+    float:left;
+    min-height:90px;
+     border-bottom: 1px solid #ccc;
+}
+
+.speciablock-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:190px;
+}     
+.speciablock-right-bottom-right
+{
+    width:50%;
+    float:left;
+    min-height:90px;
+}
+.speciablock-right-bottom-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:90px;
+}
+  }
+@media (min-width:500px)
+  {
+      .boss-hotgoods-block-img
+      {
+         width:100%;
+         height:240px;
+      }
+  
+.speciablock
+{
+    width:100%;
+    float:left;
+    background:#fff;
+    min-height:200px;
+    margin-top: 3%;
+}
+.speciablock-right-top
+{
+    width:100%;
+    float:left;
+    min-height:100px;
+     border-bottom: 1px solid #ccc;
+}
+.speciablock-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:200px;
+}    
+.speciablock-right-bottom-right
+{
+    width:50%;
+    float:left;
+    min-height:100px;
+}
+.speciablock-right-bottom-left
+{
+    width:50%;
+    float:left;
+    border-right: 1px solid #ccc;
+    min-height:100px;
+}
+
+  }
+  .boss-hotgoods-block-textblock
+  {
+      width:100%;
+      padding: 5px;
+      margin-top: 3%;
+      border-top: 1px solid #ccc;
+      font-size:12px;
+      color:rgb(51, 51, 51);
+  }
+  .boss-hotgoods-block-textblock p
+  {
+      float: left;
+      width: 100%;
+      line-height: 15px;
+      height:30px;
+      overflow:hidden;
+
+  }
+  .boss-hotgoods-block-textblock span
+  {
+      color:red;
+  }
+
+.speciablock-right
+{
+    width:50%;
+    float:left;
+}
+
+.speciablock-right-bottom
+{
+    width:100%;
+    float:left;
+}
+
+.hotcatelist
+{
+    width:100%;
+    float:left;
+    background:#fff;
+    min-height:100px;
+    margin-top:3%;
+}
+.hotcatetittle
+{
+    width:100%;
+    min-height: 35px;
+    padding:8px;
+    border-bottom: 1px  solid #ccc;
+}
+.hotcatecontain
+{
+    width:100%;
+    min-height: 90px;
+    padding:8px;
+    text-align: center;
+}
+.hotcateblock
+{
+    width:18%;
+    margin: 3%;
+    float:left;
+    text-align: center;
+}
+.hotcateblock img
+{
+    width:100%;
+    
+}
+.hotcateblock span
+{
+    display:block;
+}
+
+
+.shoplistcontain
+{
+    width:100%;
+     float:left;
+    min-height: 500px;
+     background:#fff;
+}
+.shoplist-tittle
+{
+    width:100%;
+    float:left;
+    border-bottom: 1px solid #ccc;
+    padding:6px;
+}
+.goodslistdiv
+{
+    width:100%;
+    float:left;
+}
+.goodssecion-list
+{
+    width:100%;
+    padding:6px;
+    float:left;
+    margin-top: 3%;
+    border-bottom: 1px solid #ccc;
+    
+}
+.sectionlist-img
+{
+    position: relative;
+    width:30%;
+    float:left;
+}
+.sectionlist-img img
+{
+    float:left;
+    width:100%;
+}
+.sectionlist-text
+{
+    margin-left: 5%;
+    width:65%;
+    float:left;
+}
+.sectionlist-text span
+{
+    color:red;
+    font-size:110%;
+}
+.sectionlist-name
+{
+    height:40px;
+    line-height:20px;
+    overflow:hidden;
+}
+.sectionlist-desc
+{
+    color:#ccc;
+     height:20px;
+    line-height:20px;
+    overflow:hidden;
+}
+
+.hotsearchDiv
+{
+    float: left;
+    width:100%;
+    min-height:150px;
+    
+    border-top: 1px solid #ccc;
+}
+.hotsearchDiv-tittle
+{
+    background:#f3f5f7;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.localsearchlist
+{
+    width:100%;
+    float:left;
+    
+}
+.localsearchlist-list
+{
+    padding:9px;
+    width:100%;
+    float:left;
+    background:#fff;
+    border-bottom: 1px solid #ccc;
+}
+/** 店铺详情页面**/
+.tittlebardiv
+{
+    width:100%;
+    background:#fff;
+    height: 60px;
+    padding:5px;
+    float:left;
+    border-bottom: 2px solid #ddd;
+}
+.tittlebardiv img
+{
+    height: 50px;
+    max-width: 20%;
+    float:left;
+}
+.tittlebardiv p
+{
+    width:60%;
+    float:left;
+    line-height: 50px;
+    height:50px;
+    overflow: hidden;
+}
+.tittlebardiv a
+{
+    max-width:20%;
+    float:right;
+    margin-top: 8px;
+    padding:3px;
+}
+
+.scorezoon
+{
+    width:94%;
+     float:left;
+    margin-left: 3%;
+    background:#fff;
+    margin-top: 2%;
+
+}
+.scorezoon-tittle
+{
+    width:100%;
+    float:left;
+    border-bottom: 2px solid #ddd;
+    padding:15px;
+}
+.scorezoon-body
+{
+    width:100%;
+    float:left;
+    padding:10px;
+    
+}
+.scorezoon-body i
+{
+    color:#c53c3e;
+}
+.scorezoon-bodyblock
+{
+    width:33.33%;
+    float:left;
+    text-align: center;
+}
+
+.scorezoon-usermsg
+{
+    width:100%;
+    float:left;
+    border-bottom: 1px solid #ddd;
+    padding:10px;
+    
+}
+.qrcodezoon
+{
+    float:left;
+    width:auto;
+    padding:5%;
+    margin-left: 10%;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.img_mark {
+    position: absolute;
+    float: right;
+    height: 50px;
+    width: 50px;
+    right: 5px;
+}
+    /*公共遮罩层**/
+    .public-cover{
+        position: fixed;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        color:red;
+        text-align: center;
+        z-index: 10000;
+    }
+    .public-cover i{
+        position: fixed;
+        top:45%;
+        left:49%;
+        font-size: 130%;
+    }
+    .error_img{
+         position: fixed;
+         top:20%;
+        width: 50%;
+        left: 25%;
+    }
+    .error_span{
+        position: fixed;
+        top:60%;
+        width: 80%;
+        left:10%;
+        color:#32071a;
+    }
+    .pricechoose{
+        margin-left: 15px;
+        background-color: #fff;
+    }
+    .pricechoose:hover{
+        background-color: #aaa;
+    }
+    
+ /*公共遮罩层**/
+
+ .catblock-left {
+    float: left;
+    width: 22%;
+    color: #ff8208;
+    font-size: 200%;
+    padding-left: 30px;
+}
+.order-info{
+    width: 68%;
+    float: left;
+    padding-top: 2.5%;
+}

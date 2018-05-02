@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>微信版51云店-订单管理</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="//cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/ordercss.css?11051903" rel="stylesheet">
+
+
+
+    
+
+</head>
+
+<body style="font-family: 微软雅黑" >
+    <div id="bodyconter" >
+        <!--<div class="alert alert-warning" style="text-align: center;display: none" id="emptyTips">您好！您还没有任何订单</div>-->
+        <div class="topline">
+            <div class="typeallactive" id="typeallid" onclick="typechoice(0)">
+                全部
+            </div>
+            <div class="typeundo" id="typeundoid" onclick="typechoice(1)">
+                未处理
+            </div>
+            <div class="typeredo" id="typeredoid" onclick="typechoice(5)">
+                已处理
+            </div>
+            <div class="typecancel"  id="typecancelid" onclick="typechoice(10)">
+                已取消
+            </div>
+        </div>
+        <div class="alert alert-warning" style="margin-top:68px;text-align: center;display:none" id="emptyTips">未发现订单信息</div>
+        <div class="alert alert-warning"  id="buyTips" style="position: fixed;display:none;top:50px;width:100%;z-index:9999999">
+            <a href="#" class="close" data-dismiss="alert">
+               &times;
+            </a>
+            <strong>注意！</strong>3C数码类商品价格变动较大，请及时下单！下单过程中我们优先为您选择最低价格的同款商品！
+         </div>
+        
+        <div id="orderlistpanelId" style="position:absolute;top:48px;">
+            
+        </div>
+        
+<!--    <div style="position:relative;margin-top:58px;text-align: center;" id="loadmorediv">
+        <span id="loadtextid">加载中....</span>
+    </div>
+        -->
+    </div>
+
+    
+    
+     <!--  备注信息对话框-->
+     <div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+           <div class="modal-dialog">
+              <div class="modal-content">
+                 <div class="modal-header">
+                    <button type="button" class="close" 
+                       data-dismiss="modal" aria-hidden="true">
+                          &times;
+                    </button>
+                    <h5 class="modal-title" id="remarkModalLabel">
+                        订单备注信息<span style="color:red" id="remarkModalordernumberspan">（订单号：加载中...）</span>
+                    </h5>
+                 </div>
+                 <div class="modal-body">
+                    <form role="form">
+                    <div class="form-group">
+                      <label for="name">提示：可以备注顾客信息和注意事项</label>
+                      <textarea class="form-control" rows="6" id="remarktextarea"></textarea>
+                    </div>
+                  </form>
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" 
+                       data-dismiss="modal">关闭
+                    </button>
+                     <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="saveRemark()">
+                        保存
+                     </button>
+                 </div>
+              </div>
+            </div>
+        </div>
+    <!--  店铺信息对话框-->
+        <div class="modal fade" id="shopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+           <div class="modal-dialog">
+              <div class="modal-content">
+                 <div class="modal-header">
+                    <button type="button" class="close" 
+                       data-dismiss="modal" aria-hidden="true">
+                          &times;
+                    </button>
+                    <h4 class="modal-title" id="shopkModalLabel">
+                       店铺信息
+                    </h4>
+                 </div>
+                 <div class="modal-body" id="shopContain">
+                     
+                 </div>
+                 <div class="modal-footer">
+                     <a type="button" class="btn btn-success" href="#" id="hreftel" >拨打手机</a>
+                    <button type="button" class="btn btn-default" 
+                       data-dismiss="modal">关闭
+                    </button>
+                 </div>
+              </div>
+            </div>
+        </div>
+    
+    <!-- Mainly scripts -->
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script language="javascript" src="./commonJs/config.js?12111049"></script>
+        <script src="js/orderjs.js?01071512"></script>
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<?php
+error_reporting(0);
+require_once "./publicWxAction/jssdk.php"; 
+$jssdk = new JSSDK();
+$signPackage = $jssdk->GetSignPackage();
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>微云店</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/indexphp.css?09181736" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+    <body style="background:#f5f5f9">
+        <div class="container" style="background:#fff;">
+            <div class="public-block">
+                <div class="half-block" >
+                    <span class="span-header" style=" color:#ff8208" id="allvisitorid">-&nbsp;-</span>
+                    <span class="span-small">总访问量</span>
+                </div>
+                <div class="half-block">
+                    <span class="span-header" style=" color:#ff8208" id="allorderid">-&nbsp;-</span>
+                    <span class="span-small">总订单量</span>
+                </div>
+
+            </div>
+            <span class="span-small">有访问量才有订单量，做个勤劳的老板，去分享店铺吧</span>
+            <div class="public-block" style="border-top: 1px solid #ddd;">
+                <div class="public-block-3">
+                    <span class="span-timiheader" id="tdvisitorid">_&nbsp;_</span>
+                    <span class="span-small">今日访问量</span>
+                </div>
+                <div class="public-block-3" onclick="funpoint(2)">
+                    <span class="span-timiheader" id="tdoder">_&nbsp;_</span>
+                    <span class="span-small">今日意向订单</span>
+                </div>
+                <div class="public-block-3" onclick="funpoint(7)">
+                    <span class="span-timiheader" id="tdcomtoster">_&nbsp;_</span>
+                    <span class="span-small">新增会员</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="addgsblock" onclick="funpoint(6)">
+            <i class="icon-plus-sign icon-large" style="  color:#ff8208;"></i>
+            &nbsp;添加商品到云店
+        </div>
+        <div class="sliderblock">
+            <div style="float:left;width: 100%;"><img src="source/20150917094933.jpg" style="width: 100%;" ></div>
+        </div>
+
+        <!--功能模块开始 -->
+        <div class="catepageblock" style="text-align: left;">
+            云店管理
+        </div>
+        <div class="gncateblock">
+            <div class="cateblock">
+                <div class="public-block-2" >
+                    <div class="catblock-left">
+                        <i class="icon-inbox"></i>
+                    </div>
+                    <div class="catblock-right" style="border-right: 1px solid #ddd;" onclick="funpoint(1)">
+                        <span class="right-tittle">商品管理</span>
+                        <span class="right-content">管理已经加入云店的商品,修改零售价移出云店等</span>
+                    </div>
+                </div>
+                <div class="public-block-2">
+                    <div class="catblock-left">
+                        <i class=" icon-print"></i>
+                    </div>
+                    <div class="catblock-right" onclick="funpoint(2)">
+                        <span class="right-tittle">订单管理</span>
+                        <span class="right-content">云店下单后需要到订货网上购买哦</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cateblock" style="border-top: 1px solid #ddd;">
+                <div class="public-block-2" onclick="funpoint(4)">
+                    <div class="catblock-left">
+                        <i class="icon-share"></i>
+                    </div>
+                    <div class="catblock-right" style="border-right: 1px solid #ddd;">
+                        <span class="right-tittle">分享店铺</span>
+                        <span class="right-content">分享云店铺,有效增加意向订单和会员量</span>
+                    </div>
+                </div>
+                <div class="public-block-2"  onclick="funpoint(7)">
+                    <div class="catblock-left">
+                        <i class="  icon-group"></i>
+                    </div>
+                    <div class="catblock-right">
+                        <span class="right-tittle">客户管理</span>
+                        <span class="right-content">浏览我的云店铺并有购买意向的顾客</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cateblock" style="border-top: 1px solid #ddd;">
+                <div class="public-block-2" >
+                    <div class="catblock-left">
+                        <i class="icon-home"></i>
+                    </div>
+                    <div class="catblock-right" style="border-right: 1px solid #ddd;" onclick="funpoint(3)">
+                        <span class="right-tittle">店铺管理</span>
+                        <span class="right-content">我的所有分店和分销店铺</span>
+                    </div>
+                </div>
+                <div class="public-block-2" id="scanQRCode1">
+                    <div class="catblock-left">
+                        <i class="icon-qrcode" ></i>
+                    </div>
+                    <div class="catblock-right" style="border-right: 1px solid #ddd;">
+                        <span class="right-tittle">云店扫一扫</span>
+                        <span class="right-content">扫描云店商品二维码看进价，添加分店</span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="cateblock" style="border-top: 1px solid #ddd;">
+                <div class="public-block-2" >
+                    <div class="catblock-left">
+                        <i class="icon-money"></i>
+                    </div>
+                    <div class="catblock-right" style="border-right: 1px solid #ddd;" onclick="funpoint(10)">
+                        <span class="right-tittle">我的返利</span>
+                        <span class="right-content">查看我的返利记录</span>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!--功能模块结束 -->
+
+        <div class="blockclear"></div>
+
+        <div class="block-footer">
+            <div class="public-block-4">
+                <div class="footer-achive">
+                    <i class="icon-th"></i>
+                    <span>首页</span>
+                </div>
+            </div>
+
+            <div class="public-block-4" onclick="funpoint(6)">
+                <div class="footer-nomal">
+                    <i class=" icon-briefcase"></i>
+                    <span>市场</span>
+                </div>
+            </div>
+
+            <div class="public-block-4" onclick="funpoint(8)">
+                <div class="footer-nomal">
+                    <i class=" icon-money"></i>
+                    <span>账簿</span>
+                </div>
+            </div>
+
+            <div class="public-block-4" onclick="funpoint(5)">
+                <div class="footer-nomal">
+                    <i class=" icon-heart-empty"></i>
+                    <span>我的</span>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- 底部弹出框 -->
+        <div class="alert-contailer" id="indexbottom">
+            <div class="alert-contailer-bg" onclick="hidenIndexBottom()"></div>
+            <div class="alert-container-block-achive">
+                <div class="alert-contailer-text">
+                    <div class="public-block-3" style="border-right: 1px solid #ddd">
+                        <i class="icon-h-sign"></i>
+                        <span>订货网商品</span>
+                    </div>
+
+                    <div class="public-block-3" style="border-right: 1px solid #ddd">
+                        <i class=" icon-upload-alt"></i>
+                        <span>自营商品</span>
+                    </div>
+
+                    <div class="public-block-3">
+                        <i class=" icon-globe"></i>
+                        <span>第三方商品</span>
+                    </div>
+
+                </div>
+                <div class="public-block-alert" onclick="hidenIndexBottom()">
+                    取消
+                </div>
+            </div>
+        </div>
+
+        <!--加载中弹出框-->
+        <div class="alert-contailer" >
+            <div class="alert-contailer-bg"></div>
+            <span class="alert-lodingspan"><i class="icon-refresh icon-spin"></i></span>
+        </div>
+        <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+        <script src="./commonJs/config.js?12111049"></script>
+        <script src="./js/wxindex.js?11301336"></script>
+        <script src="js/wxhome.js?01120958"></script>
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script>
+            wx.config({
+                appId: '<?php echo $signPackage["appId"]; ?>',
+                timestamp: <?php echo $signPackage["timestamp"]; ?>,
+                nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+                signature: '<?php echo $signPackage["signature"]; ?>',
+                jsApiList: [
+                    // 所有要调用的 API 都要加到这个列表中
+                    'scanQRCode',
+                    'onMenuShareTimeline'
+                ]
+            });
+            wx.ready(function() {
+                //wx.hideOptionMenu();
+                // 在这里调用 API
+            });
+
+            document.querySelector('#scanQRCode1').onclick = function() {
+                wx.scanQRCode({
+                    needResult: 1,
+                    desc: '扫描51云店二维码',
+                    success: function(res) {
+                        _wxScanQRCode(res);
+                    },
+                    fail: function(res) {
+
+                        alert(JSON.stringify(res));
+                    }
+                });
+            };
+
+
+        </script>
+    </body>
+    <script>
+        $(document).ready(function() {
+            setCookie("tag", 0, 10);
+            indexrady();
+        });
+    </script>
+    
+</html>

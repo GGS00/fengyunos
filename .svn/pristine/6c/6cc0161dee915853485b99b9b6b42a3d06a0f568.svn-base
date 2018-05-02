@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>云店商品管理</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        
+        <link href="//cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/indexphp.css?09181736" rel="stylesheet">
+        <link href="css/ydyuan.css?09181736" rel="stylesheet">
+        <link href="css/ydcmd.css?11131706" rel="stylesheet">
+    </head>
+    <body>
+        <div id="header" style="position: fixed;">
+            <div id="top-line"></div>
+            <div class="titlecontainer" id="newclassify">
+            </div>
+        </div>
+        <div id="extraitem" class="shaddow_back">  
+        </div>
+        <div id="goods_list_late" class="boxbox">
+
+        </div>
+        <div class="blockclear"></div>
+
+        <div class="bottom_select" id="command_bottom">
+            <div class="manager_goods">
+                <div class="add_goods" onclick="tounaddgoodslist()">添加商品到本专区</div>
+            </div>
+
+            <div class="manager_goods">
+                <div class="part_manager" onclick="changelayout()">批量管理</div>
+            </div>
+        </div>
+
+        <div class="bottom_select" id="delete_bottom" style="display: none">
+            <div class="manager_goods">
+                <div class="add_goods" onclick="deletelist()">移出云店</div>
+            </div>
+
+            <div class="manager_goods">
+                <div class="part_manager" onclick="layback()">返回</div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="marketType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group" onclick="chooseType(3)">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option1" checked> 特价<font style="color:blue">(例：当前设置零售价为：5000，输入降价300，那么在前端客户会看到<del>原价5300</del>，特价5000)</font>
+                                </label>
+                            </div>
+                            <a  class="list-group-item">
+                                <input type="text" id="OnSale" class="form-control" placeholder="请输入商品降价参数">
+                            </a>
+                        </div>
+                        <div class="list-group" onclick="chooseType(0)">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option2" >普通
+                                </label>
+                            </div>
+                        </div>
+                        <div class="list-group" onclick="chooseType(1)">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option2" > 新品
+                                </label>
+                            </div>
+                        </div>
+                        <div class="list-group" onclick="chooseType(2)">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option2" > 品牌
+                                </label>
+                            </div>
+                        </div>
+                        <div class="list-group" onclick="chooseType(4)">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsRadios" value="option2" > 热销
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                onclick="updateMark()">保存
+                        </button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script language="javascript" src="./commonJs/config.js?12111048"></script>
+        <script src="js/ydcmd.js?1602291141"></script>   
+        <script src="js/wxindex.js?1602291141"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                ydCmdInit();
+                scrollload();//滚动加载
+            });
+        </script>
+    </body>
+
+
+</html>

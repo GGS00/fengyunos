@@ -1,0 +1,223 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this temp late file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+//获得参数的方法  var selfImei = request.QueryString("imei"); 
+var request =
+{
+    QueryString : function(val)
+    {
+        var uri = window.location.search;
+        var re = new RegExp("" +val+ "=([^&?]*)", "ig");
+        return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+    }
+}
+
+var Glob_OpenId;
+var Glob_LoginSource =  0;
+var sessionStorage  = window.sessionStorage ; 
+var localStorage1  = window.localStorage ; 
+function wxloginready()
+{
+    
+     Glob_OpenId = globSessionStorage["sessionopenid"];
+     if(!Glob_OpenId)
+     {
+         //未获取到Openid 提示错误
+         $("#dialogZoon").fadeIn();
+         return;
+     }
+     
+    $("#loginZoonID").fadeIn();
+    Glob_LoginSource = request.QueryString("dh");
+         
+}
+
+/**
+ * 
+ * @type Number|Number|Number
+ * registerby 云店用户注册来源分类
+ * 1_1   扫描云店盒子二维码注册
+ * 1_2  扫描店主盒子二维码注册
+ * 1_3  微信自主注册
+ * 1_4 pad、手机自主注册
+ * 2_3 微信51数据同步注册
+ * 2_4 pad、手机51数据同步注册
+ */
+function wxLogin()
+{
+ 
+    var username = $("#username").val();
+    var password = $("#password").val();
+    var registerby = "2_3";
+   if("" == username)
+   {
+       $("#alertZoon").show();
+       setTimeout("coverdivhiden();",1000);
+       document.getElementById('alerttext').innerHTML="请输入用户名";
+       document.getElementById('usernamedivid').setAttribute("class", "login-input-type-error");
+       return;
+   }
+   if("" == password)
+   {
+        $("#alertZoon").show();
+        setTimeout("coverdivhiden();",1000);
+        document.getElementById('alerttext').innerHTML="请输入密码";
+        document.getElementById('usernamedivid').setAttribute("class", "login-input-type");
+        document.getElementById('passworddivid').setAttribute("class", "login-input-type-error");
+        return;
+   }
+     if((username!="") && (password!=""))
+     {
+         var pwdmd5 = hex_md5(password);
+         document.getElementById('usernamedivid').setAttribute("class", "login-input-type");
+         document.getElementById('passworddivid').setAttribute("class", "login-input-type");
+         
+         var actionstr = "wx/loginWx.do";
+         if(1 == Glob_LoginSource)
+         {
+             //51订货网账户登录
+             actionstr =  "wx/RigsterBy51dh.do";
+             registerby = "2_3";
+             
+         }
+         $.ajax({
+           type:"POST",
+           url: Comm_Config+actionstr, 
+           data: {"username":username,"password":pwdmd5,"openid":Glob_OpenId,"mac":Glob_OpenId,"registerby":registerby},     
+           success: function(data){
+               
+               var d = eval(data);
+               var result = d.resultValue;
+               if(2 == result)
+               {
+                    $("#alertZoon").show();
+                    setTimeout("coverdivhiden();",1000);
+                   
+                    if(1 == Glob_LoginSource)
+                    {
+                        document.getElementById('alerttext').innerHTML="51订货网不存在此用户名";
+                    }
+                    else
+                    {
+                        document.getElementById('alerttext').innerHTML="密码错误";
+                    }
+               }
+               else if(1 == result)
+               {
+                   //  user diregister
+                   $("#alertZoon").show();
+                    setTimeout("coverdivhiden();",1000);
+                    if(1 == Glob_LoginSource)
+                    {
+                        document.getElementById('alerttext').innerHTML="用户名已注册51云店";
+                    }
+                    else
+                    {
+                        document.getElementById('alerttext').innerHTML="用户名不存在";
+                    }
+                   
+               }
+               else if(3 == result)
+               {
+                   document.getElementById('dialogbodyId').innerHTML="";
+//                   if(1 == Glob_LoginSource)
+//                    {
+//                        $("#dialogbodyId").append("<h4>请等待</h4><span>您注册的账户正在审核当中,暂时无法登陆</span>");
+//                    }
+//                    else
+//                    {
+                        $("#dialogbodyId").append("<h4>请等待</h4><span>用户不存在..;</span>");
+//                    }
+                   $("#dialogZoon").fadeIn();
+               }
+               else if(4 == result)
+               {
+                   document.getElementById('dialogbodyId').innerHTML="";
+//                    if(1 == Glob_LoginSource)
+//                    {
+//                        $("#dialogbodyId").append("<h4>请等待</h4><span>发生了未知错误，请退出重试</span>");
+//                    }
+//                    else
+//                    {
+                        $("#dialogbodyId").append("<h4>请等待</h4><span>您的账号在审核当中...</span>");
+//                    }
+                   $("#dialogZoon").fadeIn();
+               }
+                else if(5 == result)
+               {//加盟店续费
+                   var partnerinfor = d.partner_info;
+                   alert("您的店铺已到期，请联系您区域的合伙人 :"+partnerinfor.name+":"+partnerinfor.tel);
+               }
+               else if(40001 == result){
+                   var is_belong_partner = d.is_belong_partner;
+                   var belong_type = d.belong_type;// 1 是加盟商 0 直营店
+                   var is_branch = d.is_branch;//是否是分店 1 表示是  0 表示否
+                   var partnerinfor = d.partner_info;
+                   if(is_belong_partner == 1){//属于合伙人
+                        if(belong_type == 1){
+                            alert("请联系您区域的合伙人 :"+partnerinfor.name+":"+partnerinfor.tel);
+                        }else{
+                            alert("您的分店已到期，请续费！！");//给一个二维码扫描
+                        }
+                   }else{
+                          alert("您的分店已到期，请续费！！");//给一个二维码扫描
+                   }
+               }
+               else
+               {
+                    var agentid = d.agentInfo.id;
+                    var aliasid = d.agentInfo.alias_id;
+                    var shopid = d.shopId;
+                    var isfanli = d.isFanli;
+                    var sessionid = d.sessionInfo.sessionid;
+                    var selltype = d.sell_type;
+                    var shoptype = d.shop_type;
+                    globSessionStorage ["sessionAid"] =agentid;
+                    globSessionStorage ["sessionAlias"] =aliasid;
+                    globSessionStorage["sessionistoken"] = sessionid;
+                    localStorage1["sessionisfanli"] = isfanli;
+                    localStorage1["sessionAid"] = agentid; 
+                    var randomstr = GetRandomNum();
+                    var shopID = d.shopId;//不为空就是分店 
+                    if(null ===  shopID ||"" === shopID|| undefined === shopID){
+                          globSessionStorage["sessionisboss"] = 1;
+                          globSessionStorage ["sessionshopid"] =d.master_shopid;
+                          sessionStorage["sessionshopid"] = d.master_shopid;
+                          sessionStorage["sessionshoptype"] = shoptype;
+                          window.location.href="index.html#/home/home?shoptype="+shoptype+"";
+                    }else{
+                          sessionStorage["sessionselltype"] = d.sell_type;
+                          sessionStorage["sessionshoptype"] = shoptype;
+                          window.location.href="index.html#/shop?aid="+agentid+"&alias="+aliasid+"&shopid="+shopID+"&selltype="+selltype+"&shoptype="+shoptype+"&isshare=1?"+randomstr;
+                    }
+               }
+            },
+            error : function() {  
+                 $("#alertZoon").show();
+                 setTimeout("coverdivhiden();",1000);
+                document.getElementById('alerttext').innerHTML="登录失败，请关闭页面重新登录";
+            }  
+        });
+     }
+}
+
+function coverdivhiden()
+{
+   $("#alertZoon").hide();
+
+}
+
+function dialogdivhiden()
+{
+     $("#dialogZoon").hide();
+}
+
+function GetRandomNum() {   
+    var Min = 0;
+    var Max = 10000;
+    var Range = Max - Min;   
+    var Rand = Math.random();   
+    return(Min + Math.round(Rand * Range));   
+} 

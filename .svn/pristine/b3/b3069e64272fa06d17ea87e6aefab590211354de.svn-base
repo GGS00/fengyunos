@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>功能选择</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title myRebate" style="left:78px;width:56%">功能选择</h1>
+ 
+</header>
+
+<div class="mui-content">
+    
+   <div class="menuSelect" onclick="toBinding()">
+     <span class="selectM">Mac绑定</span>
+   </div>
+   <div class="menuSelect" onclick="toRenew()">
+     <span class="selectM">续费</span>
+   </div>
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+  function toBinding(){
+    window.location.href="binding.html"
+  }
+
+  function toRenew(){
+    window.location.href="renew.html"
+  }
+
+
+</script>
+</body>
+</html>

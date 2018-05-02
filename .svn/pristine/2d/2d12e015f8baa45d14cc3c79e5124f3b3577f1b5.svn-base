@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加商品</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/tallManager.css">
+    <style>
+        li, li > div {
+            width: 100%;
+            padding: 0px 10px !important;
+        }
+
+        .mui-left label {
+            padding-left: 21px !important;
+        }
+
+        .mui-left input {
+            left: -3px !important;
+            top: 17px !important;
+            font-size: 25%;
+        }
+
+        .mui-numbox {
+            padding: 0px 22px !important;
+            margin: 0px !important;
+            width: 78px;
+            height: 22px;
+            position: absolute;
+            right: 1px;
+            top: 20px;
+        }
+
+        .mui-numbox button {
+            width: 22px !important;
+        }
+
+        li img {
+            width: 39px;
+            height: 39px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 id="title" class="mui-title">添加商品</h1>
+    <a href="addSaleGoods.php" class="mui-icon mui-icon-plusempty mui-pull-right" style='font-weight:bolder'></a>
+</header>
+</body>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+        //启用双击监听
+        mui.init({
+            gestureConfig:{
+                doubletap:true
+            },
+            subpages:[{
+                url:'chooseSaleGoods_sub.html',
+                id:'chooseSaleGoods_sub.html',
+                styles:{
+                    top: '0px',
+                    bottom: '0px',
+                }
+            }]
+        });
+
+        var contentWebview = null;
+        document.querySelector('header').addEventListener('doubletap',function () {
+            if(contentWebview==null){
+                contentWebview = plus.webview.currentWebview().children()[0];
+            }
+            contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+        });
+</script>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>销售详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/tallManager.css">
+    <style>
+        .mui-pull-top-pocket {
+            top: 0px !important;
+        }
+
+        #pullrefresh {
+            top: 163px;
+            bottom: 100px;
+        }
+        .footer{
+            font-size: 20px;
+            height: 100%;
+            margin-right: 30px;   
+            float: right;
+            background-color: #fff;
+            text-align: center;
+            line-height: 50px;
+        }
+        .topshow div{
+           padding:0 0 5px 10px;
+           font-size: 14px;
+           font-family: 微软雅黑;
+        }
+        .topshow span{
+           margin-left: 15px;
+        }
+       /* .ordertime{
+           width: 60%;
+           font-size: 15px;
+           height: 100%;
+           float: left;
+           background-color: #fff;
+           text-align: center;
+           line-height: 50px;
+        }*/
+            
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title">销售详情</h1>
+    <button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left"><span
+            class="mui-icon mui-icon-left-nav"></span>销售记录
+    </button>
+</header>
+
+<div class="mui-content" style="color: #7B7777;">
+  <div class='topshow'>
+    <div style="margin-top: 12px;">
+        客　　户:<span id="customer"></span>
+    </div>
+    <div style='word-spacing: 3px;'>
+        供 应 商:<span id="supply"></span>
+    </div>
+    <div>
+        门　　店:<span id="shop"></span>
+    </div>
+    <div>
+        抹　　零: <span id="reduce" style='color:red'>0</span> 元
+    </div>
+    <div>
+        其　　他: <span id="extra" style='color:red'>0</span> 元
+    </div>
+    <div>
+        下单时间: <span class="ordertime"></span>
+    </div>
+  </div>
+  
+    <div id="scroll" class="mui-scroll-wrapper" style="position: absolute;top:216px;bottom:60px;color: #696565;">
+        <div class="mui-scroll">
+            <ul id="addGoodsList" class="mui-table-view">          
+
+            </ul>
+        </div>
+    </div>
+    <nav class="mui-bar mui-bar-tab" style='box-shadow: rgb(207, 203, 203) 0px -7px 10px;'>
+        <div class='footer'>合计: <span id="totalMon" style="color:red">0</span>元</div>
+    </nav>
+
+
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="./../../commonJs/config.js?010716064"></script>
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init();
+    mui('#scroll').scroll({
+        indicators: true //是否显示滚动条
+    });
+    
+    var orderId=request.QueryString("id");
+    initial();
+
+    function initial(){
+          $.ajax({
+                type: "POST",
+                url: "" + Comm_Config + "wx/getSaleAtomList.do",
+                data:{"saleid":orderId},
+                success: function (data) {                  
+                    goodsorder(data);        
+                }
+            })
+    }
+
+    function goodsorder(data) {
+            var d = eval(data);
+            var supplyName='';
+            var supplyid = d.resultValue.purchaseAtomList[0].supplyid[0];
+            if(supplyid==1){
+                     supplyName='51订货网';
+            }else if(supplyid==4){
+                     supplyName='店主自定义';
+            }else if(supplyid==9){
+                     supplyName='云店自营';
+            }else{
+                     supplyName='';
+            }
+            $("#customer").html(d.resultValue.customer);
+            $("#supply").html(supplyName);
+            $("#shop").html(d.resultValue.shopName);
+            $("#reduce").html(d.resultValue.reducePrice);
+            $("#extra").html(d.resultValue.addPrice);
+            $(".ordertime").html(d.resultValue.createtime);
+            $('#totalMon').html(d.resultValue.totalPrice);
+            var table = $("#addGoodsList");
+            var purchaseAtomList=d.resultValue.purchaseAtomList;
+            for(var i=0;i<purchaseAtomList.length;i++){  
+             table.append("<li class=\"mui-table-view-cell\"><div class=\"mui-slider-right mui-disabled\"></div><div class=\"mui-slider-handle\"><h4 style=\"width:70%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;\">" + purchaseAtomList[i].goodsName + "</h4><h6>￥" + purchaseAtomList[i].wholesalePrice + " * "+ purchaseAtomList[i].totalNumber + "</h6><div class=\"goods-item-right\"><h4 class=\"color-fdb03b\">￥<span>"+purchaseAtomList[i].totalPrice +"</span></h4></div></div></li>");
+            
+
+           }
+        }
+        
+    
+
+</script>
+</body>
+</html>

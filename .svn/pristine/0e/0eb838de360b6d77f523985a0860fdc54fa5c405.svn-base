@@ -1,0 +1,245 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2015-9-6, 16:23:05
+    Author     : admin
+*/
+body {
+    font-family: 微软雅黑;
+}
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing:  border-box;
+}
+.image_div{
+    position:relative;
+    float: left;
+    width: 25%;
+    /* height: 100px; */
+    text-align: center;
+    margin-top: 4%;
+}
+
+.showstatus{
+    position:absolute;
+    height:25px;
+    width:25px;
+    right: 0px;
+}
+
+.image_att{
+    /* height: 80%; */
+    width: 90%;
+    text-align: center;
+    float: left;
+    margin-left: 5px;
+
+}
+
+.content_div{
+    float: left;
+    width: 75%;
+    display: block;
+    height: 100px;
+    padding-top: 3%;
+    padding-left: 10px;
+    /* padding-right: 9px; */
+}
+
+.content_des{
+    word-wrap:  break-word;
+    color:  #000000;
+    font-size: 100%;
+    margin-top: 5px;
+
+}
+
+.text_att{
+    color: #A6A7A7;
+    margin-top: 8px;
+    font-size: 90%;
+}
+
+.text_att_price{
+    float:left;
+    color: #D02F00;
+    float:left;
+    margin-top:8px;
+    font-size: 90%;
+}
+
+.image_select{
+    height:25px;
+    width:25px;
+    float: right;
+    margin-right:5px;
+    /*       margin-top: 5px;*/
+}
+.boxbox{
+    margin-top: 45px;
+    top: 50px;
+    height: auto;
+
+
+}
+.mei_item{
+    display: inline;
+    border-bottom: 1px solid #ccc;
+    float: left;
+    padding-bottom: 2%;
+    width: 100%;
+}
+
+
+.image_item_select{
+    /*    height: 30px;
+        width: 30px;*/
+    /*    size: 30px;*/
+    font-size:25px;
+    color: #fff;
+
+}
+
+.show_item_dialog{
+    float: right;
+   
+    width: 240px;
+    background:  #000000;
+    z-index: 4;
+    opacity: 0.8;
+    margin-right:40px;
+    display: inline;
+    position: relative;
+    display:none;
+    bottom:50px;
+    border-radius: 3px;
+    padding:2%;
+}
+
+.first_item_choice{
+    width: 33%;
+    float:left;
+    text-align: center;
+
+}
+
+.text_item_attr{
+    color:  #ffffff;
+    font-size: 90%;
+    margin-top:3px
+}
+
+.bottom_select{
+    float:left;
+    bottom: 0;
+    position:  fixed;
+    height: 50px;
+    width: 100%;
+    background: #FFFFFF;
+    text-align: center;
+    vertical-align:  central;
+    border-top:  #c8c8c8   solid 2px;
+}
+
+.add_goods{
+    font-size: 100%;
+    color:  white;
+    margin: 5px;
+    background: #D13600;
+    height: 36px;
+    border-radius: 3px;
+    padding-top: 8px;
+}
+
+.part_manager{
+    font-size: 100%;
+    color:   #666;
+    background: #FFFFFF;
+    border:  #666 solid 1px;
+    height: 36px;
+    margin: 5px;
+    border-radius: 3px;
+    padding-top: 8px;
+}
+
+.manager_goods{
+    width: 50%;
+    position: relative;
+    float: left;
+}
+
+.check_select{
+    height:20px;
+    width:20px;
+    float: right;
+    display: none;
+}
+
+.every_item{
+    float: left;
+    width: 22%;
+    text-align: center;
+    font-size:100%;
+}
+.every_item_full{
+    float: left;
+    width: 25%;
+    text-align: center;
+    font-size:100%;
+}
+
+.every_item_bottom{
+    float: left;
+    width: 33%;
+    text-align: center;
+    font-size:90%;
+    color: #000;
+    padding: 3%;
+    border:1px solid #ddd;
+
+}
+/*.every_item_bottom:hover
+{
+    color:red;
+}*/
+.plusatt{
+    float:left;
+    font-size:200%;
+    color:black;    
+    margin-left: 2%;
+}
+.shaddow_back{
+    top:43px;
+    position: fixed;
+    width:100%;
+   background:  #999;
+/*    opacity: 0.8;*/
+    display: none;
+    z-index:9999;
+    
+/*    background-color:  #999;
+    background:rgba(255, 255, 255, 0.8)!important;
+    filter:Alpha(opacity=80);*/
+    
+    
+    
+    
+    
+    border-bottom:1px solid #fff;
+}
+
+.nocontent{
+    float: left;
+    color: #000;
+    font-size: 90%;
+    width: 100%;
+    margin: 3%;
+    text-align: center;
+    color:#414141;
+}
+
+

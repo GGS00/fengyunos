@@ -1,0 +1,148 @@
+<link rel="stylesheet" href="css/old/ydset.css" />
+<div style="background: #efeff4" ng-controller="CenterCtrl as center">
+	<div id="myCarousel" class="carousel slide">
+		<div class="carousel-inner">
+
+			<div class="item active">
+
+				<div class="infoblockcontain" style="margin-top:3%;">
+					<div class="infoblockcontain-list">
+						<div class="infoblock-list-tittle" style="margin-top: 4%;">
+							头像
+						</div>
+						<div class="infoblock-list-value">
+							<img src="{{center.d.icon != null?center.d.icon:'source/yunlogo.png'}}" width="48" height="48">
+						</div>
+						<div class="infoblock-list-more" style="margin-top: 4%;">
+
+						</div>
+					</div>
+
+					<div class="infoblockcontain-list" ng-click="center.editShopMsg('shop_name',center.d.shop_name)">
+						<div class="infoblock-list-tittle">
+							店铺名
+						</div>
+						<div class="infoblock-list-value">
+							{{center.d.shop_name != null?center.d.shop_name:'加载中...'}}
+						</div>
+						<div class="infoblock-list-more">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+
+					<div class="infoblockcontain-list" ng-click="center.editShopMsg('name',center.d.name)">
+						<div class="infoblock-list-tittle">
+							店主姓名
+						</div>
+						<div class="infoblock-list-value">
+							{{center.d.name != null?center.d.name:'加载中...'}}
+						</div>
+						<div class="infoblock-list-more">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+
+					<div class="infoblockcontain-list" ng-click="center.editShopMsg('tel',center.d.tel)">
+						<div class="infoblock-list-tittle">
+							手机号
+						</div>
+						<div class="infoblock-list-value">
+							{{center.d.tel != null?center.d.tel:'加载中...'}}
+						</div>
+						<div class="infoblock-list-more">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+
+					<div class="infoblockcontain-list" ui-sref="code">
+						<div class="infoblock-list-tittle">
+							店铺二维码
+						</div>
+						<div class="infoblock-list-value">
+							<i class="fa fa-qrcode"></i>
+						</div>
+						<div class="infoblock-list-more">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+				</div>
+
+				<div class="infoblockcontain" style="margin-top:3%;">
+					<div class="infoblockcontain-list" ng-click="center.editShopMsg('qq',center.d.qq)">
+						<div class="infoblock-list-tittle">
+							QQ
+						</div>
+						<div class="infoblock-list-value">
+							{{center.d.qq != null?center.d.qq:'未设置'}}
+						</div>
+						<div class="infoblock-list-more">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+
+					<div class="infoblockcontain-list" ng-click="center.editShopMsg('wechat',center.d.wechat)">
+						<div class="infoblock-list-tittle">
+							微信
+						</div>
+						<div class="infoblock-list-value">
+							{{center.d.wechat != null?center.d.wechat:'未设置'}}
+						</div>
+						<div class="infoblock-list-more">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+
+					<div ng-if="main.isfanli == 1" class="infoblockcontain-list" ng-click="main.toMenu()">
+
+						<div class="infoblock-list-tittle">
+							<i class="fa  fa-circle" style="color: red;"></i>
+							绑定银行卡
+						</div>
+
+						<div class="infoblock-list-more" style="float: right;">
+							<i class="fa fa-angle-right"></i>
+						</div>
+					</div>
+				</div>
+
+				<input type="submit" value="退出登录" ng-click="center.loginOut()" class="mui-btn mui-btn-primary mui-btn-block" style="padding: 5px;margin: 10%;width: 80%;">
+				<!--<div class="infoblockcontain" style="margin-top:3%;" >-->
+				<!--<div class="infoblockcontain-list" onclick="editShopMsg(7)">-->
+				<!--<div class="infoblock-list-tittle">-->
+				<!--修改密码-->
+				<!--</div>-->
+				<!--<div class="infoblock-list-value" id="agentpwdid">-->
+				<!--<i class="icon-unlock"></i>-->
+				<!--</div>-->
+				<!--<div class="infoblock-list-more">-->
+				<!--<i class=" icon-angle-right"></i>-->
+				<!--</div>-->
+				<!--</div>-->
+
+				<!---->
+				<!--</div>-->
+			</div>
+
+			<div class="item" style="height: 400px;">
+				<div class="infoblockcontain" style="margin-top:3%;padding-bottom:2%;">
+
+					<input type="text" style="float:left;border:0px;outline:none;width:90%" ng-model="center.editValue" ng-focus="center.clear = 'true'">
+					<input type="password" style="float:left;border:0px;outline:none;width:90%;display:none" id="publicpwdid" >
+					<i class="fa fa-remove" style="width:10%;" ng-show="center.clear" ng-click="center.editValue = ''"></i>
+				</div>
+
+				<div class="container">
+					<button type="button" class="btn btn-default" style="width:30%;margin-left: 10%;margin-top: 5%" ng-click="center.canceledit()">取消</button>
+					<button type="button" class="btn btn-danger" style="width:30%;margin-left: 10%;margin-top: 5%" ng-click="center.updateagentmsg()">保存</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!--功能模块结束 -->
+
+	<div class="blockclear"></div>
+
+	
+</div>

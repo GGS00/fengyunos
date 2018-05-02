@@ -1,0 +1,151 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>店铺订单管理</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>订单管理</strong>
+            </li>   
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row" id="maincontain">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>您的店铺订单列表<font color="red">（手机数码产品价格变化较为频繁，为保障您的利益请您尽快于51订货网下单购买）</font></h5>
+                </div>
+                <div class="ibox-content" >
+                    <div class="row">
+                        <div class="col-sm-5 m-b-xs">
+                        </div>
+                        <div class="col-sm-4 m-b-xs">
+                            <div data-toggle="buttons" class="btn-group">
+                                <label class="btn btn-sm btn-white active" onclick="searchtype(0)"> <input type="radio" id="option1" name="options"> 全部 </label>
+                                <label class="btn btn-sm btn-white " onclick="searchtype(1)"> <input type="radio" id="option2" name="options">未处理 </label>
+                                <label class="btn btn-sm btn-white" onclick="searchtype(5)"> <input type="radio" id="option3" name="options"> 已处理 </label>
+                                <label class="btn btn-sm btn-white" onclick="searchtype(10)"> <input type="radio" id="option3" name="options"> 已取消 </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                        </div>
+                    </div>
+                    <div id="tablelist">
+                        <div id="tablelist2">
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>订单编号</th>
+                                    <th>商品</th>
+                                    <th>商品图片</th>
+                                    <th>下单店铺</th>
+                                    <th>成交零售价</th>
+                                    <th>指导进货价</th>
+                                    <th>毛利润</th>
+                                    <th>下单日期</th>
+                                    <th>订单状态</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyId" >
+                            </tbody>
+                        </table>
+                    </div>
+                    <div  style="text-align: center">
+                        <div class="btn-group" id="page_btn_group">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+
+<div class="modal fade" id="shopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="shopkModalLabel">
+                    下单店铺的相关信息
+                </h4>
+            </div>
+            <div class="modal-body" id="shopContain">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" 
+                        data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  备注信息对话框-->
+<div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="remarkModalLabel">
+                    输入该订单的备注信息<span style="color:red" id="remarkModalordernumberspan">（订单号：加载中...）</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="name">提示：可以备注顾客的个人信息和一些注意事项</label>
+                        <textarea class="form-control" rows="6" id="remarktextarea"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" 
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="saveRemark()">
+                    保存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 修改订单状态的对话框-->
+<div class="modal fade" id="editStatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" 
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="editStatusModalLabel">
+                    选择您要修改订单的状态<span style="color:red" id="ordernumberspaneditStatus">（订单号：加载中...）</span>
+                </h4>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <div data-toggle="buttons" class="btn-group  btn-group-lg" id="btn_groupList">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" 
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="submitchanggeStatus()">
+                    保存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/controller/shopDetails.js"></script>

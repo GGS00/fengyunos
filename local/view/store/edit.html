@@ -1,0 +1,94 @@
+<link href="css/old/ydcmd.css?11131706" rel="stylesheet">
+<link href="css/old/ydprice.css" rel="stylesheet">
+
+<div style="background-color: #E0E0E0" ng-controller="StoreEditCtrl as edit">
+	<!--        <header class="bar bar-nav ">
+            <a href="javascript:history.go(-1);"><h4 style="position: absolute; float:left;height: 44px;line-height: 44px;margin:0px;color:#FFF">取消</h4></a>
+            <h4 style="height: 44px;line-height: 44px;margin:0px;text-align: center;color:#FFF">编辑</h4>      
+        </header>-->
+	<div class="table-view">
+		<div class="table-view-cell">
+			<div class="goodsImg">
+				<img class="media-object-little pull-left" ng-src="{{edit.litpic}}">
+			</div>
+			<div class="goodsInfo">
+				<h4 class="ellipsis" ng-bind="edit.goodsName"></h4>
+				<p class='ellipsis'>多个商家正在分销</p>
+			</div>
+		</div>
+	</div>
+	<div class="table-view" ng-repeat="list in edit.infoItem">
+		<div class="table-view-cell">
+			<p class="col-xs-6">规格</p>
+			<p class="col-xs-6 text-left" ng-bind="list.attr"></p>
+			<p class="col-xs-6">{{list.rebate_money != null?'返利':'成本价'}}</p>
+			<p class="col-xs-6 text-left" ng-bind="list.rebate_money != null?list.rebate_money:list.wholesale_price"></p>
+			<p class="col-xs-6">库存</p>
+			<p class="col-xs-6 text-left">暂无信息 </p>
+		</div>
+		<div class="table-view-cell" style="background-color:#FFFFCC;padding:10px;margin-bottom:50px">
+			<div class="table-view-cell" ng-click="edit.showPrice($index,list.goods_price)">
+				<div style="margin: 0px;margin-bottom: 5px;">
+					<h5 class="col-xs-6"><i class="icon-hand-up"></i>&nbsp;设置售价</h5>
+					<h4 class="col-xs-6 text-right" ng-bind="list.goods_price"></h4>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="block-footer">
+		<div class='col-xs-6 text-right' ng-if="edit.infoItem[0].is_rebate == 0">
+			<button class="btn btn-default" ng-click="edit.changeprice()">批量修改价格</button>
+		</div>
+		<div class="col-xs-{{edit.infoItem[0].is_rebate == 0?'6':'12'}}  {{edit.infoItem[0].is_rebate == 0?'':'text-center'}}">
+			<a href="javascript:history.go(-1);"><button class='btn btn-danger'>&nbsp;&nbsp;返回商品列表&nbsp;&nbsp;</button></a>
+		</div>
+	</div>
+
+	<div class="alert-contailer" id="changepriceshow">
+		<div class="alert-contailer-bg" ng-click="edit.hidenChangePrice()"></div>
+		<div class="alert-changeprice-box">
+			<div class="alert-contailer-text" style="background-color: #FFF">
+				<div id="pricetitle" class="pricetitle" ng-init="list = ['固定利润', '价格梯度系数']">
+					<a ng-click="edit.change($index)" ng-repeat="l in list" class="price-item {{edit.show[$index]?'active':''}}">{{l}}</a>
+				</div>
+				<br>
+				<div class="input-group" ng-show="edit.show[0]">
+					<input type="number" class="form-control" ng-model="edit.allPrice" id="addareparam_input" placeholder="输入利润">
+					<span class="input-group-addon">元</span>
+				</div>
+				<h4 ng-show="edit.show[1]">确定按固定梯度系数还原价格吗？</4>
+                </div>
+                <div class="public-block-alert" style="background-color: #FFF" >
+                    <div class="col-xs-6" ng-click="edit.hidenChangePrice()">取消</div>
+                    <div class="col-xs-6" ng-show="edit.show[0]" ng-click="edit.changeBox()">确定</div>
+                    <div class="col-xs-6"  ng-show="edit.show[1]" ng-click="edit.saveCoefficient()">确定</div>
+                </div>    
+            </div>
+        </div>
+
+        <div class="alert-contailer" id="shopPrice">
+            <div class="alert-contailer-bg" onclick="hidenChangePrice()"></div>
+            <div class="alert-changeprice-box">
+                <div class="alert-contailer-text" style="background-color: #FFF">
+                    <div id="pricetitle" class="pricetitle">
+                        <a class="price-item active" href="#item3mobile">
+                            修改当前价格
+                        </a>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="edit.nowPrice" placeholder="输入新价格">
+                        <span class="input-group-addon">元</span>
+                    </div>
+                </div>
+                <div class="public-block-alert" style="background-color: #FFF" >
+                    <div class="col-xs-6" ng-click="edit.hidePrice()" style="border-right: 1px solid #ddd">取消</div>
+                    <div class="col-xs-6" ng-click="edit.changeBox2()">确定</div>
+                </div>    
+            </div>
+        </div>
+       
+               
+
+</div>

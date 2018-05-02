@@ -1,0 +1,251 @@
+body
+{ font-family: 微软雅黑;}
+a
+{ text-decoration:none;}
+*
+{
+    font-family: MicroSoft Yahei;
+    outline: none;
+}
+/**  iphone   3、4、5 **/  
+@media (max-width:374px) {
+    
+    .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:40%;
+    }
+    
+  
+}
+/**  6**/
+@media (min-width:345px) and (max-width:400px) {
+    .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:35%;
+    }
+    
+    
+}
+/**  6Plus**/
+@media (min-width:400px) and (max-width:414px) {
+     .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:35%;
+    }
+   
+}
+@media (min-width:415px) and (max-width:720px) {
+    .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:40%;
+    }
+  
+    
+}
+@media (min-width:721px) and (max-width:1200px) {
+    .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:75%;
+    }
+   
+    
+}
+@media (min-width:1201px) and (max-width:1300px) {
+    .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:75%;
+    }
+   
+}
+@media (min-width:1301px){
+    .containerdiv
+    {
+        position: absolute;
+        width:100%;
+        padding: 5%;
+        top:75%;
+    }
+   
+    
+}
+ #scanQRCodehome, #buy_btn_id,#register_btn_id,#login_btn_id
+{
+    width: 100%;
+}
+.containerdiv h5
+{
+       
+     font-size: 100%;
+    padding-top: 5%;
+}
+
+
+/**以下是弹出框的样式**/
+.alertZoon
+    {
+        position: fixed;
+        width:100%;
+        height:100%;
+        top:0px;
+        left:0px;
+        z-index: 9998;
+        display: none;
+
+    }
+   .alertZoon-bg
+    {
+        width:100%;
+        height:100%;
+        z-index: 9998;
+        background: #000;
+        filter:alpha(opacity=20); /*IE滤镜，透明度50%*/
+        -moz-opacity:0.2; /*Firefox私有，透明度50%*/
+        opacity:0.2;/*其他，透明度50%*/
+        display: none;
+    }
+.alert-text
+    {
+        border-radius: 5px;
+        background: #505050;
+        color:#fff;
+        padding:7px;
+    }
+    .alertZoon-content
+    {
+        position:fixed;
+        width: 50%;
+        top:80%;
+        left: 25%;
+        opacity:'0.5';
+        text-align: center;
+        z-index: 9999;
+    }
+    .dialog-bg
+    {
+        width:100%;
+        height:100%;
+        background: #000;
+        filter:alpha(opacity=40); /*IE滤镜，透明度50%*/
+        -moz-opacity:0.4; /*Firefox私有，透明度50%*/
+        opacity:0.4;/*其他，透明度50%*/
+
+    }
+    .alert-dialog-content
+    {
+        position: fixed;
+        z-index: 9999;
+         text-align: center;
+        background: #fff;
+        width: 80%;
+        left:  10%;
+        top: 20%;
+    }
+
+    .dialog-body
+    {
+        width: 100%;
+        padding:15px;
+        min-height: 80px;
+    }
+    .dialog-footer
+    {
+        width: 100%;
+
+        border-top: 1px solid #ddd;
+    }
+    .dialog-footer-btn
+    {
+        width: 50%;
+        float: left;
+        color:#5996cf;
+         padding:13px;
+    }
+   .dialog-footer-btn_big
+   {
+       width: 100%;
+        float: left;
+        color:#5996cf;
+         padding:13px;
+   }
+   
+   
+   .loginbigbg
+    {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: -webkit-linear-gradient(#abe6ef, #e7d9c5); /* Safari 5.1 - 6.0 */
+    }
+    .login-zoon
+    {
+        position: absolute;
+        top:25%;
+        left:10%;
+        width: 80%;
+        text-align: center;
+        padding:2%;
+    }
+    .login-zoon img
+    {
+        width: 100px;
+        left: 50%;
+    }
+    .login-input-zoon
+    {
+        width:100%;
+        min-height: 200px;
+        margin-top: 10%;
+   
+    }
+    .login-input-type
+    {
+        width: 100%;
+        padding: 6px;
+        height: 45px;
+        background: #fff;
+        color:#aaa;
+         border-bottom: 1px solid #ddd;
+    }
+    .registeruserlabel
+    {
+        position: absolute;
+        top: 95%;
+        left: 80%;
+    }
+    .login-input-type-error
+    {
+        width: 100%;
+        padding: 6px;
+        height: 45px;
+        background: #fff;
+        color:#aaa;
+         border:  1px solid #cd4646;
+    }
+    .logininput
+    {
+        border: 0;
+        outline:none;
+        width:90%;
+         height: 33px;
+         margin-left: 5px;
+    }

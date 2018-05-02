@@ -1,0 +1,106 @@
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <ul class="nav nav-tabs" id="list">
+                        <li class="active" id="tittleli0">
+                            <a>
+                                按日期查询
+                            </a>
+                        </li>
+                        <li id="tittleli1">
+                            <a>
+                                按月份查询
+                            </a>
+                        </li>
+                        <li id="tittleli2">
+                            <a>
+                                按年份查询
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div id="div0">
+                    <div class="ibox-content col-sm-12" >
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h3>选择年份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="yearlistrun2" onchange="daylistreviewed()">
+                                </select>
+                            </div>
+                            <div class="col-sm-2  ">
+                                <h3>选择月份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="monthlistrun" onchange="daylistreviewed()">
+                                </select>
+                            </div>
+                            <div class="col-sm-2  ">
+                                <h3>开始日期</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="dayliststart" onchange="daylistreviewed2()">
+                                </select>
+                            </div>
+                            <div class="col-sm-2  ">
+                                <h3>结束日期</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="daylistend" onchange="daylistreviewed2()">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="daychart" style="min-width:700px;height:400px"></div>
+                </div>
+
+                <div id="div1">
+                    <div class="ibox-content col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h3>选择年份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="yearlistrun" onchange="monthlistreviewed()">
+                                </select>
+                            </div>
+                            <div class="col-sm-2  ">
+                                <h3>开始月份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="moothliststart" onchange="monthlistreviewed()">
+                                </select>
+                            </div>
+                            <div class="col-sm-2  ">
+                                <h3>结束月份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="moothlistend" onchange="monthlistreviewed()">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="moonchart" style="min-width:700px;height:400px;"></div>
+                </div>
+
+                <div id="div2">
+                    <div class="ibox-content col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h3>开始年份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="yearliststart" onchange="yearlistreviewed()">
+                                </select>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <h3>结束年份</h3>
+                                <select class="input-sm form-control input-s-sm inline" id="yearlistend" onchange="yearlistreviewed()">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="yearchart" style="min-width:700px;height:400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/plugins/highcharts.js"></script>
+<script src="js/old/shopChart.js"></script>
+<script>
+        Chartready();
+</script>

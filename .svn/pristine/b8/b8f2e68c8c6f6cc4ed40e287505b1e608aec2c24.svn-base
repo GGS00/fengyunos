@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>登陆微信版云店</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <link href="css/old/homephp.css?07241418" rel="stylesheet" type="text/css">
+        <link href="http://cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <link href="http://cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body onload="wxloginready()">
+        <div class="loginbigbg">
+            <div class="login-zoon">
+               <img  id="Id_shopIco" src="http://10000dp.com/wyd/resource/logo.png">
+               <div class="login-input-zoon" id="loginZoonID" style="display: none">
+                   <div class="login-input-type" id="usernamedivid">
+                       <i class="icon-user icon-large"></i> 
+                       <input type="text"  class="logininput" id="username" placeholder="输入账号">
+                   </div>
+                   <div class="login-input-type" id="passworddivid">
+                       <i class=" icon-lock icon-large"></i> 
+                       <input type="password"  class="logininput" id="password" placeholder="输入密码">
+                   </div>
+                   <br>
+                  <button type="button" class="btn btn-success" style="width: 100%;outline: none;padding: 10px;" onclick="wxLogin()">登录</button>               
+               </div>
+            </div>
+        </div>
+        <a href="javascript:history.go(-1);" type="button" style="position: absolute;top:0;left:0;width: 15%;outline: none;padding:3px;" ><i class="icon-double-angle-left"></i>返回</a>
+        
+         <div class="alertZoon" id="alertZoon" onclick="coverdivhiden()">
+                <div class="alertZoon-bg"></div>
+                <div class="alertZoon-content">
+                    <div class="alert-text" id="alerttext">
+                        提示语言
+                    </div>
+                </div>
+         </div>
+        
+            <div class="alertZoon" id="dialogZoon" onclick="dialogdivhiden()">
+                <div class="dialog-bg"></div>
+               
+                <div class="alert-dialog-content" style="border-radius: 8px;">
+              
+                    <div class="dialog-body" id="dialogbodyId">
+                        <h4>抱歉</h4>
+                        <span>我们未获取到您的微信编号，请在微信中打开并重试</span>
+                    </div>
+                    <div class="dialog-footer">
+                        <div class="dialog-footer-btn_big" onclick="orderdeleftConfirm()">
+                            好的
+                        </div>
+                        
+                    </div>
+                </div>
+             </div>
+        
+        <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+         <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="js/wx.cloudshop.config.js"></script>
+        <script src="js/md5.js?03071034"></script>
+        <script src="js/wxlogin.js?03071036"></script>
+    </body>
+</html>
+
+

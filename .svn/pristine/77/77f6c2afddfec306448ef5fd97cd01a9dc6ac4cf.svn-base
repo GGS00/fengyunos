@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+    input[type=text]{
+          font-family: 微软雅黑;
+          font-size: 15px;
+          height: 36px;
+          margin-left: 6px;
+          border: none;
+          border-bottom: #3195EB 1px solid;
+          width: 70%;
+          background: #F4F4F4;
+          padding: 5px 5px 0px 50px;
+    }
+
+    .fa-search{
+          color: #77B2EC;
+          position: absolute;
+          top: 26%;
+          left: 16%;
+    }
+
+    #header{
+          position: fixed;
+          top: 0;
+          left: 0;
+    }
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+    <i class="fa  fa-search" onclick="searchMusic()"></i>
+    <input placeholder="输入歌名或者歌手搜索" type="text" class="commentText">
+    <h1 class="mui-title myRebate" onclick="savefile()" style="left:80%;width:17%">完成</h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;width:8%;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;"></span></button>
+</header>
+
+<div class="mui-content" style="padding-top:0">
+  
+  <div class="musicHeader">
+     <audio src="" controls="controls" autoplay="autoplay" class="audioPlay" loop="loop" style="display:none"></audio>
+     <ul class="musicList">
+      
+      <!-- <li class="musicContent" onclick="chooseMusic(11)">
+        <div class="musicImg">
+          <img src="img/muwu.jpg" class="artistImg">
+        </div>
+        <div class="artistInfo">
+          <span class="songName">十年</span>
+          <p class="musictext">陈奕迅</p>
+        </div>
+        <img src="img/check.png" imgIndex = "11" class="checkImg">
+      </li>
+      
+      <li class="musicContent" onclick="chooseMusic(22)">
+        <div class="musicImg">
+          <img src="img/muwu.jpg" class="artistImg">
+        </div>
+        <div class="artistInfo">
+          <span class="songName">十年</span>
+          <p class="musictext">陈奕迅</p>
+        </div>
+        <img src="img/check.png" imgIndex = "22" class="checkImg">
+      </li> -->
+
+    </ul>
+
+     
+   </div>
+
+
+   <div class="musicBody">
+    
+
+     
+   </div>
+
+   <div class="musicFooter">
+
+    
+    
+   </div>
+ 
+    
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+  });
+
+ 
+   function tomain(){
+      window.location.href="edit.html"
+   }
+
+   function searchMusic(){
+      $(".audioPlay").attr("src","");
+      var searchText = $(".commentText").val();
+
+      if(searchText == ""){
+        mui.alert("请输入歌曲名或歌手名");
+      }else{
+
+        /*var musicData = <?php 
+        
+        echo get_search("十年","10");
+        
+        ?>;*/
+        $.ajax({
+           url: "music.php",  
+           type: "POST",
+           data:{text:searchText},
+           //dataType: "json",
+           error: function(){  
+               mui.alert('哎呀~网络好像出小差了');  
+           },  
+           success: function(data,status){//如果调用php成功    
+                showMusicList(unescape(data));//解码，显示汉字
+           }
+       }); 
+      }
+
+   }
+
+   function showMusicList(data){
+
+      $("html,body").animate({scrollTop: 0},function(){
+      
+         $(".musicList").html('');
+         
+         var d = JSON.parse(data).result.songs;
+         for(var i = 0;i < d.length;i++){
+
+          $(".musicList").append("<li class=\"musicContent\" index=\""+i+"\" musicId=\""+d[i].id +"\" onclick=\"chooseMusic(\'"+ d[i].id +"\',\'"+ i +"\')\"><div class=\"musicImg\"><img src=\""+ d[i].artists[0].img1v1Url +"\" class=\"artistImg\"></div><div class=\"artistInfo\"><span class=\"songName\">"+d[i].name+"</span><p class=\"musictext\">"+d[i].artists[0].name+"("+d[i].album.name+")</p></div><img src=\"img/check.png\" index = "+ i +" imgIndex = \'"+ d[i].id +"\' class=\"checkImg\"></li>")
+
+         }
+      
+
+
+      });
+     
+     
+     
+
+   }
+
+   function chooseMusic(id,index){
+      $(".musicList .checkImg").hide().removeAttr("checked");
+      $(".musicList").find('img[index='+ index+']').show().attr("checked","checked");
+
+      $.ajax({
+           url: "music.php",  
+           type: "POST",
+           data:{id:id},
+           //dataType: "json",
+           error: function(){  
+               mui.alert('哎呀~网络好像出小差了'); 
+           },  
+           success: function(data,status){//如果调用php成功    
+                playMusic(unescape(data));//解码，显示汉字
+           }
+       }); 
+
+   }
+
+   function playMusic(data){
+
+      var d = JSON.parse(data).songs;
+      var musicUrl = d[0].mp3Url;
+      console.log(musicUrl);
+     $(".audioPlay").attr("src",musicUrl);
+      /* $.ajax({
+          url:musicUrl,
+          type:"get",
+          dataType:"jsonp",
+          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+          statusCode:{
+            404:function(){
+              mui.alert("因版权限制暂不支持设置");
+              $(".musicList .checkImg").hide().removeAttr("checked");
+              $(".audioPlay").attr("src","");
+            },
+            200:function(){
+              console.log(musicUrl);
+              $(".audioPlay").attr("src",musicUrl);
+            }
+          }
+        });*/
+      
+   }
+
+
+   function savefile(){
+    var musicId = $(".musicList").find(".checkImg[checked=checked]").attr("imgIndex");
+
+     if(musicId){
+
+       window.location.href="edit.html?musicId="+musicId;
+
+     }else{
+
+       mui.alert("请先选择歌曲");
+
+     }
+     
+   }
+
+
+</script>
+</body>
+</html>

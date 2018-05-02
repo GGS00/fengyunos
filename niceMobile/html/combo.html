@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/custom.css?244" type="text/css" />
+    <link rel="stylesheet" href="../aliIcon/iconfont.css" type="text/css" />
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="../js/custom.js?2445"></script>
+</head>
+<body class="combo" onload="comboInit()">
+<h1 class="title">选套餐</h1>
+<div class="item" style="margin-top: 50px">
+    <div >&nbsp;&nbsp;商品金额：<span id="combo-price"></span></div>
+    <div style="text-align: center">含话费：<span id="combo-charge"></span></div>
+</div>
+<div class="item">
+    <div >&nbsp;&nbsp;已选号码</div>
+    <span id="combo-mobile" class="right" style="font-size: 80%;margin-right: 20px"></span><i class="right fa fa-angle-right"></i>
+</div>
+<div class="item">
+    <div >&nbsp;&nbsp;已选套餐</div>
+    <i class="right fa fa-angle-down"></i>
+</div>
+<div id="combo-content">
+</div>
+<div id="combo-detail" class="detail">
+    套餐包含:
+    <br/><span id="combo-detail-content" style="position: relative;top: 10px;"></span>
+</div>
+
+<!--<div class="btn-div">
+    <button id="combo-addBtn" type="button" class="btn btn-warning" onclick="sendOrder()"> 确定下单
+    </button>
+</div>-->
+
+<div class="footer-div">
+        <div class="footer-block-1" style="text-align: center;">
+            <a id="bottomcallboss">
+                <i class="fa fa-commenting-o"></i>
+                <span>店主</span>
+            </a>
+            
+        </div>
+        <div class="footer-block-1" onclick="toBossShop()">
+            <i class="fa fa-home"></i>
+            <span>店铺</span>
+        </div>
+        <div class="footer-block-1" onclick="showStoreBanner()">
+            <i class="fa fa-heart-o"></i>
+            <span>收藏</span>
+        </div>
+        <button class="footer-block-2" data-toggle="modal" id="combo-addBtn" onclick="sendOrder()">
+            <span class="buy_now_btn" >立即购买</span>
+        </button>
+        <button class="footer-block-2" id="bossBuyBtnid" style="display:none" >
+            <span class="buy_now_btn"  >立即备货</span>
+        </button>
+    </div>
+<section class="storesectionclass" id="storesectionid" onclick="missStoreBanner()">
+	<img src="../../source//shoucangbanner.png" width="100%">
+</section>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="margin-top: 35%">
+            <div class="modal-header">
+               <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <h4 class="modal-title" style="text-align: center;" id="myModalLabel">您好，完善您的信息，我们尽快与您联系</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon">姓名</span>
+                    <input type="text" class="form-control" placeholder="怎么称呼？" id="order_name">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">电话</span>
+                    <input type="text" class="form-control" placeholder="您常用的联系方式？" id="order_phone" maxlength="11">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">备注</span>
+                    <input type="text" class="form-control" placeholder="有什么需要留言咨询吗？" id="order_address">
+                </div>
+                <br>
+                <span style="color:red;display: none" id="alerttext_toast"></span>
+                <br>
+                <span>承诺，以上信息我们会严格保密，不会透露您的个人隐私</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="addOrder()">立即下单</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

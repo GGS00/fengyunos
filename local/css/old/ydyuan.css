@@ -1,0 +1,284 @@
+@charset "UTF-8";
+
+/*主体色：#ff8208*/
+* {
+    margin: 0;
+    padding: 0;
+}
+#header {
+            position:absolute;
+            left:0;
+            top:0;
+            z-index:999;
+            width: 100%;
+            height: 43px;
+            overflow: hidden;
+            background: #fdfdfc;
+            font: 12px/40px hiragino sans gb, microsoft yahei, simsun;
+            box-shadow:3px 3px 3px rgba(0,0,0,0.2);
+}
+#top-line {
+            width: 100%;
+            height: 3px;
+            line-height: 0;
+            font-size: 0;
+            overflow: hidden;
+            text-align: center;
+            z-index: 1;
+            background-color: #0fa6ea;
+            background: -webkit-linear-gradient(left, rgba(15,166,234,1) 0, rgba(89,204,24,1) 10%, rgba(15,166,234,1) 60%, rgba(15,166,234,1) 100%);
+            background: -moz-linear-gradient(left, rgba(15,166,234,1) 0, rgba(89,204,24,1) 10%, rgba(15,166,234,1) 60%, rgba(15,166,234,1) 100%);
+            background: -ms-linear-gradient(left, rgba(15,166,234,1) 0, rgba(89,204,24,1) 10%, rgba(15,166,234,1) 60%, rgba(15,166,234,1) 100%);
+            background: linear-gradient(left, rgba(15,166,234,1) 0, rgba(89,204,24,1) 10%, rgba(15,166,234,1) 60%, rgba(15,166,234,1) 100%);
+}
+#header .swiper-slide {
+            padding: 0 20px;
+            border-bottom: 1px solid #ddd;
+            width:auto !important;
+}
+.swiper_active{
+    color:red;
+    border-bottom:1px solid red;
+}
+.cmd_topSlider
+{
+
+    height: 30px;
+    background:#ddd;
+    width: 200%;
+    border-bottom: 1px solid #ddd;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+.bar{
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    left: 0;
+    height: 44px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-bottom: 0;
+    background-color: #ff8208;
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+    box-shadow: 0 0 1px rgba(0,0,0,.85);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.bar-nav {
+    top: 0;
+    -webkit-box-shadow: 0 1px 6px #ccc;
+    box-shadow: 0 1px 6px #ccc;
+}
+
+.segmented-control {
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    display: table;
+    overflow: hidden;
+    width: 80%;
+    margin:auto;
+    top:5px;
+    table-layout: fixed;
+    border: 1px solid #FFF;
+    border-radius: 3px;
+    background-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.control-item {
+    line-height: 32px;
+    display: table-cell;
+    overflow: hidden;
+    -webkit-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #FFF;
+    border-color: #FFF;
+    border-left: 1px solid #FFF;
+    text-decoration:none !important;
+
+}
+.control-item:first-child{
+    border-left: none;
+}
+
+.title_active{
+     color: #d13600;
+     
+}
+
+.test{ 
+    position:fixed; 
+    top:44px; 
+    right:0;
+    width:50px;
+    height:42px;
+    line-height:42px;
+    text-align: center;
+    background-color:#FFF;
+    color:#666666;
+    z-index:1000
+}
+.table-view {
+    position: relative;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+    background-color: #fff;
+
+}
+.table-view-cell {
+    float: left;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    padding-top:3%;
+}
+
+/*.table-view-cell:last-child{
+    margin-bottom: 40px;
+}*/
+.goodsImg{
+    float: left;
+    width: 30%;
+    padding:2% 3%;
+    text-align: center;
+}
+.goodsImg img{
+    width: 100%;
+    border-radius: 4px;
+}
+.goodsInfo{
+    float: left;
+    width: 70%;
+    padding: 3%;
+}
+.goods_text {
+    float:left;
+    width: 100%;
+
+}
+.add_Icon{
+    float: right;
+    width: 25%;
+    color: #ff8208;
+}
+.list-spanlabel
+{
+    float:left;
+    width:80%;
+    color:#999;
+}
+.list-spanico
+{
+    float:right;
+    width:20%;
+    color:#ff8208;
+    text-align: right;
+    
+}
+.list-pricelabel
+{
+    font-size:90%;
+    color:#999;
+    margin-top:2%;
+    float:left;
+    width:auto;
+    
+}
+.list-pricenumber
+{ 
+    font-size:120%;
+    color:#ff8208;
+}
+.ellipsis {
+    font-size: 105%;
+    height:40px;
+    line-height:20px;
+   overflow:hidden;
+    text-overflow:ellipsis;
+/*    white-space:nowrap;*/
+    width:100%;
+}
+
+.areablockitem
+{
+    float:left;
+    width:33%;
+    border-bottom: 1px solid #ddd;
+    border-right:1px solid #ddd;
+    overflow: hidden;
+    text-align: center;
+    padding:3% 0;
+}
+.areablockitem:hover
+{
+    float:left;
+    width:33%;
+    border-bottom: 1px solid #ddd;
+    border-right:1px solid #ddd;
+    overflow: hidden;
+    text-align: center;
+    padding:3% 0;
+    background:#ddd;
+    color:#ff8208;
+}
+.alert-changeprice-box{
+     position: fixed;
+     top: 20%;
+     background:#fff;
+     width:70%;
+     margin-left: 15%;
+     margin-right: 15%;
+     -webkit-animation-delay:0s;
+    -webkit-animation-name:alertbomachive;
+    -webkit-animation-duration:0.3s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode:forwards;
+    /* height: 110px;*/
+}
+
+.pricetitle{
+    font-size: 15px;
+    font-weight: 400;
+    display: table;
+    overflow: hidden;
+    width: 90%;
+    margin:auto;
+    top:5px;
+    table-layout: fixed;
+    border: 1px solid #666666;
+    border-radius: 7px;
+    background-color: transparent;
+    -webkit-touch-callout: none;
+}
+.price-item {
+    line-height: 32px;
+    display: table-cell;
+    overflow: hidden;
+    -webkit-transition: background-color .1s linear;
+    transition: background-color .1s linear;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #666;
+    border-color: #666666;
+    border-left: 1px solid #666;
+    background-color: #FFFFFF;
+}
+.pricetitle .active{
+    color:#FFF;
+    background-color: #666666;
+}
+.areaTitle{
+    font-size: 1.5rem;
+    padding:15px 20px;
+    margin:0px;
+    color:#666666;
+    border-bottom:0.1rem solid #666666;
+}

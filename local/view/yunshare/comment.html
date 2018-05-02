@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>评论</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+    input[type=text]{
+          font-family: 微软雅黑;
+          font-size: 14px;
+          height: 36px;
+          margin-left: 17px;
+          padding: 5px;
+          border: none;
+          border-bottom: #3195EB 1px solid;
+          width: 74%;
+          background: #F4F4F4;
+    }
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate" style="left:78px;width:56%"></h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;"></span></button>
+</header>
+
+<div class="mui-content">
+
+
+   <div class="commentBody">
+    <ul class="commentList">
+      
+      <!-- <li class="commentContent">
+        <div>
+          <span class="commentUser">游客</span> 
+          <span class="commentTime">2016-10-11 16:09:24</span>
+          <p class="comtext">甄选各大热门电商网站同行业优质商品，供用户选购，将线下实体店的货源最大化</p>
+        </div>
+      </li> -->
+  
+
+    </ul>
+
+     
+   </div>
+
+   <div class="commentFooter">
+
+     <input placeholder="写下你的评论.." type="text" class="commentText" >
+     <button class="sendButton" onclick="sendComment()">发送</button>
+    
+   </div>
+ 
+    
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/config.js"></script>
+<script type="text/javascript">
+    mui.init();
+  /*mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });*/
+
+   var contentId;
+   var isshare;
+   var agentId;
+   var isType;
+   var ismine;
+
+   initial();
+
+   function initial(){
+
+    contentId = QueryString("id"); 
+    isshare = QueryString("isshare");
+    agentId = QueryString("agentId");
+    isType = QueryString("isType");
+    ismine = QueryString("ismine");
+
+    commentListShow();
+
+   }
+
+   function sendComment(){
+
+      var commentText = $(".commentText").val();
+      
+      if(commentText == ""){
+
+        mui.alert("请先评论");
+
+      }else{
+
+          $.ajax({
+            type:"post",
+            url: ""+Comm_Config+"meiPian/addMeiPianComment.do",
+            /*url: "json/detail.json",*/
+            data: {"content":commentText,"agentid":agentId,"homepageid":contentId}, 
+            success: function(data){
+
+              $(".commentText").val('');
+
+              commentListShow();
+         
+            }
+          });
+
+      }
+   }
+
+   function commentListShow(){
+
+          $.ajax({
+            type:"post",
+            url: ""+Comm_Config+"meiPian/getMeiPianCommentByAgentIdAndPageId.do",
+            /*url: "json/detail.json",*/
+            data: {"agentid":agentId,"homepageid":contentId}, 
+            success: function(data){
+                
+                  showList(data); 
+            }
+          });
+
+
+   }
+
+   function showList(data){
+    $(".commentList").html('');
+    var d = data.resultValue;
+    $(".myRebate").html(d.length+"条评论");
+    
+    for(var i = 0 ; i < d.length ; i++){
+
+      $(".commentList").append("<li class=\"commentContent\"><div><span class=\"commentUser\">游客</span><span class=\"commentTime\">" + d[i].create_time + "</span><p class=\"comtext\">" + d[i].content + "</p></div></li>");
+
+    }
+
+    
+
+   }
+
+
+   function tomain(){
+
+    if(isshare == 1){
+
+      window.location.href="detail.php?id="+contentId + "&isType=" + isType + "?isshare=1";
+
+    }else{
+
+      if(ismine != null){
+
+        window.location.href="detail.php?id="+contentId + "&isType=" + isType + "&agentId=" +agentId + "&ismine=1";
+
+
+      }else{
+
+        window.location.href="detail.php?id="+contentId + "&isType=" + isType;
+
+
+      }
+      
+
+    }
+
+      
+   }
+
+   
+
+   function QueryString(val){
+      var uri = window.location.search;
+      var re = new RegExp("" +val+ "=([^&?]*)", "ig");
+      return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+   }
+
+</script>
+</body>
+</html>

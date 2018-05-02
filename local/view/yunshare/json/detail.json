@@ -1,0 +1,36 @@
+{
+    "resultValue": {
+        "id": 17,
+        "title": "云店测试",
+        "title_img_url": "img/1.jpg",
+        "music_url": "mp3.url",
+        "edit_type": "店铺",
+        "shop_id": null,
+        "agent_id": null,
+        "create_time": 1476077759000,
+        "homepagelist": [
+            {
+                "id": 11,
+                "img_url": "img/1.jpg",
+                "content": "云店测试云店测试云店测试云店测试",
+                "sort": "0",
+                "homepage_id": 0
+            },
+            {
+                "id": 12,
+                "img_url": "",
+                "content": "云店测试云店",
+                "sort": "1",
+                "homepage_id": 0
+            },
+            {
+                "id": 13,
+                "img_url": "",
+                "content": "云店测试云店测试云店测试云店测试",
+                "sort": "2",
+                "homepage_id": 0
+            }
+        ]
+    },
+    "msg": "查询成功!"
+}

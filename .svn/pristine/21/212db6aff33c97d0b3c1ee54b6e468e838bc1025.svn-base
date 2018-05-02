@@ -1,0 +1,22 @@
+<?php
+if($_GET['action'] == 'downImg'){
+$serverId = $_GET['Glob_server'];
+$accessToken = $_GET['Glob_token'];
+
+/*$accessToken = '公众号 AccessToken';
+$media_id = 'wx.uploadImage 返回的 serverId';*/
+
+// 要存在你服务器哪个位置？
+$targetName = 'http://static.51dh.com.cn/51yd/application/'.date("YmdHis").'.jpg';
+/*$targetName = dirname(__FILE__).date("YmdHis").'.jpg';*/
+echo $targetName;
+$ch = curl_init("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={$accessToken}&media_id={$serverId}");
+$fp = fopen(FCPATH.$targetName, 'wb');
+curl_setopt($ch, CURLOPT_FILE, $fp);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_exec($ch);
+curl_close($ch);
+fclose($fp);
+}
+
+?>

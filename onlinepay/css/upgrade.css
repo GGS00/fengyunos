@@ -1,0 +1,266 @@
+
+body{
+    background: #fafafa;
+    font-family: 幼圆;
+}
+.vip-ico-section
+{
+    float:left;
+    width:100%;
+}
+.vip-ico-block{
+    float: left;
+    width: 25%;
+    text-align: center;
+    padding: 2% 0;
+
+}
+.vip-ico-block img{
+    float: left;
+    width: 80%;
+    display: block;
+    margin-bottom: 2%;
+    margin-left: 10%;
+}
+.vip-ico-block i{
+    float: left;
+    width: 80%;
+    display: block;
+    margin-bottom: 2%;
+    margin-left: 10%;
+    font-size: 200%;
+    color:#f0ad4e;
+}
+.vip-ico-block span{
+    float: left;
+    width: 100%;
+    color:red;
+}
+.morevipright{
+    float: left;
+    width: 100%;
+    background: #f2f2f2;
+    padding:3% 0;
+}
+.cutline{
+    float:left;
+    width:35%;
+    border: 1px solid #ddd;
+    margin-top: 2%;
+}
+.moretext{
+    float:left;
+    width:30%;
+    text-align: center;
+    color:red;
+}
+.morespandiv{
+    float: left;
+    width: 100%;
+    margin-top: 2%;
+    text-align: center;
+}
+.combo-section{
+    float:left;
+    width:100%;
+    margin-top: 5%;
+}
+.combo-tittlediv{
+    float:left;
+    width: 30%;
+    padding:2% 0;
+    background: #f0ad4e;
+    color:#fff;
+    padding-left: 3%;
+}
+.combo-list-contain{
+    float:left;
+    width:100%;
+    border-top: 1px solid #ddd;
+    background:  #fff;
+    margin-top: 3%;
+}
+.combo-list{
+    float:left;
+    width:100%;
+    border-bottom: 1px solid #ddd;
+    padding:4% 0%;
+    background:  #fff;
+}
+.combo-list-text{
+    float:left;
+    width:65%;
+    padding-left: 5%;
+    padding-top: 2%;
+}
+.combo-list-btn{
+    float:left;
+    width:25%;
+    text-align: center;
+    outline: none;
+}
+.combo-list-btn button{
+    float: left;
+    width: 100%;
+}
+.combo-list-i{
+    float:left;
+    width:5%;
+    text-align: center;
+    color:#999;
+    padding-top:2%;
+}
+.combo-list-i-active{
+    float:left;
+    width:5%;
+    text-align: center;
+    color:#5cb85c;
+    padding-top:2%;
+}
+.combo-list-btn i{
+    font-size: 200%;
+    color:#5cb85c;
+}
+.readmespan{
+    float: right;
+    color:#999;
+    padding: 2% 2%;
+}
+
+.combo-pay{
+    float:left;
+    width:100%;
+    display: none;
+}
+.bottom-block{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 2%;
+    border-top: 1px solid #ddd;
+    background: #fff;
+}
+.bottom-clear{
+    float: left;
+    width: 100%;
+    height: 60px;
+}
+
+.payway{
+   float: left;
+   width: 100%;
+   margin-top: 5%;
+}
+.payblock{
+     float: left;
+   width: 50%;
+   text-align: center;
+}
+.payblock img{
+    float: left;
+    width: 30%;
+    margin-left: 35%;
+}
+.payblock span{
+    float: left;
+    width: 100%;
+}
+
+.payorderlist{
+    float:left;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding:2%;
+}
+.payorderlist-img{
+    float:left;
+    width: 20%;
+}
+.payorderlist-img img{
+    width: 90%;
+    margin-left: 5%;
+}
+.payorderlist-text{
+    float:left;
+    width: 75%;
+    margin-left: 5%;
+}
+.order-name{
+    float:left;
+    width: 100%;
+    color:#000;
+    margin-bottom: 2%;
+}
+.order-desc{
+    float:left;
+    width: 100%;
+    color:#999;
+    margin-bottom: 2%;
+}
+.order-pay-success{
+    float:left;
+    width: 100%;
+    color:#5cb85c;
+    font-size: 120%;
+    margin-bottom: 2%;
+}
+
+.shopmsgcontain{
+    width:100%;
+    padding-top: 3%;
+    display: none;
+}
+
+.coverblock{
+    position: fixed;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: #000;
+    opacity:0.5;
+    text-align: center;
+    display: none;
+}
+.coverblock i{
+    position: fixed;
+    color:#fff;
+    font-size: 130%;
+    top:45%;
+    
+}
+.coverblock-error{
+    position: fixed;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: #000;
+    opacity:0.7;
+    text-align: center;
+    display: none;
+}
+.errortips{
+    width:100%;
+    padding-top: 5%;
+    color:red;
+    display: none;
+}
+.toastdiv{
+    position: fixed;
+    width: 100%;
+    bottom: 10%;
+    text-align: center;
+    display: none;
+}
+.toastdivspan{
+    padding: 3%;
+    background: #575757;
+    border-radius: 5px;
+    color:#fff;
+}

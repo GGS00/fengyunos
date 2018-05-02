@@ -1,0 +1,48 @@
+
+    <link  rel="stylesheet" href="css/old/wshop.css?11121454">
+        
+    <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+    <div ng-controller="SearchByNameCtrl as search">
+        <div class="wshop-top"  id="shopHomeTopid" >
+            <div class="top-arealist" onclick="history.go(-1)">
+                <i class="icon-remove icon-large"></i> 
+                <span>取消</span>
+            </div>
+            <div class="search-top">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="search.word" value="{{search.word}}" autofocus="true" autocomplete="true">
+               <span class="input-group-btn">
+                   <button class="btn btn-default" type="button" ng-click="search.searchByKeyWord(search.word)">
+                     搜索
+                  </button>
+               </span>
+            </div><!-- /input-group -->
+        </div>
+        </div>
+    <section class="hotsearchDiv">
+        <div class="hotsearchDiv-tittle">
+            热门搜索
+        </div>
+        <div style="padding: 10px;">
+             <button class="btn btn-default" style="margin: 5px" ng-click="search.handelKeyWords('小米')">小米</button>
+             <button class="btn btn-default" style="margin: 5px" ng-click="search.handelKeyWords('iphone6')">iphone6</button>
+             <button class="btn btn-default" style="margin: 5px" ng-click="search.handelKeyWords('华为p7')">华为p7</button>
+             <button class="btn btn-default" style="margin: 5px" ng-click="search.handelKeyWords('红米')">红米</button>
+             <button class="btn btn-default" style="margin: 5px" ng-click="search.handelKeyWords('小米4')">小米4</button>
+             <button class="btn btn-default" style="margin: 5px" ng-click="search.handelKeyWords('三星')">三星</button>
+             
+        </div>
+        <div class="hotsearchDiv-tittle">
+            搜索历史
+        </div>
+        <div class="localsearchlist" id="heistrylistId">
+        
+            <div ng-repeat="list in search.keywordarry" ng-click="search.handelKeyWords(list)" class="localsearchlist-list"><i class="icon-time icon-large"></i>&nbsp;{{list}}</div>
+
+            <div ng-if="search.keywordarry!=0" style="text-align:center;"><a  ng-click="search.clearhistery()" class="btn btn-default" role="button" >清空搜索记录</a></div>
+        </div>        
+    </section>
+
+    </div>
+

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--
+我的设置
+-->
+<html>
+    <head>
+        <title>我的信息</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <meta name="format-detection" content="telephone=no, email=no" />
+        <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+        <link href="css/indexphp.css?09181736" rel="stylesheet">
+        <link href="css/ydset.css?11051903" rel="stylesheet"/>
+
+
+    </head>
+    <body style="background: #efeff4">
+        <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+
+                <div class="item active">
+
+                    <div class="infoblockcontain" style="margin-top:3%;">
+                        <div class="infoblockcontain-list" >
+                            <div class="infoblock-list-tittle" style="margin-top: 4%;">
+                                头像
+                            </div>
+                            <div class="infoblock-list-value">
+                                <img src="source/yunlogo.png" id="agenticoid">
+                            </div>
+                            <div class="infoblock-list-more" style="margin-top: 4%;">
+                              
+                            </div>
+                        </div>
+
+                        <div class="infoblockcontain-list" onclick="editShopMsg(2)">
+                            <div class="infoblock-list-tittle">
+                                店铺名
+                            </div>
+                            <div class="infoblock-list-value" id="agentshopnameid">
+                                加载中...
+                            </div>
+                            <div class="infoblock-list-more">
+                                <i class=" icon-angle-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="infoblockcontain-list" onclick="editShopMsg(3)">
+                            <div class="infoblock-list-tittle">
+                                店主姓名
+                            </div>
+                            <div class="infoblock-list-value"  id="agentnameid">
+                                加载中...
+                            </div>
+                            <div class="infoblock-list-more">
+                                <i class=" icon-angle-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="infoblockcontain-list" onclick="editShopMsg(4)">
+                            <div class="infoblock-list-tittle">
+                                手机号
+                            </div>
+                            <div class="infoblock-list-value" id="agenttelid">
+                                加载中...
+                            </div>
+                            <div class="infoblock-list-more">
+                                <i class=" icon-angle-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="infoblockcontain-list" onclick="toshopercode()">
+                            <div class="infoblock-list-tittle">
+                                店铺二维码
+                            </div>
+                            <div class="infoblock-list-value">
+                                <i class=" icon-qrcode"></i>
+                            </div>
+                            <div class="infoblock-list-more">
+                                <i class=" icon-angle-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="infoblockcontain" style="margin-top:3%;" >
+                        <div class="infoblockcontain-list" onclick="editShopMsg(5)">
+                            <div class="infoblock-list-tittle">
+                                QQ
+                            </div>
+                            <div class="infoblock-list-value" id="agentqqid">
+                                加载中...
+                            </div>
+                            <div class="infoblock-list-more">
+                                <i class=" icon-angle-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="infoblockcontain-list" onclick="editShopMsg(6)">
+                            <div class="infoblock-list-tittle">
+                                微信
+                            </div>
+                            <div class="infoblock-list-value" id="agentwechatid">
+                                加载中...
+                            </div>
+                            <div class="infoblock-list-more">
+                                <i class=" icon-angle-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!--<div class="infoblockcontain" style="margin-top:3%;" >-->
+                        <!--<div class="infoblockcontain-list" onclick="editShopMsg(7)">-->
+                            <!--<div class="infoblock-list-tittle">-->
+                                <!--修改密码-->
+                            <!--</div>-->
+                            <!--<div class="infoblock-list-value" id="agentpwdid">-->
+                                   <!--<i class="icon-unlock"></i>-->
+                            <!--</div>-->
+                            <!--<div class="infoblock-list-more">-->
+                                <!--<i class=" icon-angle-right"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!---->
+                    <!--</div>-->
+                 </div>
+
+                <div class="item" style="height: 400px;">
+                    <div class="infoblockcontain" style="margin-top:3%;padding-bottom:2%;">
+    
+                            <input type="text" style="float:left;border:0px;outline:none;width:90%" id="publicinputid" onfocus="inputFocus()">
+                            <input type="password" style="float:left;border:0px;outline:none;width:90%;display:none" id="publicpwdid" onfocus="inputFocus()">
+                            <i class=" icon-remove-sign" style="width:10%;display:none" onclick="inputclear()" id="icoclearid"></i>
+                    </div> 
+                    
+                    
+                    <div class="container" >
+                        <button type="button" class="btn btn-default" style="width:30%;margin-left: 10%;margin-top: 5%" onclick="canceledit()">取消</button>
+                        <button type="button" class="btn btn-danger" style="width:30%;margin-left: 10%;margin-top: 5%" onclick="updateagentmsg()">保存</button>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+          <!--功能模块结束 -->
+        
+        <div class="blockclear"></div>
+
+        <div class="block-footer">
+            <div class="public-block-4" onclick="funpoint(9)">
+                <div class="footer-nomal">
+                    <i class="icon-th"></i>
+                    <span>首页</span>
+                </div>
+            </div>
+            
+            <div class="public-block-4" onclick="funpoint(6)">
+                <div class="footer-nomal">
+                    <i class=" icon-briefcase"></i>
+                    <span>市场</span>
+                </div>
+            </div>
+            
+            <div class="public-block-4" onclick="funpoint(8)">
+                <div class="footer-nomal">
+                    <i class="icon-money"></i>
+                    <span>账簿</span>
+                </div>
+            </div>
+            
+            <div class="public-block-4" onclick="funpoint(5)">
+                <div class="footer-achive">
+                    <i class=" icon-heart-empty"></i>
+                    <span>我的</span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script language="javascript" src="./commonJs/config.js?12111048"></script>
+
+        <script src="js/setting.js?11051905"></script>
+        <script src="./js/wxindex.js?11161712"></script>
+        <script src="js/md5.js?11051903"></script>
+        <script>
+            loadagentinfo();
+            $('.carousel').carousel({
+                interval: false
+            });
+        </script>
+    </body>
+</html>

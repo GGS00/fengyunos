@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>内容</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+
+    .mui-bar{
+          padding-left:0;
+    }
+
+    .imgTips{
+          text-align: center;
+          margin-top: 32%;
+    }
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+
+  <header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate" style="left:78px;color:#4D4D4D;width:56%"></h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;padding-left: 10px;"></span></button>
+    <p class="mui-progressbar mui-progressbar-infinite"></p>
+
+</header>
+
+
+
+<div class="mui-content">
+ 
+
+
+  <div class="contentBody" style="min-height: 570px;margin-top: 6px;">
+
+   <!--  <div class="culling" onclick="toDetail()">
+     <img src="img/1.jpg">
+     <div class="cullingTitle">
+       <span class="activity">【店铺】51云店夏日大酬宾</span>
+       <div class="classify">
+         <div class="comment">    
+          <i class="fa fa-eye"></i><span class="content">2500</span>
+          <i class="fa fa-thumbs-o-up"></i><span class="content">507</span>
+          <i class="fa fa-comment-o"></i><span class="content">232</span>
+         </div>
+         <div class="shopact">
+           <span class="activityType">店铺活动</span>
+         </div>
+       </div>
+      </div>
+   </div>-->
+
+  </div>
+
+
+    
+   
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/config.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+
+  initial();
+
+  function initial(){
+
+    var type = QueryString("type");
+    if(type == 1){
+      listShow("店铺");
+      $(".myRebate").html("店铺");
+    } 
+    if(type == 2){
+      
+      listShow("商品");
+      $(".myRebate").html("商品");
+
+    }
+    if(type == 3){
+      
+      listShow("活动");
+      $(".myRebate").html("活动");
+
+    }
+
+  }
+
+  function listShow(type){
+      $(".contentBody").html('');
+
+      $.ajax({
+              type:"post",
+              /*url: ""+Comm_Config+"meiPian/getHomePageByEditType.do",*/
+              url: "json/index.json", 
+              data: {"editType":type,"agentid":"123"}, 
+              success: function(data){
+                $(".contentHeader").show();
+
+                var d = data.resultValue;
+                if(d == "" || d == null){
+
+                  $(".contentBody").append("<div class=\"imgTips\"><img src=\"img/tips.png\"></div>")
+
+                  
+                }
+                
+                for(var i = 0 ; i < d.length ; i++){
+
+                  $(".contentBody").append("<div class=\"culling\" onclick=\"toDetail("+d[i].id+")\"><img src=\""+ d[i].title_img_url +"\"><div class=\"cullingTitle\"><span class=\"activity\">【"+ d[i].edit_type +"】"+ d[i].title +"</span><div class=\"classify\"><div class=\"comment\"><i class=\"fa fa-eye\"></i><span class=\"content\">2500</span><i class=\"fa fa-thumbs-o-up\" style=\"margin-left: 5px;\"></i><span class=\"content\">507</span><i class=\"fa fa-comment-o\" style=\"margin-left: 5px;\"></i><span class=\"content\">232</span></div><div class=\"shopact\"><span class=\"activityType\">"+  d[i].edit_type +"活动</span></div></div></div></div>");
+
+                }
+
+                $(".mui-progressbar-infinite").hide();
+                 
+              }
+    });
+  }
+  
+
+  function toDetail(id){
+    window.location.href="detail.php?id="+id;
+  }
+
+  function tomain(){
+    
+    window.location.href="index.html";
+
+  }
+
+
+  function QueryString(val){
+      var uri = window.location.search;
+      var re = new RegExp("" +val+ "=([^&?]*)", "ig");
+      return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+  }
+
+
+</script>
+</body>
+</html>

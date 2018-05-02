@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>返利历史记录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="splitAccount/css/mui.min.css">
+    <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/rebate.css">    
+    <style>
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate"  style="left:90px;width:56%">历史记录</h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain"></span>返回</button>
+</header>
+
+<div class="mui-content">
+    <div class="statisticsHeader">
+        <span class="statistics">返利历史记录</span>
+    </div>
+
+
+     <div id="scroll" class="mui-scroll-wrapper" style="position: absolute;top:90px;bottom:52px;">
+       <div class="mui-scroll">
+               <ul class="mui-table-view" style="background-color: #EFEFF4;font-size: 15px;color:#9C9C9C;font-family:微软雅黑;font-weight:bold;">      
+                   <!-- <li class="mui-table-view-cell" onclick="hrefrebateDetail()">
+                       <div style='float:left;width:60%;word-wrap: break-word;padding: 0 14px;margin-top: 7px;'>2016-08 月份<span class="" style="color: #1E1E1E;font-size: 18px;font-weight: normal;"></spam></div>
+                                    
+                       <div style='float:left;width:40%;word-wrap: break-word;padding: 0 4px;margin-top: 7px;'>返利合计: ￥<span style="color: #FF6600;font-size: 18px;font-weight: normal;">960</span></div>
+                   </li> -->
+            
+                  
+               </ul> 
+           </div>
+   </div>
+</div>
+
+<div class="block-footer">
+        <div class="public-block-4" onclick="funpoint(9)">
+            <div class="footer-achive">
+                <i class="icon-th"></i>
+                <span>首页</span>
+            </div>
+        </div>
+        
+        <div class="public-block-4" onclick="funpoint(6)">
+            <div class="footer-nomal">
+                <i class=" icon-briefcase"></i>
+                <span>市场</span>
+            </div>
+        </div>
+        
+        <div class="public-block-4" onclick="funpoint(8)">
+            <div class="footer-nomal">
+                <i class="icon-money"></i>
+                <span>账簿</span>
+            </div>
+        </div>
+        
+        <div class="public-block-4" onclick="funpoint(5)">
+            <div class="footer-nomal">
+                <i class=" icon-heart-empty"></i>
+                <span>我的</span>
+            </div>
+        </div>
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="commonJs/config.js?010716064"></script>
+<script src="splitAccount/js/mui.min.js"></script>
+<script src="./js/wxindex.js?11161713"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+  var Glob_aid;
+  var GLOB_localStorage = window.localStorage;
+  Glob_aid = GLOB_localStorage["sessionAid"];
+
+  getRebate();
+  function getRebate(){
+
+      $.ajax({
+          type: "post",
+         /* url:'json/historyRebate.json',*/
+          url: "" + Comm_Config + "/pc/getRebateRecordByAgent.do",
+          data: {
+              agent_id:Glob_aid
+          },
+          success: function(data) {
+            var d =   (data);      
+              for(var p in d.resultValue){
+                var month = p.replace(/[\u4E00-\u9FA5]+/g,""); 
+                 $('.mui-table-view').append('<li class=\"mui-table-view-cell\" onclick=\"hrefrebateDetail('+month+')\"><div style=\'float:left;width:53%;word-wrap: break-word;padding: 0 14px;margin-top: 7px;\'>'+p+'</div><div style=\'float:left;width:47%;word-wrap: break-word;padding: 0 4px;margin-top: 7px;\'>返利合计: ￥<span style=\"color: #FF6600;font-size: 18px;font-weight: normal;\">'+ d.resultValue[p] +'</span></div></li>')
+                    
+              }                         
+          }
+      })
+  }
+
+  function tomain(){
+   window.location.href="rebate.html";
+  }
+  function hrefrebateDetail(month){
+   window.location.href="rebateDetail.html?month="+ month;
+  }
+</script>
+</body>
+</html>

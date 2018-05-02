@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+
+    .culling div :last-child{
+          margin-bottom: 76px;
+    }
+
+    .mui-bar{
+          padding-left:0;
+    }
+
+    .imgTips{
+          text-align: center;
+          margin-top: 44%;
+          margin-left: 10%;
+    }
+
+
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title myRebate" style="left:23%;width:56%">推荐</h1>
+    <p class="mui-progressbar mui-progressbar-infinite"></p>
+</header>
+
+<div class="mui-content">
+  
+  <div class="contentHeader" style="display:none">
+    <div class="recommend" style="margin-left: 6%;" onclick="toActList(1)">
+      <img src="img/muwu.jpg">
+      <div class="recommendTitle">
+        <span>店铺</span>
+      </div>
+    </div>
+    <div class="recommend" onclick="toActList(2)">
+      <img src="img/11.jpg">
+      <div class="recommendTitle">
+        <span>商品</span>
+      </div>
+    </div>
+    <div class="recommend" onclick="toActList(3)">
+      <img src="img/22.jpg">
+      <div class="recommendTitle">
+        <span>活动</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="contentBody" >
+
+   <!--  <div class="culling" onclick="toDetail()">
+     <img src="img/1.jpg">
+     <div class="cullingTitle">
+       <span class="activity">【店铺】51云店夏日大酬宾</span>
+       <div class="classify">
+         <div class="comment">    
+          <i class="fa fa-eye"></i><span class="content">2500</span>
+          <i class="fa fa-thumbs-o-up"></i><span class="content">507</span>
+          <i class="fa fa-comment-o"></i><span class="content">232</span>
+         </div>
+         <div class="shopact">
+           <span class="activityType">店铺活动</span>
+         </div>
+       </div>
+      </div>
+   </div>-->
+
+  </div>
+
+  <div class="contentFooter">
+    <div class="footerMenu">
+      <div class="discover">
+        <i class="fa fa-compass"></i>
+        <p>发现</p>
+      </div>
+    </div>
+    <div class="footerMenu">
+      <img src="img/add.png" style="width: 44px;eight: 44px;margin-top: 2px;" onclick="getInfo()">
+    </div>
+    <div class="footerMenu">
+      <div class="mine">
+        <i class="fa fa-user"></i>
+        <p>我的</p>
+      </div>
+    </div>
+
+  </div>
+    
+   
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/config.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+   wx.config({
+      appId: '<?php echo $signPackage["appId"]; ?>',
+      timestamp: '<?php echo $signPackage["timestamp"]; ?>',
+      nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+      signature: '<?php echo $signPackage["signature"]; ?>',
+      jsApiList: [
+          // 所有要调用的 API 都要加到这个列表中
+          'getLocation',
+          'chooseImage',
+          'uploadImage',
+          'downloadImage',
+          'hideAllNonBaseMenuItem'
+      ]
+  });
+
+
+initial();
+
+function initial(){
+
+  contentShow();
+
+}
+
+function contentShow(){
+
+    $(".contentBody").html('');
+
+    $.ajax({
+              type:"post",
+              /*url: ""+Comm_Config+"meiPian/getAllHomePageByAgentId.do",*/
+              url: "json/index.json",
+              data: {"agentid":"123"},
+              success: function(data){
+                $(".contentHeader").show();
+                var d = data.resultValue;
+
+                if(d == "" || d == null){
+
+                  $(".contentBody").append("<div class=\"imgTips\"><img src=\"img/noContent.png\" style=\"width: 69%;\"></div>")
+
+                  
+                }
+                
+                for(var i = 0 ; i < d.length ; i++){
+                  
+                  $(".contentBody").append("<div class=\"culling\" onclick=\"toDetail("+d[i].id+")\"><img src=\""+ d[i].title_img_url +"\"><div class=\"cullingTitle\"><span class=\"activity\">【"+ d[i].edit_type +"】"+ d[i].title +"</span><div class=\"classify\"><div class=\"comment\"><i class=\"fa fa-eye\"></i><span class=\"content\">2500</span><i class=\"fa fa-thumbs-o-up\" style=\"margin-left: 5px;\"></i><span class=\"content\">507</span><i class=\"fa fa-comment-o\" style=\"margin-left: 5px;\"></i><span class=\"content\">232</span></div><div class=\"shopact\"><span class=\"activityType\">"+  d[i].edit_type +"活动</span></div></div></div></div>");
+
+                }
+
+                $(".mui-progressbar-infinite").hide();
+                 
+              }
+    });
+
+  }
+
+  var images = { 
+                  localId: [], 
+                  serverId: [] 
+             };
+  var imgarr = [];
+
+  function getInfo(){
+
+     window.location.href="edit.php";
+
+    wx.chooseImage({
+                  success: function (res) {
+                   /*var localIds = res.localIds;*/
+                   images.localId = res.localIds;
+                   syncUpload();
+                   
+                  }
+          });
+
+    
+    
+  }
+
+  var syncUpload = function() {
+                  length = images.localId.length;
+                  if(length > 1){
+
+                    mui.alert("每次只允许上传一张图片");
+
+                  }else{
+
+                    function upload() {
+                      wx.uploadImage({
+                        localId: images.localId[0],
+                        success: function(res) {
+                          downImg(res.serverId);
+                        }
+                      });
+                    }
+                    upload();
+                  }
+                  
+                 };
+
+    var downImg = function(serverId){
+             Glob_token = ("<?php echo $access_token ?>");
+             Glob_server = serverId;
+              $.ajax({
+                  url: "" + Comm_Config + "wx/wxUploadFile.do",
+                  type:'POST',
+                  data:{"mediaId":Glob_server,"accessToken":Glob_token,"dir":'partner_pay'},
+                  success: function(data){
+                         var imgsrc = data.path;   
+
+                         imgarr.push(imgsrc);
+                         imgshow(imgarr);
+                         
+                  }
+              });
+              
+          };
+
+    function imgshow(data){
+
+              console.log(data);           
+             /*$(".editPlace").append("<div class=\"editVersion\"><i class=\"fa fa-minus-square-o deletePic\" onclick=\"deletePic(this)\"></i><img class=\"thumbnail\" src=\"img/1.jpg\"><textarea  class=\"editText\" placeholder=\"点击添加文字\"></textarea><i class=\"fa fa-angle-up moveup\"></i><i class=\"fa fa-angle-down movedown\"></i></div>"); 
+             changeUpdown();
+             operate();
+            }*/
+
+           /* window.location.href="edit.php";*/
+                     
+    }
+
+
+  function toDetail(id){
+    window.location.href="detail.php?id=" + id;
+  }
+
+  function toActList(type){
+
+    switch (type)
+        {
+          case 1: //店铺内容
+            
+            window.location.href="activityList.html?type=1";
+             
+            break;
+
+          case 2://商品内容
+            
+            window.location.href="activityList.html?type=2";
+            
+            break;
+
+          case 3://活动内容
+          
+           window.location.href="activityList.html?type=3";
+           
+           break;
+       
+        }
+
+  }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+@charset "UTF-8";
+
+/*主体色：#ff8208*/
+
+ #owl-demo .item{
+text-align: center;
+}
+#owl-demo .item img{
+
+  width: 100%;
+  height: auto;
+}
+body
+{
+    font-family: 微软雅黑;
+}
+a:link{
+text-decoration:none;
+}
+a:visited{
+text-decoration:none;
+}
+a:hover{
+text-decoration:none;
+}
+a:active{
+text-decoration:none;
+}
+.public-block
+{
+    float:left;
+    width:100%;
+    text-align: center;
+    padding:18px;
+}
+.half-block
+{
+    float:left;
+    width:50%;
+}
+.catepageblock
+{
+    float:left;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 5px;
+}
+.span-header
+{
+    font-size: 230%;
+    display: block;
+  
+}
+.span-timiheader
+{
+    font-size: 150%;
+    display: block;
+}
+.span-tittle
+{
+    font-size: 130%;
+    display: block;
+}
+.span-small
+{
+    font-size: 80%;
+    color:#bbb;
+    text-align: center;
+}
+.normal-span-right
+{
+    display: block;
+    float: right;
+    width:100%;
+    text-align: right;
+    font-size: 50%;
+    color:#bbb;
+}
+.public-block-2
+{
+    float:left;
+    width:50%;
+    padding-bottom: 10px;
+    
+}
+.public-block-3
+{
+    float:left;
+    width:33.333%;
+}
+.public-block-3 i
+{
+    font-size: 150%;
+    color:#ff8208;
+}
+/*.public-block-3 span
+{
+    font-size: 110%;
+    color:#aaa;
+}*/
+.public-block-3 i,span
+{
+    display:block;
+}
+.public-block-4
+{
+    float:left;
+    width:33.3%;
+    text-align: center;
+   
+}
+.public-block-4 i
+{
+    display: block;
+    font-size:150%;
+}
+.public-block-4 span
+{
+    display: block;
+    font-size:90%;
+}
+.addgsblock
+{
+    float:left;
+    width:100%;
+    background:#fafafa;
+    min-height: 60px;
+     border-top: 1px solid #ddd;
+     text-align: center;
+     font-size: 100%;
+     padding-top: 20px;
+}
+.sliderblock
+{
+     float:left;
+    width:100%;
+    margin-top: 1px;
+    background:#fafafa;
+    min-height: 100px;
+     border-top: 1px solid #ccc;
+     padding:10px;
+     background:#fff;
+}
+
+.gncateblock
+{
+    width:100%;
+    float:left;
+    background:#fff;
+}
+
+.cateblock
+{
+    float:left;
+    width:100%;
+   padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+.catblock-left
+{
+    float:left;
+    width:30%;
+    color:#ff8208;
+    font-size: 200%;
+    padding:10px;
+    text-align: center;
+
+}
+.catblock-right
+{
+    float:left;
+    padding:5px;
+    width:70%;
+    text-align: left;
+    height:68px;
+    overflow: hidden;
+    padding:10px
+}
+.right-tittle
+{
+    font-size:110%;
+    display:block;
+}
+.right-content
+{
+    color:#bbb;
+    font-size:80%;
+}
+.section1
+{
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.section1 img
+{
+    width:60%;
+    margin-left: 20%;
+    display:block;
+    margin-bottom: 10px;
+}
+.section1 span
+{
+    font-size: 100%;
+    color:#aaa;
+}
+.blockclear
+{
+    float:left;
+    width: 100%;
+    height: 50px;
+}
+.block-footer
+{
+    position: fixed;
+    width:100%;
+    left:0;
+    bottom:0;
+/*    height:50px;*/
+    border-top: 1px solid #ddd;
+    background:#f8f8f8;
+    padding:5px;
+}
+.footer-nomal
+{
+    color:#a5a5a5;
+}
+.footer-achive
+{
+    color:#00aaee;
+}
+.footer-achive i
+{
+    display: block;
+}
+.alert-contailer
+{
+    position: fixed;
+    width: 100%;
+    height:100%;
+    top:0;
+    left:0;
+    display:none;
+}
+.alert-contailer-bg
+{
+    position: fixed;
+    width: 100%;
+    height:100%;
+    top:0;
+    left:0;
+    filter:alpha(opacity=30); 
+    -moz-opacity:0.3; 
+    opacity:0.3;
+    background: #000;   
+}
+.alert-lodingspan
+{
+    position: fixed;
+    top:48%;
+    left:48%;
+    color:#fff;
+}
+.alert-container-block
+{
+     position: fixed;
+     width:100%;
+     left:0;
+     bottom: 0;
+     background:#fff;
+     border-top-right-radius: 4px;
+     border-top-left-radius: 4px;
+     padding-top:10px;
+     height:0;
+    /* height: 110px;*/
+}
+.alert-container-block-achive
+{
+     position: fixed;
+     left:0;
+     bottom: 0;
+     background:#fff;
+     height:0;
+     width:100%;
+     -webkit-animation-delay:0s;
+    -webkit-animation-name:alertbomachive;
+    -webkit-animation-duration:0.3s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode:forwards;
+    /* height: 110px;*/
+}
+@-webkit-keyframes alertbomachive /* Safari and Chrome */
+{
+
+100% {height: 110px;opacity:1;border-top-right-radius: 4px;border-top-left-radius: 4px;padding-top:10px;}
+}
+
+.alert-contailer-text
+{
+    float:left;
+    width:100%;
+    text-align: center;
+    padding:8px;
+
+}
+
+.callteldiv
+{
+    float:left;
+    width:80%;
+    margin-left: 10%;
+    margin-top:30%;
+    text-align: center;
+    border-radius: 6px;
+    background:#fff;
+    z-index:9999;
+}
+.callteldiv-msg
+{
+     float:left;
+    width:100%;
+    border-bottom: 1px solid #ddd;
+    padding:9% 2%;
+    font-size:130%;
+    font-weight: bold; 
+    color:#ff8208;
+    
+}
+.callteldiv-btn
+{
+     float:left;
+    width:100%;
+}
+.callteldiv-btn-block
+{
+     float:left;
+    width:50%;
+    padding:5% 0;
+    color:#438eff;
+}
+
+.public-block-alert
+{
+    width: 100%;
+      float:left;
+      padding:10px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+.timelable
+{
+    float:left;
+    width:auto;
+    margin-left:40%;
+    background:#999;
+    color:#fff;
+    border-radius: 4px;
+    font-size:60%;
+    padding:1% 2%;
+    margin-top:5%;
+    margin-bottom:5%;
+}
+.emptyclear{
+        float:left;
+    width:auto;
+    margin-left:40%;
+    color:#fff;
+    border-radius: 4px;
+    font-size:60%;
+    padding:1% 2%;
+    margin-top:5%;
+    margin-bottom:5%;
+}
+.infoblock
+{
+    float:left;
+    width:96%;
+    margin-left:2%;
+    border:1px solid #999;
+    padding:2% 3%;
+    background:#fff;
+    border-radius: 4px;
+}
+.infoblock-tittle
+{
+    margin-bottom:2%;
+}
+.infoblock-time
+{
+    color:#999;
+    font-size:80%;
+}
+.infoblock-img
+{
+    width:100%;
+     border-radius: 2px;
+     margin-top:2%;
+     margin-bottom:2%;
+}
+.infoblock-p
+{
+    float:left;
+    width:100%;
+    height:80px;
+    line-height:20px;
+    color:#555;
+    font-size:90%;
+    overflow:hidden;
+}
+.baseblock
+{
+    float:left;
+    width:100%;
+}
+.nonecenterblock
+{
+      float:left;
+    width:100%;
+    padding:2% 3%;
+}
+.paddinglistblock
+{
+     float:left;
+    width:100%;
+    padding:2% 3%;
+}

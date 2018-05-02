@@ -1,0 +1,41 @@
+{
+    "resultValue": [
+        {
+            "id": 8,
+            "content": "呜呜呜",
+            "agent_id": 123,
+            "create_time": 1476173364000
+        },
+        {
+            "id": 7,
+            "content": "1",
+            "agent_id": 123,
+            "create_time": 1476172221000
+        },
+        {
+            "id": 6,
+            "content": "1",
+            "agent_id": 123,
+            "create_time": 1476172132000
+        },
+        {
+            "id": 5,
+            "content": "11",
+            "agent_id": 123,
+            "create_time": 1476172115000
+        },
+        {
+            "id": 4,
+            "content": "11111111111",
+            "agent_id": 123,
+            "create_time": 1476172107000
+        },
+        {
+            "id": 3,
+            "content": "11111111111",
+            "agent_id": 123,
+            "create_time": 1476172102000
+        }
+    ],
+    "msg": "查询成功!"
+}

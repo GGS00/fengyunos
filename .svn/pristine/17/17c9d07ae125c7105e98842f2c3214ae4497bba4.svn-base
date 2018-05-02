@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登入</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+
+    body{
+      font-family: "微软雅黑";
+    }
+
+    .mui-content{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: url(img/fengjino.png);
+          margin:0px; padding:0px;
+          background-size:cover; 
+          /* background: -webkit-linear-gradient(#397178, #E7E4E0); */
+    }
+
+    #loginZoonID{
+          position: absolute;
+          top: 16%;
+          left: 10%;
+          width: 80%;
+          text-align: center;
+          padding: 2%;
+          opacity: 0.7;
+    }
+
+    #Id_shopIco{
+          width: 143px;
+          border: 0;
+          margin-bottom: 30%;
+    }
+
+    .login-input-type{
+          width: 100%;
+          padding: 6px;
+          height: 49px;
+          background: #0B0B0B;
+          color: #fff;
+          opacity: 1;
+          padding-top: 8px;
+          padding-left: 14px;
+          margin-bottom: 14px;
+          border-radius: 6px;
+    }
+
+    input[type=text],input[type=password]{
+          border: 0;
+          outline: none;
+          width: 90%;
+          height: 33px;
+          margin-left: 5px;
+          background: #0B0B0B;
+          font-family: "微软雅黑";
+          font-size: 15px;
+    }
+
+    .btn-success{
+          color: #fff;
+          opacity: 1;
+          background-color: #41AE0F;
+          border-color: #41AE0F;
+          font-weight: 600;
+          font-size: 15px;
+          letter-spacing: 13px;
+    }
+
+    .shade{
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          background: #000;
+          opacity: 0.5;
+    }
+
+    input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+        background-color: #0B0B0B !important;
+        background-image: none;
+        color: rgb(0, 0, 0);
+    }
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+
+
+  <div class="mui-content">
+       <div class="shade">
+          
+
+       </div>
+
+       <div class="login-input-zoon" id="loginZoonID" >
+        <img id="Id_shopIco" src="http://10000dp.com/wyd/resource/logo.png">
+             <div class="login-input-type" id="usernamedivid">
+                 <i class="fa fa-user"></i> 
+                 <input type="text"  class="logininput" id="username" placeholder="输入账号">
+             </div>
+             <div class="login-input-type" id="passworddivid">
+                 <i class="fa fa-lock"></i> 
+                 <input type="password"  class="logininput" id="password" placeholder="输入密码">
+             </div>
+             <br>
+            <button type="button" class="btn btn-success" style="width: 100%;outline: none;padding: 10px;" onclick="wxLogin()">登录</button>               
+         </div>  
+  </div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+  function wxLogin(){
+    window.location.href="index.html";
+  }
+
+
+
+
+</script>
+</body>
+</html>

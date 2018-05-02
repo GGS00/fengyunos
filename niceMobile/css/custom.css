@@ -1,0 +1,370 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	line-height: normal;
+	width: 100%;
+	height: 100%;
+}
+
+h1 {
+	font-weight: 400;
+}
+
+h1.title {
+	position: fixed;
+	top: 0px;
+	z-index: 999;
+	width: 100%;
+	height: 50px;
+	background-color: #eaeaea;
+	line-height: 2.5;
+	text-align: center;
+	border-bottom: solid 1px #cdcdcd;
+	margin: 0px;
+	padding: 0px;
+	font-size: 140%;
+}
+
+.small-title {
+	width: 100%;
+	height: 48px;
+	background-color: #f7f6f6;
+	text-align: left;
+	line-height: 2.8;
+	font-size: 113%;
+	padding-left: 10px;
+	border-bottom: solid 1px #cdcdcd;
+}
+
+.sort-div {
+	position: fixed;
+	top: 50px;
+	z-index: 999;
+	background-color: #f6f5f5;
+	width: 100%;
+	height: 40px;
+	border-bottom: solid 1px #cdcdcd;
+}
+
+.sort-div .item {
+	float: left;
+	width: 33%;
+	height: 100%;
+	text-align: center;
+	line-height: 2.5;
+}
+
+.right-border {
+	border-right: solid 1px #cdcdcd;
+}
+
+.sort-div .item .icon-up {
+	position: relative;
+	top: -6px;
+	font-size: 18px;
+}
+
+.sort-div .item .icon-down {
+	position: absolute;
+	margin-top: 15px;
+	margin-left: -11.6px;
+	font-size: 18px;
+}
+
+a:hover,
+a:link,
+a:visited,
+a:active {
+	color: black
+}
+
+.item .icon-normal {
+	color: #c8c4c1;
+}
+
+.item .icon-activity {
+	color: #fea275;
+}
+
+.mobile-item {
+	height: 77px;
+	float: left;
+	width: 50%;
+}
+
+.operator {
+	background-color: #86b328;
+	height: 100%;
+	float: left;
+	width: 27px;
+	line-height: 2;
+	text-align: center;
+	color: white;
+}
+
+.operator >p {
+	margin-top: 7px;
+}
+
+.mobile-content {
+	width: 100%;
+	height: 100%;
+	border-bottom: solid 1px #cdcdcd;
+}
+
+.mobile-content .mobile {
+	width: 100%;
+	height: 50%;
+	font-size: 130%;
+	line-height: 2.5;
+	text-align: center;
+}
+
+.mobile-content .price-div {
+	height: 50%;
+	font-size: 60%;
+	line-height: 3;
+}
+
+.price-left {
+	position: absolute;
+	margin-right: 5px;
+	right: 50%;
+}
+
+.price-right {
+	position: absolute;
+	margin-right: 5px;
+	right: 0px;
+}
+
+.worth {
+	margin-left: 5px;
+}
+
+.operator-div {
+	width: 100%;
+	height: 57px;
+	border-bottom: solid 1px #cdcdcd;
+}
+
+.filtrate-content >div.title {
+	height: 100%;
+	float: left;
+	width: 30px;
+	text-align: center;
+	color: white;
+	font-size: 94%;
+	background-color: #fea275;
+}
+
+.filtrate-content >div.content {
+	height: 100%;
+	width: 100%;
+}
+
+.radio_sm {
+	width: 25%;
+	float: left;
+	padding: 5px 0px;
+	text-align: center;
+	border: solid 2px #cdcdcd;
+	border-radius: 3px;
+	margin-left: 10px;
+	margin-top: 13px;
+	font-size: 80%;
+}
+
+.price-div {
+	width: 100%;
+	height: 96px;
+	border-bottom: solid 1px #cdcdcd;
+}
+
+.section-div {
+	width: 100%;
+	height: 60px;
+	border-bottom: solid 1px #cdcdcd;
+}
+
+.section-div .content {
+	line-height: 3.6;
+}
+
+.filtrate input {
+	width: 14px;
+	text-align: center;
+	height: 20px;
+	display: inline;
+	line-height: normal;
+	margin-left: 8px;
+}
+
+.checked {
+	background: url(../img/icon-right.png) no-repeat right bottom;
+	border: solid 2px #fea275;
+}
+
+.filtrate .okbtn {
+	position: fixed;
+	top: 12px;
+	z-index: 999;
+	right: 12px;
+	border: solid 1px #cdcdcd;
+	width: 42px;
+	height: 27px;
+	font-size: 92%;
+	text-align: center;
+	line-height: 1.9;
+}
+
+.combo .item {
+	width: 100%;
+	height: 40px;
+	border-bottom: solid 1px #cdcdcd;
+	line-height: 2.9;
+}
+
+.combo .item div {
+	float: left;
+	width: 50%;
+	height: 100%;
+	font-size: 90%;
+}
+
+.combo .item span {
+	color: #fea275;
+	font-size: 110%;
+}
+
+.combo .item .right {
+	position: absolute;
+	right: 10px;
+	margin-top: 13px;
+	line-height: normal;
+}
+
+.combo .radio_sm {
+	width: 29%;
+	padding: 7px 0px;
+}
+
+.combo .detail {
+	border-top: solid 1px #cdcdcd;
+	float: left;
+	width: 100%;
+	padding: 10px;
+	margin-top: 60px;
+}
+
+.combo .btn-div {
+	width: 100%;
+	position: absolute;
+	bottom: 10px;
+	text-align: center;
+}
+
+.combo .custombtn {
+	width: 70%;
+	background-color: #fea275;
+}
+
+#addMore {
+	text-align: center;
+	float: left;
+	width: 100%;
+	display: none;
+}
+
+#addMore i {
+	margin: 10px 0px;
+	font-size: 147%;
+}
+
+#addMore span {
+	margin: 10px 0px;
+}
+
+#fail {
+	margin: 10px 0px;
+	float: left;
+	width: 100%;
+}
+
+.modal * {
+	font-size: 80%;
+}
+
+.footer-div {
+	position: fixed;
+	float: left;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	background: #333;
+	z-index: 99;
+	/*        background: -webkit-linear-gradient(left,#32071a,#150b1d, #4b2a55);  Safari 5.1 - 6.0 
+        background: -o-linear-gradient(right,#32071a,#150b1d, #4b2a55);  Opera 11.1 - 12.0 
+        background: -moz-linear-gradient(right,#32071a,#150b1d, #4b2a55);  Firefox 3.6 - 15 
+        background: linear-gradient(right,#32071a,#150b1d, #4b2a55);  标准的语法（必须放在最后） */
+}
+
+.footer-block-1 {
+	float: left;
+	width: 20%;
+	color: #fff;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.footer-block-2 {
+	float: left;
+	width: 40%;
+	color: #fff;
+	;
+	text-align: center;
+	background: #f15353;
+	height: 50px;
+	padding-top: 1px;
+	border: none;
+	outline: none;
+}
+
+.footer-block-1 span {
+	float: left;
+	width: 100%;
+	font-size: 100%;
+}
+
+.footer-block-1 a {
+	float: left;
+	width: 100%;
+	font-size: 100%;
+	color: #fff;
+}
+
+.footer-block-1 i {
+	float: left;
+	width: 100%;
+	font-size: 140%;
+}
+
+.buy_now_btn {
+	float: left;
+	width: 100%;
+	margin-top: 3%;
+	font-size: 130%;
+}
+
+ .storesectionclass
+  {
+      position: fixed;
+      width:100%;
+      top:0;
+      left:0;
+      z-index: 99999;
+      display:none;
+  }

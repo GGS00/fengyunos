@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="css/old/ordercss.css" />
+<div style="font-family: 微软雅黑" ng-controller="OrderCtrl as order">
+	<div id="bodyconter">
+		<!--<div class="alert alert-warning" style="text-align: center;display: none" id="emptyTips">您好！您还没有任何订单</div>-->
+		<div class="topline">
+			<div class="{{order.status ==0?'typeallactive':'typecancel'}}"  ng-click="order.typeChoice(0)">
+				全部
+			</div>
+			<div class="{{order.status ==1?'typeallactive':'typecancel'}}"  ng-click="order.typeChoice(1)">
+				未处理
+			</div>
+			<div class="{{order.status ==5?'typeallactive':'typecancel'}}" ng-click="order.typeChoice(5)">
+				已处理
+			</div>
+			<div class="{{order.status ==10?'typeallactive':'typecancel'}}"  ng-click="order.typeChoice(10)">
+				已取消
+			</div>
+		</div>
+		<div class="alert alert-warning" style="margin-top:68px;text-align: center;display:none" id="emptyTips">未发现订单信息</div>
+		<div class="alert alert-warning" id="buyTips" style="position: fixed;display:none;top:50px;width:100%;z-index:9999999">
+			<a href="#" class="close" data-dismiss="alert">
+				&times;
+			</a>
+			<strong>注意！</strong>3C数码类商品价格变动较大，请及时下单！下单过程中我们优先为您选择最低价格的同款商品！
+		</div>
+
+		<div style="position:absolute;top:48px;">
+			<div class="panel panel-default" ng-repeat="list in order.list">
+				<div class="panel-heading">
+					<h3 class="panel-title" data-toggle="modal" data-target="#shopModal" ng-click="order.getShopMsg(list.shop_id)">华博云店旗舰店
+					<span ng-if="list.status == 1" style="float:right;color:#EE9A00">未处理</span>
+					<span ng-if="list.status == 10" style="float:right;color:red">已取消</span>
+					<span ng-if="list.status == 5" style="float:right;color:green">已处理</span>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div style="float: left;width:100%;">
+						<div style="float:left;width:20%"><img ng-src="{{list.litpic}}" width="60px;" height="auto"></div>
+						<div style="float:left;width:78%;">
+							<p style="float:left;width: 90%">{{list.good_name}}（{{list.attr}}）</p>
+							<span style="float:left;width: 10%;text-align: center">x{{list.goods_count}}</span></div>
+						<span>{{list.is_rebate == 0?'进货价:':'返利:'}}￥{{list.is_rebate == 0?list.settle_price:list.rebate_money}} x {{list.goods_count}} = ￥{{(list.is_rebate == 0?list.settle_price:list.rebate_money) * list.goods_count}}</span>
+						<span>成交价:￥{{list.total_fee}} x {{list.goods_count}} = ￥{{list.total_fee * list.goods_count}}</span>
+					</div>
+					<div></div>
+				</div>
+				<div class="alert alert-default">
+					<span style="float:left">日期:{{list.switchTime}}</span>
+					<span style="float:right">订单号:{{list.order_num}}</span></div>
+				<div class="panel-heading">
+				    <span ng-if="list.is_show == 1" style="display:inline-block">
+						<a ng-if="list.supply_id == 1 && list.is_rebate== 0" type="button" class="btn btn-success" href="http://wsc.51dh.com.cn/search/index?flag=true&mall_id=0&keywords={{list.good_name}}&source=yd&site=dh">51订货网购买</a>
+						<a ng-if="list.supply_id.slice(0,2) == 4" type="button" class="btn btn-success" onclick="javascript:alert('店主自营商品，请在店内提货');">店主自营</a>
+						<a ng-if="list.supply_id == 4" type="button" class="btn btn-success"></a>
+				    </span>
+				    <span ng-if="list.is_show == 0" style="display:inline-block">
+				    	<a type="button" class="btn btn-danger" disabled>订货网已经下架</a>
+				    </span>
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#remarkModal" ng-click="order.getRemarkMsg(list.order_num)">备注信息</button>
+					<button id="delbtn0" ng-if="list.is_rebate== 0" type="button" class="btn btn-default" ng-click="order.delOrder(list.order_num)">删除订单</button>
+				</div>
+			</div>
+		</div>
+
+		<!--    <div style="position:relative;margin-top:58px;text-align: center;" id="loadmorediv">
+        <span id="loadtextid">加载中....</span>
+    </div>
+        -->
+	</div>
+
+	<!--  备注信息对话框-->
+	<div class="modal fade" id="remarkModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                          &times;
+                    </button>
+					<h5 class="modal-title">
+                       	 订单备注信息<span style="color:red" >（订单号：{{order.orderNum!=null?order.orderNum:'加载中...'}}）</span>
+                    </h5>
+				</div>
+				<div class="modal-body">
+					<form role="form">
+						<div class="form-group">
+							<label for="name">提示：可以备注顾客信息和注意事项</label>
+							<textarea class="form-control" rows="6" ng-model="order.remarkTextarea"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="order.saveRemark()">
+                        保存
+                     </button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--  店铺信息对话框-->
+	<div class="modal fade" id="shopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                          &times;
+                    </button>
+					<h4 class="modal-title" id="shopkModalLabel">
+                       店铺信息
+                    </h4>
+				</div>
+				<div class="modal-body" id="shopContain">
+					<h4>{{order.shopInfo.shop_name}}</h4>
+					<span> 姓名：{{order.shopInfo.name}}</span><br>
+					<span>手机：{{order.shopInfo.tel}}</span><br>
+					<span>QQ：{{order.shopInfo.qq}}</span><br>
+					<span>地址{{order.shopInfo.province + order.shopInfo.county + order.shopInfo.city + order.shopInfo.address}}</span>
+				</div>
+				<div class="modal-footer">
+					<a type="button" class="btn btn-success" href="tel:{{order.shopInfo.tel}}" id="hreftel">拨打手机</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<!--  <script src="js/orderjs.js?01071513"></script>-->
+</div>

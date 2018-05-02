@@ -1,0 +1,84 @@
+    <?php
+    error_reporting(0);
+    require_once "../publicWxAction/jssdk.php";
+    $jssdk = new JSSDK();
+    $signPackage = $jssdk->GetSignPackage();
+    ?>
+    <link  rel="stylesheet" href="css/old/wshop.css?12311220">
+
+    <div ng-controller="GoodslistCtrl as goods">
+
+        <div class="wshop-top" id="goodsListTopId">
+            <div class="top-arealist" onclick="history.go(-1)">
+                <i class="fa fa-arrow-left"></i> 
+                <span>返回</span>
+            </div>
+            <div class="search-top-shot">
+                <div class="search-input">
+                    <i class=" icon-search icon-large"></i> 
+                    <input type="search"class="searchinput" placeholder="输入关键字查找本店商品" ng-focus="goods.searchGoodsByName()" value="{{goods.word}}">
+                  
+                </div>
+            </div>
+            <div class="top-arealist" onclick="gotoshophome()" >
+                <i class="fa fa-home"></i> 
+                <span>首页</span>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="shoplistcontain" id="goodsLitContainId" style="min-height:700px">
+            <div class="shoplist-tittle">
+                共计：<span id="goodsNumberSpanId" style="display: inline">{{goods.count}}</span>件商品
+
+                 <div style="float:right">
+                    <span ng-click="goods.selectgoodsbyincrease(1)" style="display: inline"><i class="fa fa-sort-amount-asc"></i>&nbsp;高价排序</span>
+                    <span ng-click="goods.selectgoodsbyincrease(2)" style="display: inline"><i class="fa fa-sort-amount-desc"></i>&nbsp;低价排序</span>
+                </div>
+               
+                
+            </div>
+            <div class="goodslistdiv" id="goodslistdiv">
+
+
+                <section ng-if="list.is_show == 1" class="goodssecion-list" ng-repeat="list in goods.list" ng-click="goods.hrefgoodsDetail(list.base_id)">
+                    <div class="sectionlist-img">
+                    <img ng-if="list.market_type > 0 && list.market_type < 5" ng-src="http://10000dp.com/wxadmin/local/source/label_{{list.market_type}}.png" class="img_mark" style="width:50px;margin-right:5px">
+                    <img ng-src="{{list.litpic}}">
+                    </div>
+                    <div class="sectionlist-text">
+                        <p class="sectionlist-name">{{list.goods_name + list.attr}}</p>
+                        <p class="sectionlist-desc">{{list.goods_describe}}</p>
+                        <span>￥{{list.goods_price.toFixed(2)}}</span>
+                        <span ng-if="(((1 == goods.isBoss) && (1 != goods.isShare))&&(goods.isRebate != 1))||((((1 == goods.sellType)||(2 == goods.sellType)) && (1 == goods.isShare))&&(goods.isRebate != 1))" style="color:#000;">进货价:￥{{list.wholesale_price.toFixed(2)}}</span>
+
+                        <span ng-if="(((1 == goods.isBoss) && (1 != goods.isShare))&&(goods.isRebate == 1))||((((1 == goods.sellType)||(2 == goods.sellType)) && (1 == goods.isShare))&&(goods.isRebate == 1))" style="color:#000;">返利:￥{{list.rebate_money.toFixed(2)}}</span>
+                    </div> 
+                </section>
+
+            </div>
+        </div>
+    
+    </div>
+
+    <script>
+
+     wx.config({
+                appId: '<?php echo $signPackage["appId"]; ?>',
+                timestamp: <?php echo $signPackage["timestamp"]; ?>,
+                nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+                signature: '<?php echo $signPackage["signature"]; ?>',
+                jsApiList: [
+                    // 所有要调用的 API 都要加到这个列表中
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'getNetworkType'
+                ]
+            });
+    </script>
+

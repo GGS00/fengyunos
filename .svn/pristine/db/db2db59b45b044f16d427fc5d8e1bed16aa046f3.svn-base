@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的返利</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+     body{
+      font-family: 微软雅黑;
+     }
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate" style="left:78px;width:56%">Mac绑定</h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #838181;"></span>返回</button>
+</header>
+
+<div class="mui-content">
+  <input id="userName" class="userName" placeholder="请输入用户名"/>
+  <div class="searchUser">
+    <button class="searchButton" onclick="searchByName()">查询</button>
+  </div>
+  <input id="macName" class="userName" readonly="readonly" style="display:none"/>
+
+  <div id="bindmac" style="display:none">
+    <input id="newMac" class="newMac" placeholder="输入新的Mac码"/>
+    <div class="searchUser">
+      <button class="bindButton" onclick="bindMac()">绑定</button>
+    </div>
+  </div>
+    
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+  function tomain(){
+      window.location.href="index.html"
+    }
+
+  function searchByName(){
+    var username = $("#userName").val();
+    
+    if(username==""){
+       mui.alert("用户名不能为空");
+    }else{
+
+       $.ajax({
+        type: "post",
+        /*url:'json/rebate.json',*/
+        url: "http://121.40.188.67:8081/adminserver/admin/getMacByUserName.do",
+        data: {
+            username:username
+        },
+        success: function(data) {
+             if (data.resultValue == 1) {
+                
+                mui.alert("账号不存在")
+
+             }else{
+
+                $("#macName").val(data.resultValue);
+                $("#macName").show();
+                $("#bindmac").show();
+
+             }
+              
+            }             
+            
+        })
+    
+
+    }
+
+  }
+
+  function bindMac(){
+    var newmac = $("#newMac").val();
+    var username = $("#userName").val();
+    if(newmac==""){
+       mui.alert("新mac码不能为空");
+       return;
+    }else if(username == ""){
+       mui.alert("用户名不能为空");
+       return;
+    }else{
+
+       $.ajax({
+        type: "post",
+        /*url:'json/rebate.json',*/
+        url: "http://121.40.188.67:8081/adminserver/admin/toBindMacByUserName.do",
+        data: {
+            username:username,
+            mac:newmac
+        },
+        success: function(data) {
+             if (data.resultValue == 1) {
+                
+                mui.alert("修改失败")
+
+             }else{
+
+                mui.alert('修改成功', function() {
+                  location.reload();
+                });
+
+             }
+              
+            }             
+            
+        })
+    
+
+    }
+
+
+  }
+
+</script>
+</body>
+</html>

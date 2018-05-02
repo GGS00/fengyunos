@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>我的客户</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no, email=no" />
+        
+        <link href="//cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        
+        <link href="css/indexphp.css?11051903" rel="stylesheet">
+    </head>
+    <body onload="loadcustomerlist()" style="background:#efeff4;">
+        <div class="list-group" id="customerblocklist">
+            <a href="#" class="list-group-item active" style="border-radius: 0">
+               <h4 class="list-group-item-heading">
+                  我的客户
+               </h4>
+            </a>
+         </div>
+        
+        <div class="alert-contailer"  id="telactivediv">
+            <div class="alert-contailer-bg" style="z-index: -1" onclick="hideteldiv()"></div>
+            <div class="callteldiv">
+                <div class="callteldiv-msg" id="telvalue">
+                    -&nbsp;-&nbsp;-&nbsp;-&nbsp;-&nbsp;-
+                </div>
+                <div class="callteldiv-btn">
+                    <a class="callteldiv-btn-block" style="border-right: 1px solid #ddd" href="tel:0000" id="aemallid" onclick="hideteldiv()">
+                        发送短信
+                    </a>
+                    <a class="callteldiv-btn-block" href="tel:0000" id="acallid" onclick="hideteldiv()">
+                        拨打电话
+                    </a>
+                </div>
+                
+            </div>
+                
+            
+        </div>
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+         <script src="./commonJs/config.js?12111048"></script>
+         <script src="js/wxindex.js?11051903"></script>
+         
+    </body>
+</html>

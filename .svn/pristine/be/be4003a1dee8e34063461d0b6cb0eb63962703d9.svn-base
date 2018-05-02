@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的返利</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<!-- <header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title myRebate" style="left:78px;width:56%">功能选择</h1>
+ 
+</header> -->
+
+<div class="mui-content">
+   <img src="img/yundian.png" style="width: 100%;">
+    <input id="loginName" class="loginput" placeholder="请输入用户名"/>
+    <input id="loginCode" class="loginput" type="password" placeholder="请输入密码"/>
+
+    <div class="searchUser">
+      <button class="loginButton" onclick="login()">登入</button>
+    </div>
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+  function login(){
+     var loginName = $("#loginName").val();
+     var loginCode = $("#loginCode").val();
+
+     if(loginName == ""){
+       mui.alert("用户名不能为空");
+       return;
+     }
+     if(loginCode == ""){
+       mui.alert("密码不能为空");
+       return;
+     }
+
+      $.ajax({
+        type: "post",
+        /*url:'json/rebate.json',*/
+        url: "http://121.40.188.67:8081/adminserver/admin/login.do",
+        data: {
+            username:loginName,
+            password:loginCode
+        },
+        success: function(data) {
+            if(data.resultValue == 0){
+
+              window.location.href="index.html"
+              
+            }else{
+                
+                mui.alert("登入失败,请检查用户名或密码");
+
+            }
+
+        }             
+            
+      })
+    
+
+
+
+  }
+
+ 
+
+
+</script>
+</body>
+</html>

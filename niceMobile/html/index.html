@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>商城搜索结果</title>
+    <meta charset="UTF-8">
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../aliIcon/iconfont.css" type="text/css" />
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script src="../js/custom.js?2301606283"></script>
+    <script>
+        location.replace();
+        $(window).scroll(function() {
+            if (isContinu) {
+                var scrollTop = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+                if (scrollTop + windowHeight == scrollHeight) {
+                    requestMobileList();
+                }
+            }
+        });
+    </script>
+</head>
+<body onload="initData()">
+    <h1 class="title">选号</h1>
+    <div class="sort-div">
+        <div id="mobilesort" class="item right-border" onclick="mobileSort()" >
+            <span>号码</span>
+            <i class="fa fa-angle-up icon-up icon-normal" id=""></i>
+            <i class="fa fa-angle-down icon-down icon-normal"></i>
+        </div>
+        <div id="price-div" class="item right-border"  onclick="priceSort()">
+            <span>价格</span>
+            <i class="fa fa-angle-up icon-up icon-normal"></i>
+            <i class="fa fa-angle-down icon-down icon-normal"></i>
+        </div>
+        <a href="filtrate.html">
+        <div class="item">
+            <span>筛选</span>
+            <i class="iconfont icon-filter icon-normal" style="font-size: 14px"></i>
+        </div>
+        </a>
+    </div>
+    <div id="content-div" style="margin-top: 90px">
+
+    </div>
+    <div id="addMore"><i class="fa fa-spinner fa-pulse  fa-fw"></i><span>&nbsp;加载中...</span></div>
+    <div id="fail" style="text-align: center;padding: 10px 0px;" onclick="requestMobileList()"><span>加载失败</span></div>
+    <div id="noData" style="text-align: center;padding: 10px 0px;display: none" onclick="requestMobileList()"><span>没有数据</span></div>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+
+    .mui-preview-image.mui-fullscreen {
+        position: fixed;
+        z-index: 20;
+        background-color: #000;
+      }
+      .mui-preview-header,
+      .mui-preview-footer {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        z-index: 10;
+      }
+      .mui-preview-header {
+        height: 44px;
+        top: 0;
+      }
+      .mui-preview-footer {
+        height: 50px;
+        bottom: 0px;
+      }
+      .mui-preview-header .mui-preview-indicator {
+        display: block;
+        line-height: 25px;
+        color: #fff;
+        text-align: center;
+        margin: 15px auto 4;
+        width: 70px;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        font-size: 16px;
+      }
+      .mui-preview-image {
+        display: none;
+        -webkit-animation-duration: 0.5s;
+        animation-duration: 0.5s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+      }
+      .mui-preview-image.mui-preview-in {
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+      }
+      .mui-preview-image.mui-preview-out {
+        background: none;
+        -webkit-animation-name: fadeOut;
+        animation-name: fadeOut;
+      }
+      .mui-preview-image.mui-preview-out .mui-preview-header,
+      .mui-preview-image.mui-preview-out .mui-preview-footer {
+        display: none;
+      }
+      .mui-zoom-scroller {
+        position: absolute;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        -webkit-backface-visibility: hidden;
+      }
+      .mui-zoom {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+      }
+      .mui-slider .mui-slider-group .mui-slider-item img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+        width: 100%;
+      }
+      .mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+        display: inline-table;
+      }
+      .mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .mui-preview-loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      .mui-preview-loading.mui-active {
+        display: block;
+      }
+      .mui-preview-loading .mui-spinner-white {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -25px;
+        margin-top: -25px;
+        height: 50px;
+        width: 50px;
+      }
+      .mui-preview-image img.mui-transitioning {
+        -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+      }
+      @-webkit-keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .mui-popover.mui-popover-action.mui-popover-bottom {
+          position: fixed;
+          overflow-x: scroll;
+      }
+       
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate" style="left:78px;width:56%"></h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;"></span></button>
+</header>
+
+<div class="mui-content">
+   <div class="detailHeader">
+      <p class="headerTitle">我的云店</p>
+      <div class="headerInfo">
+        <span class ="articleDate">2016-09-18</span>
+        <span class="publisher">店小二</span>
+      </div>
+   </div>
+
+   <div class="detailBody">
+      <div class="musicAudio">
+         <i id="palyiconid" class="fa fa-play" onclick="playbgmusic()"></i>
+         <span class="musicSong">十年-陈奕迅</span>
+      </div>
+   <audio src="http://m2.music.126.net/N60p33vWZSDS0_HM9vMFeA==/18786255672577951.mp3" id="bgMusic"  loop="loop" hidden="true"  style="display:none"></audio>
+      <div class="imgShow mui-content-padded">
+        <img src="img/1.jpg" data-preview-src="" data-preview-group="1" />
+        <img src="img/2.jpg" data-preview-src="" data-preview-group="1" />
+        <img src="img/3.jpg" data-preview-src="" data-preview-group="1" />
+      </div>
+
+      <div class="textShow">
+       <p class="textDetail">甄选各大热门电商网站同行业优质商品，供用户选购，将线下实体店的货源最大化</p> 
+      </div>
+    </div>
+   
+   <div id="changeSkin" onclick="changeSkin()">
+     <i class="fa  fa-star-o" style="font-size: 40px;color: #67A0C8;"></i>
+   </div>
+   
+   <div class="detailFooter">
+
+    <div class="footerMenu">
+      <div class="zan">
+        <i class="fa fa-thumbs-o-up"></i>
+        <span id="zan" style="margin-left: 2px;">0</span>
+      </div>
+    </div>
+    <div class="footerMenu" style="margin-top: 12px;">
+      <span>分享</span>
+    </div>
+    <div class="footerMenu" onclick="toComment()">
+      <div class="detailcomment">
+        <i class="fa fa-comment-o"></i>
+      </div>
+    </div>
+    
+   </div>   
+</div>
+
+<div id="delete" class="mui-popover mui-popover-action mui-popover-bottom">
+      <div class="imgList">
+
+            <div class="imgChoose" onclick="skinStyle(5)"  style="margin-left:3%">
+              <img src="img/biaozhun.png" class="imgCss">
+              <span class="skinName" style="color: #E5E3E3;">标准</span>
+            </div>
+         
+            <div class="imgChoose" onclick="skinStyle(0)">
+              <img src="img/fengjin.png" class="imgCss">
+              <span class="skinName">风景</span>
+            </div>
+
+            <div class="imgChoose"  onclick="skinStyle(1)">
+              <img src="img/wood.png" class="imgCss">
+              <span class="skinName" style="color: #fff;">木纹</span>
+            </div>
+
+            <div class="imgChoose"  onclick="skinStyle(2)">
+              <img src="img/paper.png" class="imgCss">
+              <span class="skinName" style="left: 27%;">羊皮纸</span>
+            </div>
+
+            <div class="imgChoose"  onclick="skinStyle(3)">
+              <img src="img/colorful.png" class="imgCss">
+              <span class="skinName" style="color: #6C2F2F;">色彩</span>
+            </div>
+
+            <div class="imgChoose"  onclick="skinStyle(4)">
+              <img src="img/black.png" class="imgCss">
+              <span class="skinName" style="color: #C8C6C6;">黑奢</span>
+            </div>
+        
+
+      </div>
+
+      <ul class="mui-table-view">
+        <li class="mui-table-view-cell" style="width:100%">
+          <a onclick="confirmSkin()"><b>确定</b></a>
+         
+        </li>
+      </ul>
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.zoom.js"></script>
+<script src="js/mui.previewimage.js"></script>
+<script type="text/javascript">
+  /*mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });*/
+
+   mui.previewImage();
+   initial();
+
+   function initial(){
+      var randomstr = GetRandomNum();
+      $("#zan").html(randomstr);
+   }
+   
+
+   function tomain(){
+      window.location.href="index.html"
+   }
+
+   function toComment(){
+      window.location.href="comment.html"
+   }
+
+   
+   function GetRandomNum(){
+      var Min = 0;
+      var Max = 1000;
+      var Range = Max - Min;
+      var Rand = Math.random();
+      return(Min + Math.round(Rand * Range));
+   }
+
+   function playbgmusic(){
+      var myAuto = document.getElementById('bgMusic'); 
+
+      if($("#palyiconid").hasClass('fa fa-pause')){
+
+         $("#palyiconid").attr("class", "fa fa-play");
+           myAuto.pause();
+
+      }else{
+
+        $("#palyiconid").attr("class", "fa fa-pause");
+           myAuto.play();
+      }
+
+   }
+
+
+
+
+   function changeSkin(){
+     
+     $("#delete").addClass("mui-active");   
+
+   }
+
+   function confirmSkin(){
+    /* $(".mui-content").removeClass("scenerySkin woodSkin paperSkin colorSkin blackSkin");*/
+    $("#delete").removeClass("mui-active");
+
+    /*提交修改皮肤的处理*/
+
+
+
+
+
+    
+
+   }
+
+
+   function skinStyle(style){
+
+    $(".mui-content").removeClass("scenerySkin woodSkin paperSkin colorSkin blackSkin");
+
+    switch (style)
+      {
+        case 0: //风景皮肤
+          $(".mui-content").addClass("scenerySkin");
+          $(".headerTitle").css("color","#fff");
+          $(".articleDate").css("color","#C8C6C6");
+          $(".publisher").css("color","#63B5D6");
+          $(".musicSong").css("color","#CBC4C4");
+          $("#palyiconid").css("color","#D5D5D5");
+          $(".textDetail").css("color","#fff");
+          break;
+        case 1://木纹皮肤
+          $(".mui-content").addClass("woodSkin");
+          $(".headerTitle").css("color","#603706");
+          $(".articleDate").css("color","#552D04");
+          $(".publisher").css("color","#144F93");
+          $(".musicSong").css("color","#512F04");
+          $("#palyiconid").css("color","#532003");
+          $(".textDetail").css("color","#492C0E");  
+          break;
+        case 2://羊皮纸皮肤
+          $(".mui-content").addClass("paperSkin");
+          $(".headerTitle").css("color","#4F2304");
+          $(".articleDate").css("color","#512C07");
+          $(".publisher").css("color","#357ED1");
+          $(".musicSong").css("color","#572C07");
+          $("#palyiconid").css("color","#5C2B08");
+          $(".textDetail").css("color","#49220B");   
+          break;
+        case 3://色彩皮肤
+          $(".mui-content").addClass("colorSkin");
+          $(".headerTitle").css("color","#F484A6");
+          $(".articleDate").css("color","#EC4C7F");
+          $(".publisher").css("color","#8E20E7");
+          $(".musicSong").css("color","#F45E8C");
+          $("#palyiconid").css("color","#EE6FAA");
+          $(".textDetail").css("color","#F82587");  
+          break;
+        case 4://黑奢皮肤
+          $(".mui-content").addClass("blackSkin");
+          $(".headerTitle").css("color","#A5A9AB");
+          $(".articleDate").css("color","#A1A1A1");
+          $(".publisher").css("color","#357ED1");
+          $(".musicSong").css("color","#D9D9D9");
+          $("#palyiconid").css("color","#AAA9A9");
+          $(".textDetail").css("color","#B2B2B6");   
+          break;
+        case 5://黑奢皮肤
+          $(".headerTitle").css("color","#3A3A3A");
+          $(".articleDate").css("color","#A1A1A1");
+          $(".publisher").css("color","#65809F");
+          $(".musicSong").css("color","#8A8A8A");
+          $("#palyiconid").css("color","#D5D5D5");
+          $(".textDetail").css("color","#8f8f94");   
+          break;
+      }
+   }
+
+
+</script>
+</body>
+</html>

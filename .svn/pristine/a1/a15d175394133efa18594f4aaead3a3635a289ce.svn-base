@@ -1,0 +1,536 @@
+angular
+	.module('cloudshop')
+    .factory('Public', Public)
+    .factory('Agent', Agent)
+    .factory('Order',Order)
+    .factory('Goods',Goods)
+    .factory('Shop',Shop)
+    .factory('Detail',Detail)
+    .factory('Goodslist',Goodslist)
+    .factory('SearchByName',SearchByName)
+    
+    
+    
+function Public($http){
+	return {
+		IndexReport:IndexReport,
+	}
+	function IndexReport(){
+		return $http({url: ""+ Comm_Config + "wx/getWxIndexReport.do",method: "get",
+						params:{
+							"agent_id": GLOB_AID,
+						}	
+					});
+	}
+	
+}
+
+
+function Agent($http){
+	return {
+		getAgent:getAgent,
+		updataAgent:updataAgent,
+		getShop:getShop,
+		getCustom:getCustom,
+		getShopA:getShopA
+	}
+	function getAgent(){
+		return $http({url: ""+ Comm_Config + "wx/getAgentByAgentId.do",method: "get",
+						params:{
+							"agentid": GLOB_AID,
+						}	
+					});
+	}
+	function updataAgent(vm){
+		return $http({url: ""+ Comm_Config + "wx/updateAgentByCondition.do",method: "get",
+						params: vm.data,	
+					});
+	}
+	
+	function getShop(vm){
+		return $http({url: ""+ Comm_Config + "wx/getShopInfoByShopId.do",method: "get",
+						params:{
+							"shopid":vm.shopId
+						},
+					});
+	}
+	
+	function getCustom(){
+		return $http({url: ""+ Comm_Config + "wx/getAgentCustomer.do",method: "get",
+						params:{
+							"agentid":GLOB_AID
+						},
+					});
+	}
+	
+	function getShopA(){
+		return $http({url: ""+ Comm_Config + "wx/getShopInfoByAgentId.do",method: "get",
+						params:{
+							"agent_id":GLOB_AID
+						},
+					});
+	}
+	
+
+}
+
+
+function Order($http){
+	return {
+		getOrder:getOrder,
+		getRemark:getRemark,
+		saveRemark:saveRemark,
+		delRemark:delRemark
+	}
+	
+	function getOrder(vm){
+		return $http({url: ""+ Comm_Config + "wx/getOrderIntentList.do",method: "get",
+						params:{
+							"agent_id":GLOB_AID,
+							"page":vm.page,
+							"status":vm.status,
+							"shopid":GLOB_SHOPID
+						}	
+					});
+	}
+	
+	function getRemark(vm){
+		return $http({url: ""+ Comm_Config + "wx/getRemarkByOrderNum.do",method: "get",
+						params:{
+							"order_num":vm.orderRemark,
+						}	
+					});
+	}
+	
+	function saveRemark(vm){
+		return $http({url: ""+ Comm_Config + "wx/changeOrderIntentRemark.do",method: "get",
+						params:{
+							"order_num":vm.orderRemark,
+							"status":vm.remarkTextarea
+						}	
+					});
+	}
+	
+	function delRemark(vm){
+		return $http({url: ""+ Comm_Config + "wx/changeOrderIntentStatus.do",method: "get",
+						params:{
+							"order_num":vm.orderDel,
+							"status":vm.success_status
+						}	
+					});
+	}
+}
+
+
+function Goods($http){
+	return {
+		area:area,
+		getGoods:getGoods,
+		updateMark:updateMark,
+		rmGoods:rmGoods,
+		rmlGoods:rmlGoods,
+		goodsAttr:goodsAttr,
+		editPrice:editPrice
+	}
+	
+	function area(){//获取区域列表
+		return $http({url: ""+ Comm_Config + "wx/getAreaListByAgentNoPage.do",method: "get",
+						params:{
+							"agentid": GLOB_AID,
+							"alias": GLOB_ALIAS,
+							"shopid":GLOB_SHOPID
+						}	
+					});
+	}
+
+	function getGoods(vm){//获取区域里的商品列表
+		return $http({url: ""+ Comm_Config + "wx/getGoodsListBySetting.do",method: "get",
+						params:{
+							"areaseq": vm.seq, 
+							"agentid": GLOB_AID, 
+							"page": vm.page, 
+							"alias": GLOB_ALIAS,
+							"shopid":GLOB_SHOPID
+						}	
+					});
+	}
+	
+	
+	function updateMark(vm){//修改商品的Mark标记
+		return $http({url: ""+ Comm_Config + "wx/updateMarketType.do",method: "post",
+						params:{
+							"base_id": vm.baseId, 
+							"market_type": vm.marketType, 
+							"discount": vm.onSale,
+							"agent_id":GLOB_AID,
+							"shopid":GLOB_SHOPID
+						}	
+					});
+	
+	}
+	
+	
+	function rmGoods(vm){//商品移出区域
+		return $http({url: ""+ Comm_Config + "wx/removeGoodsInArea.do",method: "post",
+						params:{
+							"areaseq": vm.seq, 
+							"baseid": vm.baseId, 
+							"agentid":GLOB_AID, 
+							"alias": GLOB_ALIAS,
+							"shopid":GLOB_SHOPID
+						}	
+					});
+	
+	}
+	
+	function rmlGoods(vm){//多个商品移出区域
+		return $http({url: ""+ Comm_Config + "wx/batchRemoveGoodsInArea.do",method: "post",
+						params:{
+							"areaseq": vm.seq, 
+							"agentid": GLOB_AID, 
+							"baseids": vm.delList, 
+							"alias": GLOB_ALIAS, 
+//							"token": token,
+							"shopid":GLOB_SHOPID
+						}	
+					});
+	
+	} 
+	
+	
+	function goodsAttr(vm){//获取商品属性
+		return $http({url: ""+ Comm_Config + "wx/getGoodsDetailAttr.do",method: "get",
+						params:{
+							"agentid": GLOB_AID,
+                            "baseid": vm.base_id,
+                            "alias": GLOB_ALIAS,
+                            "shopid":GLOB_SHOPID
+						}	
+					});
+	}
+	
+	function editPrice(vm){//修改商品属性价格
+		return $http({url: ""+ Comm_Config + "wx/updateRebateAtomGoodsPrice.do",method: "post",
+						params:{
+							"agentid": GLOB_AID,
+                            "baseid": vm.base_id,
+                            "atomidprice": vm.result,
+                            "alias": GLOB_ALIAS,
+//                          "token": token
+						}	
+					});
+	}
+
+}
+
+
+
+
+function Shop($http){
+	return {
+		area:area,
+		getPic:getPic,
+		getAgent:getAgent,
+		getAgentByAgent:getAgentByAgent,
+		getTopGoodsList:getTopGoodsList,
+		getShopByMac:getShopByMac,
+		loadBannerText:loadBannerText,
+		loadBannerMusic:loadBannerMusic
+	}
+
+
+	function getAgent(vm){
+		return $http({url: ""+ Comm_Config + "public/getShop.do",method: "post",
+						params:{
+							"agentid": GLOB_AID,
+							"id": vm.shopid
+						}	
+					});
+
+	}
+
+	function loadBannerText(vm){
+		return $http({url: ""+ Comm_Config + "wx/getTxtInfo.do",method: "get",
+						params:{
+							"agent_id": GLOB_AID,
+							"alias":vm.alias,
+							"shopid":vm.shopid
+						}	
+					});
+
+	}
+
+	function getAgentByAgent(){
+		return $http({url: ""+ Comm_Config + "wx/getAgentByAgentId.do",method: "get",
+						params:{
+							"agentid": GLOB_AID
+						}	
+					});
+
+	}
+
+	function getShopByMac(vm){
+		return $http({url: ""+ Comm_Config + "wx/getShopByMac.do",method: "get",
+						params:{
+							"mac": vm.boxid
+						}	
+					});
+
+	}
+
+	function getPic(vm){
+		return $http({url: ""+ Comm_Config + "wx/getPicInfo.do",method: "get",
+						params:{
+							"agent_id": GLOB_AID,
+							"alias": vm.alias,
+							"shopid":vm.shopid
+						}	
+					});
+
+	}
+
+	function getTopGoodsList(vm){
+		return $http({url: ""+ Comm_Config + "wx/getTopGoodsList.do",method: "get",
+						params:{
+							"agentid": GLOB_AID, 
+							"alias": vm.alias,
+							"shopid": vm.shopid,
+							"page": vm.page,
+							"orderType": vm.orderType
+						}	
+					});
+	}
+
+	function area(vm){
+		return $http({url: ""+ Comm_Config + "client/getAreaListByMac.do",method: "post",
+						params:{
+							"agentid": GLOB_AID,
+							"alias": vm.alias,
+							"shopid":vm.shopid
+						}	
+					});
+	}
+
+	function loadBannerMusic(vm){
+        return $http({url: ""+ Comm_Config + "wx/getMusicInfo.do",method: "get",
+						params:{
+							"agent_id": GLOB_AID,
+							"alias":vm.alias,
+							"shopid":vm.shopid
+						}	
+					});
+
+	}
+
+
+}
+
+
+function Detail($http){
+	return {
+		getGoods:getGoods,
+		getShop:getShop,
+		getAgentByAgentId:getAgentByAgentId,
+		getWxIndexReport:getWxIndexReport,
+		changePriceJoin:changePriceJoin,
+		changePrice:changePrice,
+		confirmOrder:confirmOrder,
+		setInstall:setInstall,
+		setInstalltwice:setInstalltwice,
+		confirmFakeOrder:confirmFakeOrder,
+		getfanli:getfanli
+
+	}
+
+	function getGoods(vm){
+		return $http({url: ""+ Comm_Config + "wx/getGoodsDetail.do",method: "get",
+						params:{
+							"baseid":vm.baseid,
+							"agentid":vm.aid,
+							"alias":vm.alias,
+							"shopid":vm.shopId
+						}	
+					});
+	}
+	function getShop(vm){
+		return $http({url: ""+ Comm_Config + "public/getShop.do",method: "post",
+						params:{
+							"agentid":vm.aid,
+							"id":vm.shopId
+						}	
+					});
+	}
+	function getAgentByAgentId(vm){
+		return $http({url: ""+ Comm_Config + "wx/getAgentByAgentId.do",method: "get",
+						params:{
+							"agentid":vm.aid
+						}	
+					});
+	}
+	function getWxIndexReport(vm){
+		return $http({url: ""+ Comm_Config + "wx/getWxIndexReport.do",method: "get",
+						params:{
+							"agent_id":vm.aid
+						}	
+					});
+	}
+	function changePrice(vm){
+		return $http({url: ""+ Comm_Config + "wx/batchUpdateAtomGoodsPrice.do",method: "post",
+						params:{
+							"baseid":vm.baseid,
+							"agentid":vm.aid,
+							"alias":GLOB_ALIAS,
+							"atomidprice":vm.result,
+							"token":token
+						}	
+					});
+	}
+	function changePriceJoin(vm){
+		return $http({url: ""+ Comm_Config + "wx/updateRetailPrice.do",method: "post",
+						params:{
+							"baseid":vm.baseid,
+							"shopid":vm.shopId,
+							"agentid":vm.aid,
+							"alias":GLOB_ALIAS,
+							"atomidprice":vm.result,
+							"token":token
+						}	
+					});
+	}
+
+	function confirmOrder(vm){
+        return $http({url: ""+ Comm_Config + "wx/addOrderIntent.do",method: "post",
+						params:{
+							"shopid":vm.shopid, 
+		                    "agentid": vm.agentid,
+		                    "alias": vm.alias, 
+		                    "goods_alias_id": vm.goods_alias_id,
+		                    "attr": vm.attr, 
+		                    "base_id": vm.baseid, 
+		                    "goods_count": 1,
+		                    "wholesale_price": vm.wholesale_price,
+		                    "good_price": vm.good_price,
+		                    "remark":'',
+		                    "customer_tel":'',
+		                    "customer_name":''
+						}	
+					});
+		
+	}
+
+	function getfanli(vm){
+        return $http({url: ""+ Comm_Config + "pc/getIsRebate.do",method: "post",
+						params:{
+		                    "agent_id":vm.aid
+						}	
+					});
+		
+	}
+
+	function confirmFakeOrder(vm){
+		return $http({url: ""+ Comm_Config + "wx/addOrderIntent.do",method: "post",
+						params:{
+							"shopid":vm.shopid, 
+		                    "agentid": vm.agentid,
+		                    "alias": vm.alias, 
+		                    "goods_alias_id": vm.goods_alias_id,
+		                    "attr": vm.attr, 
+		                    "base_id": vm.baseid, 
+		                    "goods_count": 1,
+		                    "wholesale_price": vm.wholesale_price,
+		                    "good_price": vm.good_price,
+		                    "remark":vm.address,
+		                    "customer_tel":vm.phone,
+		                    "customer_name":vm.name
+						}	
+					});
+	}
+
+
+	
+	function setInstall(vm){
+		return $http({url: ""+ Comm_Config + "pc/getGoodsInstallmentList.do",method: "post",
+						params:{
+							"agentid":vm.agentid,
+							"goodsAtomId":vm.goods_atom_id
+						}	
+					});
+	}
+
+
+	function setInstalltwice(vm){
+		return $http({url: ""+ Comm_Config + "pc/getGoodsInsuranceList.do",method: "post",
+						params:{
+							"agentid":vm.agentid,
+							"goodsAtomId":vm.goods_atom_id
+						}	
+					});
+	}
+
+
+}
+
+
+
+function Goodslist($http){
+	return {
+		getGoods:getGoods,
+		getGoodsByName:getGoodsByName
+	}
+
+	function getGoods(vm){
+		return $http({url: ""+ Comm_Config + "wx/getGoodsListBySetting.do",method: "get",
+						params:{
+							"areaseq": vm.seq, 
+							"agentid": GLOB_AID, 
+							"page": vm.page,
+							"shopid":vm.shopid, 
+							"alias": vm.alias, 
+							"orderType": vm.orderType
+						}	
+					});
+	}
+
+	function getGoodsByName(vm){
+		return $http({url: ""+ Comm_Config + "wx/getGoodsListByName.do",method: "get",
+						params:{
+							"name": vm.word,
+							"agentid": GLOB_AID, 
+							"page": vm.page,
+							"alias": vm.alias, 
+							"orderType": vm.orderType,
+							"shopid":vm.shopid
+						}	
+					});
+	}
+
+	
+
+
+}
+
+
+
+function SearchByName($http){
+	return {
+		getGoods:getGoods
+	}
+
+	function getGoods(vm){
+		return $http({url: ""+ Comm_Config + "wx/getGoodsListBySetting.do",method: "get",
+						params:{
+							"areaseq": vm.seq, 
+							"agentid": GLOB_AID, 
+							"page": vm.page,
+							"shopid":GLOB_SHOPID, 
+							"alias": GLOB_ALIAS, 
+							"orderType": vm.orderType
+						}	
+					});
+	}
+
+	
+
+
+}
+

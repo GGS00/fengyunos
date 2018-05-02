@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>当月返利</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../splitAccount/css/mui.min.css">
+    <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="rebate.css">    
+    <style>
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title myRebate" style="left:90px;width:56%">当月返利</h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain"></span>返回</button>
+</header>
+
+<div class="mui-content">
+    <div class="statisticsHeader">
+        <span class="statistics"><span class='month'></span>月收益统计</span>
+    </div>
+
+    <div class="statisticsInfo">
+        <div class="statisticsMesge">
+            <div class="orderAmount">
+                <span style="font-size:15px;">订单量</span><br/>
+                <span class="orderDis"><span id="orderNum">70</span>&nbsp笔</span>
+            </div>
+        </div> 
+        <div class="statisticsMesge">
+            <div class="orderProfit">
+                 <span style="font-size:15px;">收益</span><br/>
+                <span class="orderDis" style="color:#FF6600"><span id="profitMon">3005</span>&nbsp元</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="statisticsHeader" style="margin-top:10px;">
+        <span class="statistics">收益明细</span>
+    </div>
+     <div id="scroll" class="mui-scroll-wrapper" style="position: absolute;top:242px;bottom:52px;">
+       <div class="mui-scroll">
+               <ul class="mui-table-view" style="background-color: #EFEFF4;font-size: 15px;color:#9C9C9C;font-family:微软雅黑;font-weight:bold;">      
+                  <!--  <li class="mui-table-view-cell">
+                      <div style='float:left;width:20%;text-align: center;'>
+                          <img src="1.png" style="width:50px;height: 50px;vertical-align: middle;margin-right: 5px;margin-left: 5px;">
+                      </div>
+                      <div style='float:left;width:30%;word-wrap: break-word;padding: 0 4px;margin-top: 15px;'>返利: ￥<span class="" style="color: #1E1E1E;font-size: 18px;font-weight: normal;">120</spam></div>
+                      <div style='float:left;width:20%;word-wrap: break-word;padding: 0 4px;margin-top: 15px;'>数量: <span style="color: #1E1E1E;font-size: 18px;font-weight: normal;">8</span></div>
+                      <div style='float:left;width:30%;word-wrap: break-word;padding: 0 4px;margin-top: 15px;'>小计: ￥<span style="color: #FF6600;font-size: 18px;font-weight: normal;">960</span></div>
+                  </li>    -->
+               </ul> 
+           </div>
+   </div>
+</div>
+
+<div class="block-footer">
+            <div class="public-block-4" onclick="javascript:window.location.href='http://localhost/local1/local/#/home/home'">
+                <div class="footer-achive">
+                    <i class="icon-th"></i>
+                    <span>首页</span>
+                </div>
+            </div>
+            
+            <div class="public-block-4" onclick="javascript:window.location.href='view/splitAccount/view/home.html'">
+                <div class="footer-nomal">
+                    <i class=" icon-briefcase"></i>
+                    <span>市场</span>
+                </div>
+            </div>
+            
+            <div class="public-block-4" onclick="javascript:window.location.href='../../view/splitAccount/view/home.html'">
+                <div class="footer-nomal">
+                    <i class="icon-money"></i>
+                    <span>账簿</span>
+                </div>
+            </div>
+            
+            <div class="public-block-4" onclick="javascript:window.location.href='http://localhost/local1/local/#/home/center'">
+                <div class="footer-nomal">
+                    <i class=" icon-heart-empty"></i>
+                    <span>我的</span>
+                </div>
+            </div>
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="../../js/wx.cloudshop.config.js"></script>
+<script src="../splitAccount/js/mui.min.js"></script>
+<!-- <script src="./js/wxindex.js?11161713"></script> -->
+<script type="text/javascript">
+if(!GLOB_AID){
+    window.location.href="../../wxlogin.html";
+}
+mui.init();
+mui('#scroll').scroll({
+        indicators: true //是否显示滚动条
+    });
+var month;
+var Glob_aid;
+var GLOB_localStorage = window.localStorage;
+Glob_aid = GLOB_localStorage["sessionAid"];
+month = request.QueryString("month");
+$('.month').html(month.slice(4));
+getRebate();
+function getRebate(){
+
+    $.ajax({
+        type: "post",
+        /*url:'json/rebate.json',*/
+        url: "" + Comm_Config + "/pc/getRebateByAgent.do",
+        data: {
+            agent_id:Glob_aid,
+            month:month
+        },
+        success: function(data) {
+          var d =   (data);
+          $("#orderNum").html(d.totalCount);
+          $("#profitMon").html(d.all_rebate_money);       
+            for(var i=0;i<d.resultValue.length;i++){
+               $('.mui-table-view').append('<li class=\"mui-table-view-cell\"><div style=\'float:left;width:20%;text-align: center;\'><img src=\"'+d.resultValue[i].litpic+'\" style=\"width:50px;height: 50px;vertical-align: middle;margin-right: 5px;margin-left: 5px;\"></div><div style=\'float:left;width:31%;word-wrap: break-word;padding: 0 4px;margin-top: 15px;\'>返利: ￥<span style=\"color: #1E1E1E;font-size: 18px;font-weight: normal;\">'+d.resultValue[i].rebate_money+'</spam></div><div style=\'float:left;width:18%;word-wrap: break-word;padding: 0 4px;margin-top: 15px;\'>数量: <span style=\"color: #1E1E1E;font-size: 18px;font-weight: normal;\">'+d.resultValue[i].count+'</span></div><div style=\'float:left;width:31%;word-wrap: break-word;padding: 0 4px;margin-top: 15px;\'>小计: ￥<span style="color: #FF6600;font-size: 18px;font-weight: normal;\">'+d.resultValue[i].total+'</span></div></li>')
+            }               
+            
+        }
+    })
+}
+
+function tomain(){
+   window.location.href="historyRebate.html";
+}
+
+</script>
+</body>
+</html>

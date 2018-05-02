@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>账簿管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/tallManager.css">
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title">账簿管理</h1>
+    <button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left"><span class="mui-icon mui-icon-left-nav"></span>返回</button></header>
+
+<div class="mui-content">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right" href="purchaseRecord.html" style="font-family: 微软雅黑;">
+                <img class="mui-media-object img-item-left" src="../img/buy.png">采购
+            </a>
+        </li>
+        <li class="mui-table-view-cell">
+            <a class="mui-navigate-right" href="saleRecord.html" style="font-family: 微软雅黑;">
+                <img class="mui-media-object img-item-left" src="../img/sale.png">销售
+            </a>
+        </li>
+    </ul>
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="./../../commonJs/config.js?010716064"></script>
+<script src="../js/mui.min.js"></script>
+<script>
+/*var  GLOB_AID;
+GLOB_AID = request.QueryString("aid");
+var localStorage2  = window.localStorage;
+localStorage2["sessionAid"] = GLOB_AID;*/
+</script>
+</body>
+</html>

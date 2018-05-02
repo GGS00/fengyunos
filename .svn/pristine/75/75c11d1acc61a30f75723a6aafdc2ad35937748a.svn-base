@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>销售单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/tallManager.css">
+    <style>
+        .mui-pull-top-pocket {
+            top: 0px !important;
+        }
+
+        #pullrefresh {
+            top: 163px;
+            bottom: 100px;
+        }
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title">销售单</h1>
+    <button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left"><span
+            class="mui-icon mui-icon-left-nav"></span>返回
+    </button>
+</header>
+
+<div class="mui-content">
+    <div style="padding: 10px">
+        <div>
+            <span>客　户</span>
+             <input type="text" id="customerName" placeholder="请输入姓名" style="width:80%;border:none;margin-bottom:4px;">
+        </div>
+        <div>
+            <span style="position:relative;top:6px;">供应商</span>
+            <select class="mui-btn" id='supplier' onchange="searchBySupplier()" style="width:80%;">
+                <option value="4">店主自定义</option>
+                <option value="9">云店自营</option>
+                <option value="1">51订货网</option>
+            </select>
+        </div>
+        <div>
+            <span style="position:relative;top:6px;">门　店</span>
+            <select class="mui-btn" id="shops" style="width:80%;">
+                <!-- <option value="1111">店主自定义</option>
+                <option value="222">云店自营</option>
+                <option value="333">51订货网</option> -->
+            </select>
+        </div>
+    </div>
+    <div style="margin-top:6px;margin-left:10px">
+        <span>增加商品</span><a class="mui-icon mui-icon-plusempty" onclick="pageChange()" style='font-weight:bolder'></a>
+    </div>
+
+    <div id="scroll" class="mui-scroll-wrapper" style="position: absolute;top:216px;bottom: 95px;">
+        <div class="mui-scroll">
+            <ul id="addGoodsList" class="mui-table-view">
+            
+            </ul>
+        </div>
+    </div>
+
+    <div style="background-color:#EFEFEF;height: 50px;width: 100%;position: absolute;bottom: 50px;">
+        <div class="extra-price">
+            <div class="mui-input-row">
+                <label>抹零(-)</label>
+                <input type="text" id="reduce" onkeyup="checkReduce(this.value)"placeholder="" style="height:27px;">
+            </div>
+        </div>
+        <div class="extra-price">
+            <div class="mui-input-row">
+                <label>其他(+)</label>
+                <input type="text" id="extra" onkeyup="checkExtra(this.value)" maxlength="8" placeholder="" style="height:27px;">
+            </div>
+        </div>
+    </div>
+    <nav class="mui-bar mui-bar-tab" style='box-shadow: rgb(207, 203, 203) 0px -7px 10px;'>
+        <div class="total-price">合计:<span class='sumMon' style='color:red'>0</span>元</div>
+        <div class="ok" onclick="commitOrder()">确认</div>
+    </nav>
+
+
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="./../../commonJs/config.js?010716064"></script>
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init();
+    mui('#scroll').scroll({
+        indicators: true //是否显示滚动条
+    });
+    var Glob_aid;
+    var GLOB_localStorage = window.localStorage;
+    Glob_aid = GLOB_localStorage["sessionAid"];
+    var GLOB_SHOP;
+    var GLOB_NAME;
+    GLOB_NAME = request.QueryString("name");
+    var supply = request.QueryString("supply");
+    var shop = request.QueryString("shop");
+    if(GLOB_NAME){
+      var name = decodeURIComponent(GLOB_NAME);
+      $("#customerName").val(name);  
+    }
+    if(supply){
+      $('#supplier').find('option[value='+supply+']').attr('selected','selected');
+    }
+    var GLOB_SUPPLY = $("#supplier option:selected").val();
+    GLOB_localStorage["sessionSupply"] = GLOB_SUPPLY;
+    
+    if(GLOB_localStorage["sessionAmout"]){
+        var goodsAttr = JSON.parse(GLOB_localStorage["sessionAmout"]);
+    }
+
+    function pageChange(){
+      if(supply){
+            if(GLOB_SUPPLY!=supply){
+              GLOB_localStorage["sessionAmout"]='';
+            }else{
+              var lilen=$("#addGoodsList").children('li').size();  
+              var pagedata = "["
+              for(var i=0;i<lilen;i++){
+                var jsonText = {};
+                jsonText["price"] = $("#addGoodsList").find("li:eq("+i+")").attr("price");
+                jsonText["goodsAtomid"] = $("#addGoodsList").find("li:eq("+i+")").attr("atomid");
+                jsonText["totalNumber"] = $("#addGoodsList").find("li:eq("+i+")").attr("totalNumber");
+                jsonText["supplyid"] = $("#addGoodsList").find("li:eq("+i+")").attr("suid");
+                jsonText["totalPrice"] = $("#addGoodsList").find("li:eq("+i+")").attr("id");
+                jsonText["goodsName"] = $("#addGoodsList").find("li:eq("+i+")").attr("goodsname");
+               
+                if(i<(lilen-1)){
+                  pagedata+=JSON.stringify(jsonText)+",";
+                }else{
+                  pagedata+=JSON.stringify(jsonText);
+                } 
+                                                 
+              }
+              pagedata += "]";
+              GLOB_localStorage['sessionAmout'] = pagedata;
+            }
+        }
+        GLOB_SHOP = $("#shops option:selected").val(); 
+        GLOB_localStorage["sessionShop"] = GLOB_SHOP;
+        var customerName =$("#customerName").val();
+
+        if(customerName != ''){
+          window.location.href="chooseSaleGoods_sub.html?name="+customerName;
+        }else{
+          window.location.href="chooseSaleGoods_sub.html";
+        }
+      
+    }
+    
+    
+    initial();
+        
+      function initial(){
+          $.ajax({
+                type: "POST",
+                /*url: "../json/addPurchase.json",*/
+                url: "" + Comm_Config + "wx/beforeAddPurchase.do",
+                data:{"agentid":Glob_aid},
+                success: function (data) {
+                    var d = eval(data);
+                    for (i = 0; i < d.resultValue.length; i++) {
+                       $("#shops").append("<option value="+ d.resultValue[i].id+">"+ d.resultValue[i].shop_name+"</option>");
+                       if(shop){
+                          $('#shops').find('option[value='+shop+']').attr('selected','selected');
+                       }
+                    }
+                    goodsDataHandel();
+                }
+            })
+      }
+  
+    function goodsDataHandel() {
+        if(goodsAttr==undefined){
+            return;
+        }else{
+            var table = $("#addGoodsList");
+             sumCount=0;
+            for(var i=0;i<goodsAttr.length;i++){
+            
+             table.append("<li suid=\'"+goodsAttr[i].supplyid+"\' goodsname=\'"+goodsAttr[i].goodsName+"\' price=\'"+goodsAttr[i].price +"\' atomid=\'"+goodsAttr[i].goodsAtomid+"\' totalNumber=\'"+goodsAttr[i].totalNumber+"\' id=\'"+goodsAttr[i].totalPrice+"\' class=\"mui-table-view-cell\"><div class=\"mui-slider-right mui-disabled\"><a class=\"mui-btn mui-btn-red\">删除</a></div><div class=\"mui-slider-handle\" style=\"height:40px\"><h4 style=\"width:70%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;text-align:left\">" + goodsAttr[i].goodsName + "</h4><h6>￥" + goodsAttr[i].price + " * "+goodsAttr[i].totalNumber + "</h6><div class=\"goods-item-right\"><h4 class=\"color-fdb03b\">￥<span>"+goodsAttr[i].totalPrice +"</span></h4></div></div></li>");
+                sumCount = Number(Number(sumCount) + Number(goodsAttr[i].totalPrice)).toFixed(2);
+            
+
+           }
+           $('.sumMon').html(''+sumCount+'');    
+        }
+        
+    }
+    mui('#addGoodsList').on('tap', '.mui-btn', function (event) {
+        var elem = this;
+        
+        var li = elem.parentNode.parentNode;
+        mui.confirm('确认删除该条记录？', '', btnArray, function (e) {
+            if (e.index == 0) {
+                var cutMoney=li.id;
+                li.parentNode.removeChild(li);
+                var lilen=$("#addGoodsList").children('li').size();
+                var summ = 0;
+                if(lilen == 0){
+                    sumCount=0.00;
+                    $('#reduce').val('');
+                    $('#extra').val('');
+                    $('.sumMon').html(''+sumCount+'');
+                    return;
+                }
+                if(($('#reduce').val()!='')||($('#extra').val()!='')){
+                     var reduceVal = $('#reduce').val();
+                     var extraVal = $('#extra').val();
+                     for(var i=0;i<lilen;i++){
+                      var price = $("#addGoodsList").find("li:eq("+i+")").attr("id");
+                          summ = Number(Number(summ)+Number(price)).toFixed(2)
+                    }
+                    sumCount=Number(Number(summ)-Number(reduceVal)+Number(extraVal)).toFixed(2);           
+                }else{
+                    sumCount=Number(Number(sumCount) - Number(cutMoney)).toFixed(2);  
+                }
+                 
+                $('.sumMon').html(''+sumCount+'');
+            } else {
+                setTimeout(function () {
+                    mui.swipeoutClose(li);
+                }, 0);
+            }
+        });
+    });
+    var btnArray = ['确认', '取消'];
+
+    function checkExtra(str){ 
+     var re =/^\+?(0|[1-9][0-9]*)$/;
+        if ( (!re.test(str)) && (str!='') ){
+            if($('#reduce').val()!=''){
+                 mui.alert('只能输入正整数', '提示');
+                 $('#extra').val('');
+                 var reduceVal = $('#reduce').val();
+                 var xx = Number(Number(sumCount)- Number(reduceVal)).toFixed(2);
+                 $('.sumMon').html(''+  xx  +'');
+            }else{
+                 mui.alert('只能输入正整数', '提示');
+                 $('#extra').val('');
+                 $('.sumMon').html(''+  sumCount  +'');
+            }           
+        }else{
+             if($('#reduce').val()!=''){
+                var changeMon = Number(Number(sumCount) + Number(str)).toFixed(2);
+                var reduceVal1 = $('#reduce').val();
+                var changeMon = Number(Number(sumCount) + Number(str)-Number(reduceVal1)).toFixed(2);
+                $('.sumMon').html(''+  changeMon  +'');
+             }else{
+                var changeMon = Number(Number(sumCount) + Number(str)).toFixed(2);
+                $('.sumMon').html(''+  changeMon  +'');
+             }
+        }
+    }
+
+    function checkReduce(str){ 
+     var re =/^\+?(0|[1-9][0-9]*)$/;
+        if  ( (!re.test(str)) && (str!='') ){
+            if($('#extra').val()!=''){
+                 mui.alert('只能输入正整数', '提示');
+                 $('#reduce').val('');
+                 var extraVal = $('#extra').val();
+                 var ss = Number(Number(sumCount) + Number(extraVal)).toFixed(2);
+                 $('.sumMon').html(''+  ss  +'');
+            }else{
+                 mui.alert('只能输入正整数', '提示');
+                 $('#reduce').val('');
+                 $('.sumMon').html(''+  sumCount  +'');
+            }   
+        }else{
+            if($('#extra').val()!=''){
+                if(Number(str)>Number(sumCount)){
+                 mui.alert('抹零不能超过合计价格', '提示');
+                 $('#reduce').val('');
+                 var extraVal1= $('#extra').val();
+                 var ww = Number(Number(sumCount) + Number(extraVal1)).toFixed(2);
+                 $('.sumMon').html(''+  ww  +'');
+                }else{
+                    var extraVal2= $('#extra').val();
+                    var changeMon = Number(Number(sumCount) + Number(extraVal2) - Number(str)).toFixed(2);
+                    $('.sumMon').html(''+  changeMon  +'');
+                }
+            }else{
+               if(Number(str)>Number(sumCount)){
+                 mui.alert('抹零不能超过合计价格', '提示');
+                 $('#reduce').val('');
+                 $('.sumMon').html(''+  sumCount  +'');
+               }else{
+                    var changeMon = Number(Number(sumCount) - Number(str)).toFixed(2);
+                    $('.sumMon').html(''+  changeMon  +'');
+               }
+            } 
+        }
+    }
+
+    function searchBySupplier(){
+       GLOB_SUPPLY = $("#supplier option:selected").val();
+       if(supply){
+          if(GLOB_SUPPLY!=supply){
+            $("#addGoodsList").hide();
+          }else{
+            $("#addGoodsList").show();
+          }
+       }
+       GLOB_localStorage["sessionSupply"] = GLOB_SUPPLY;
+       /*loadPurchase();*/
+    }
+
+    function commitOrder(){
+
+        var randomstr = GetRandomNum();
+        GLOB_SUPPLY = $("#supplier option:selected").val();
+        GLOB_SHOP = $("#shops option:selected").val();
+        /*var supplyid = $("#addGoodsList").find("li:eq(0)").attr("suid");*/
+        var totalPrice = $('.sumMon').html();
+        var reducePrice = $('#reduce').val();
+        var addPrice = $('#extra').val();
+        var customer = $('#customerName').val();
+        if(reducePrice==''){
+            reducePrice = 0;
+        }
+        if(addPrice==''){
+            addPrice = 0;
+        }
+        var lilen=$("#addGoodsList").children('li').size(); 
+        if(lilen==0){
+            mui.alert("请添加商品");
+            return;
+        } 
+        if(customer==''){
+            mui.alert("请输入客户姓名");
+            return;
+        } 
+        var result = "["
+        for(var i=0;i<lilen;i++){
+          var jsonText = {};
+          jsonText["goodsAtomid"] = $("#addGoodsList").find("li:eq("+i+")").attr("atomid");     
+          jsonText["totalNumber"] = $("#addGoodsList").find("li:eq("+i+")").attr("totalNumber");
+          jsonText["supplyid"] = $("#addGoodsList").find("li:eq("+i+")").attr("suid");;   
+          jsonText["totalPrice"] = $("#addGoodsList").find("li:eq("+i+")").attr("id");;     
+          if(i<(lilen-1)){
+            result+=JSON.stringify(jsonText)+",";
+          }else{
+            result+=JSON.stringify(jsonText);
+          }          
+        }
+       result += "]";        
+        $.ajax({
+            type: "POST",
+            url: "" + Comm_Config + "wx/addSale.do",
+            data:{"agentid":Glob_aid,"shopid":GLOB_SHOP,"customer":customer,"totalPrice":totalPrice,"reducePrice":reducePrice,"addPrice":addPrice,"str":result},
+            success: function (data) {
+                mui.alert("保存成功");
+                window.location.href="saleRecord_sub.html?"+randomstr;
+            }
+        })
+
+    }
+        /*data: {
+            "agentid": 232,
+            "shopid" : 205,
+            "supplyid": "4_232",
+            "totalPrice" : 2000,
+            "reducePrice" : 5,
+            "addPrice" : 3,
+            "str" :　"[{'goodsAtomid' : 50354, 'totalNumber' : 2,'totalPrice' : 2000}]", 
+        },*/
+             
+      function GetRandomNum() {   
+          var Min = 0;
+          var Max = 10000;
+          var Range = Max - Min;   
+          var Rand = Math.random();   
+          return(Min + Math.round(Rand * Range));   
+      } 
+</script>
+</body>
+</html>

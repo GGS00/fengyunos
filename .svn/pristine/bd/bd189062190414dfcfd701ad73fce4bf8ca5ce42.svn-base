@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>绑定银行卡</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<script src="jquery-1.11.3.min.js"></script>-->
+        <!--<link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" rel="stylesheet">-->
+        <link href="css/mui.min.css" rel="stylesheet">
+        <link href="css/bank.css" rel="stylesheet">
+        <script src="js/jquery-1.11.3.min.js"></script>
+        <script src="js/mui.min.js"></script>
+        <script src="js/bank.js"></script>
+    </head>
+    <body onload="getBankCardList()">
+        <div class="content">
+            <div id="card-div"></div>
+            <a href="addCard.html">
+                <button type="button" style="line-height: 1.7;" class="mui-btn mui-btn-primary mui-btn-block height150 radius"><img src="img/add.png"> 添加银行卡</button>
+            </a>
+        </div>
+    </body>
+</html>

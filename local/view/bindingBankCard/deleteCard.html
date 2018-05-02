@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解除银行卡绑定</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/mui.min.css" rel="stylesheet">
+    <link href="css/bank.css" rel="stylesheet">
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/mui.min.js"></script>
+    <script src="js/bank.js"></script>
+</head>
+<body onload="initDel()">
+    <div class="content" id="card-div">
+        <div class="radius card-item" >
+            <img id="icon" src="img/bank.png"><span id="name" class="bankName">招商银行</span><span id="code" class="bankCode">1234 2563 2563 3652 125</span>
+        </div>
+        <button type="button" id="delete" style="background-color: #dcd6ce" class="mui-btn  mui-btn-block height150 radius">删除绑定</button>
+    </div>
+<script>
+    document.getElementById("delete").addEventListener('tap', function() {
+        var btnArray = ['否', '是'];
+        mui.confirm('确定解除绑定？', '提示', btnArray, function(e) {
+            if (e.index == 1) {
+                deleteCard();
+            }
+
+        })
+    });
+</script>
+</body>
+</html>

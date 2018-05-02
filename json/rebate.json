@@ -1,0 +1,55 @@
+{
+    "totalCount": 4,
+    "all_rebate_money": 322.01,
+    "resultValue": [
+        {
+            "rebate_money": 111,
+            "count": 1,
+            "total": 111,
+            "rebate_date": "2016-08-01 17:03:49",
+            "add_time": 1470042229,
+            "litpic": "http://static.51dh.com.cn/51dh/fc/82/aca096fc88c547da326458f5f32bf82b2831.jpg"
+        },
+        {
+            "rebate_money": 111,
+            "count": 1,
+            "total": 111,
+            "rebate_date": "2016-08-01 17:11:05",
+            "add_time": 1470042665,
+            "litpic": "http://static.51dh.com.cn/51dh/fc/82/aca096fc88c547da326458f5f32bf82b2831.jpg"
+        },
+        {
+            "rebate_money": 0.01,
+            "count": 1,
+            "total": 0.01,
+            "rebate_date": "2016-08-01 17:14:56",
+            "add_time": 1470042896,
+            "litpic": "http://static.51dh.com.cn/51dh/83/43/ca29be2ca3d04af5fe97aa0d38bcb068df48.jpg"
+        },
+        {
+            "rebate_money": 100,
+            "count": 1,
+            "total": 100,
+            "rebate_date": "2016-08-08 10:04:14",
+            "add_time": 1470621854,
+            "litpic": "http://static.51dh.com.cn/51dh/45/84/915f51b218ab30a82d03fd6b4ddc99b4cc46.jpg"
+        },
+        {
+            "rebate_money": 100,
+            "count": 1,
+            "total": 100,
+            "rebate_date": "2016-08-08 10:04:14",
+            "add_time": 1470621854,
+            "litpic": "http://static.51dh.com.cn/51dh/45/84/915f51b218ab30a82d03fd6b4ddc99b4cc46.jpg"
+        },
+        {
+            "rebate_money": 100,
+            "count": 1,
+            "total": 100,
+            "rebate_date": "2016-08-08 10:04:14",
+            "add_time": 1470621854,
+            "litpic": "http://static.51dh.com.cn/51dh/45/84/915f51b218ab30a82d03fd6b4ddc99b4cc46.jpg"
+        }
+    ],
+    "msg": "查询成功"
+}

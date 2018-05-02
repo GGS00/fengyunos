@@ -1,0 +1,105 @@
+body{
+    background-color: #fff;
+}
+.mui-content{
+    background-color: #fff;
+}
+#header
+{
+    background-color: #fff;
+}
+
+.myRebate
+{
+    font-family: 微软雅黑;
+    font-weight: bolder;
+    color: #838181;
+}
+
+.menuSelect{
+    border: #ccc 2px solid;
+    text-align: center;
+    height: 96px;
+    width: 58%;
+    margin: 28px auto;
+}
+
+.selectM{
+    font-size: 18px;
+    font-family: 微软雅黑;
+    font-weight: 500;
+    color: #838181;
+    display: block;
+    margin-top:36px;
+}
+
+.userName{
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    font-size: 15px;
+    font-family: 微软雅黑;
+    width: 100%;
+    margin-top: 20px;
+    height: 38px;
+    padding-left: 8px;
+}
+.loginput{
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: 微软雅黑;
+    width: 70%;
+    height: 38px;
+    padding-left: 8px;
+    margin-left: 58px;
+}
+
+input[type=password]{
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: 微软雅黑;
+    width: 70%;
+    margin-top: 20px;
+    height: 38px;
+    padding-left: 8px;
+    margin-left: 58px;
+}
+
+.newMac{
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    font-size: 15px;
+    font-family: 微软雅黑;
+    width: 100%;
+    margin-top: 30px;
+    height: 38px;
+    padding-left: 8px;
+}
+
+.searchUser{
+    text-align: center;
+    margin-top: 12px;
+}
+
+.searchButton{
+    width: 80%;
+    height: 36px;
+    font-size: 16px;
+    color: #858383;
+}
+
+.loginButton{
+    font-family: 微软雅黑;
+    width: 28%;
+    height: 36px;
+    font-size: 16px;
+    color: #858383;
+}
+
+.bindButton{
+    width: 80%;
+    height: 36px;
+    font-size: 16px;
+    color: #858383;
+}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>采购单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/tallManager.css">
+    <style>
+        .mui-pull-top-pocket {
+            top: 0px !important;
+        }
+
+        #pullrefresh {
+            top: 163px;
+            bottom: 100px;
+        }
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+
+    <h1 class="mui-title">采购单</h1>
+    <button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left"><span
+            class="mui-icon mui-icon-left-nav"></span>返回
+    </button>
+</header>
+
+<div class="mui-content">
+    <div style="padding: 10px">
+        <label>
+            <span>供应商</span>
+            <select class="mui-btn" id='supplier' onchange="searchBySupplier()">
+                <option value="11">店主自定义</option>
+                <option value="22">云店自营</option>
+                <option value="33">51订货网</option>
+            </select>
+        </label>
+        <label>
+            <span>门　店</span>
+            <select class="mui-btn" id="shops" onchange="searchByShops()">
+                <option value="1111">店主自定义</option>
+                <option value="222">云店自营</option>
+                <option value="333">51订货网</option>
+            </select>
+        </label>
+    </div>
+    <div style="margin-top:6px;margin-left:10px">
+        <span>增加商品</span><a class="mui-icon mui-icon-plusempty" style='font-weight:bolder' href="chooseSaleGoods.html"></a>
+    </div>
+    <div id="scroll" class="mui-scroll-wrapper" style="position: absolute;top:170px;bottom: 95px;">
+        <div class="mui-scroll">
+            <ul id="addGoodsList" class="mui-table-view">
+              <!--   <li class="mui-table-view-cell">
+                    <div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>
+                    <div class="mui-slider-handle"><h4>某某有限公司</h4><h6>JH0255633232323</h6><h6>2016-06-06 15:25</h6>
+                        <div class="goods-item-right"><h4 class="color-fdb03b">￥2316.23</h4><h6>新街口店</h6></div>
+                    </div>
+                </li>
+                <li class="mui-table-view-cell">
+                    <div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>
+                    <div class="mui-slider-handle"><h4>某某有限公司</h4><h6>JH0255633232323</h6><h6>2016-06-06 15:25</h6>
+                        <div class="goods-item-right"><h4 class="color-fdb03b">￥2316.23</h4><h6>新街口店</h6></div>
+                    </div>
+                </li>
+                <li class="mui-table-view-cell">
+                    <div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>
+                    <div class="mui-slider-handle"><h4>某某有限公司</h4><h6>JH0255633232323</h6><h6>2016-06-06 15:25</h6>
+                        <div class="goods-item-right"><h4 class="color-fdb03b">￥2316.23</h4><h6>新街口店</h6></div>
+                    </div>
+                </li>
+                <li class="mui-table-view-cell">
+                    <div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>
+                    <div class="mui-slider-handle"><h4>某某有限公司</h4><h6>JH0255633232323</h6><h6>2016-06-06 15:25</h6>
+                        <div class="goods-item-right"><h4 class="color-fdb03b">￥2316.23</h4><h6>新街口店</h6></div>
+                    </div>
+                </li>
+                <li class="mui-table-view-cell">
+                    <div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>
+                    <div class="mui-slider-handle"><h4>某某有限公司</h4><h6>JH0255633232323</h6><h6>2016-06-06 15:25</h6>
+                        <div class="goods-item-right"><h4 class="color-fdb03b">￥2316.23</h4><h6>新街口店</h6></div>
+                    </div>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+    <div style="background-color:#EFEFEF;height: 50px;width: 100%;position: absolute;bottom: 50px;">
+        <div class="extra-price">
+            <div class="mui-input-row">
+                <label>抹零(-)</label>
+                <input type="text" id="reduce" onkeyup="checkReduce(this.value)"placeholder="" style="height:27px;">
+            </div>
+        </div>
+        <div class="extra-price">
+            <div class="mui-input-row">
+                <label>其他(+)</label>
+                <input type="text" id="extra" onkeyup="checkExtra(this.value)" maxlength="8" placeholder="" style="height:27px;">
+            </div>
+        </div>
+    </div>
+    <nav class="mui-bar mui-bar-tab" style='box-shadow: rgb(207, 203, 203) 0px -7px 10px;'>
+        <div class="total-price">合计:<span class='sumMon' style='color:red'>0</span>元</div>
+        <div class="ok">确认</div>
+    </nav>
+
+
+</div>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init();
+    mui('#scroll').scroll({
+        indicators: true //是否显示滚动条
+    });
+
+    var GLOB_SUPPLY = 11;
+    var GLOB_SHOP = 111;
+    loadPurchase(GLOB_SUPPLY,GLOB_SHOP);
+
+    function loadPurchase(supply,shop){
+        $.ajax({
+            type: "GET",
+            url: "../json/addPurchase.json",
+            data: {"supplyId":GLOB_SUPPLY,"shopId":GLOB_SHOP},
+            success: function(data) {
+                goodsDataHandel(data);
+            }
+        });
+    }
+
+           
+    function goodsDataHandel(data) {
+        var d = eval(data);
+        var table = $("#addGoodsList");
+         sumCount=0;
+        for(var i=0;i<d.resultValue.length;i++){
+        if(d.resultValue[i]){
+         table.append("<li class=\"mui-table-view-cell\"><div class=\"mui-slider-right mui-disabled\"><a class=\"mui-btn mui-btn-red\">删除</a></div><div class=\"mui-slider-handle\"><h4>" + d.resultValue[i].supply_name + "</h4><h6>" + d.resultValue[i].goods_atom_id + "</h6><h6>2016-06-06 15:25</h6><div class=\"goods-item-right\"><h4 class=\"color-fdb03b\">￥"+d.resultValue[i].wholesale_price +"</h4><h6>新街口店</h6></div></div></li>");
+            sumCount = Number(Number(sumCount) + Number(d.resultValue[i].wholesale_price)).toFixed(2);
+        }
+
+       }
+       $('.sumMon').html(''+sumCount+'');
+    }
+    mui('#addGoodsList').on('tap', '.mui-btn', function (event) {
+        var elem = this;
+        var li = elem.parentNode.parentNode;
+        mui.confirm('确认删除该条记录？', '', btnArray, function (e) {
+            if (e.index == 0) {
+                li.parentNode.removeChild(li);
+                /* window.location.reload();*/
+                loadPurchase();
+            } else {
+                setTimeout(function () {
+                    mui.swipeoutClose(li);
+                }, 0);
+            }
+        });
+    });
+    var btnArray = ['确认', '取消'];
+
+    function checkExtra(str){ 
+     var re =/^\+?(0|[1-9][0-9]*)$/;
+        if ( (!re.test(str)) && (str!='') ){
+            if($('#reduce').val()!=''){
+                 mui.alert('只能输入正整数', '提示');
+                 $('#extra').val('');
+                 var reduceVal = $('#reduce').val();
+                 var xx = Number(Number(sumCount)- Number(reduceVal)).toFixed(2);
+                 console.log(xx);
+                 $('.sumMon').html(''+  xx  +'');
+            }else{
+                 mui.alert('只能输入正整数', '提示');
+                 $('#extra').val('');
+                 $('.sumMon').html(''+  sumCount  +'');
+            }           
+        }else{
+             if($('#reduce').val()!=''){
+                var changeMon = Number(Number(sumCount) + Number(str)).toFixed(2);
+                var reduceVal1 = $('#reduce').val();
+                var changeMon = Number(Number(sumCount) + Number(str)-Number(reduceVal1)).toFixed(2);
+                $('.sumMon').html(''+  changeMon  +'');
+             }else{
+                var changeMon = Number(Number(sumCount) + Number(str)).toFixed(2);
+                $('.sumMon').html(''+  changeMon  +'');
+             }
+        }
+    }
+
+    function checkReduce(str){ 
+     var re =/^\+?(0|[1-9][0-9]*)$/;
+        if  ( (!re.test(str)) && (str!='') ){
+            if($('#extra').val()!=''){
+                 mui.alert('只能输入正整数', '提示');
+                 $('#reduce').val('');
+                 var extraVal = $('#extra').val();
+                 var ss = Number(Number(sumCount) + Number(extraVal)).toFixed(2);
+                 $('.sumMon').html(''+  ss  +'');
+            }else{
+                 mui.alert('只能输入正整数', '提示');
+                 $('#reduce').val('');
+                 $('.sumMon').html(''+  sumCount  +'');
+            }   
+        }else{
+            if($('#extra').val()!=''){
+                if(Number(str)>Number(sumCount)){
+                 mui.alert('抹零不能超过合计价格', '提示');
+                 $('#reduce').val('');
+                 var extraVal1= $('#extra').val();
+                 var ww = Number(Number(sumCount) + Number(extraVal1)).toFixed(2);
+                 console.log(ww);
+                 $('.sumMon').html(''+  ww  +'');
+                }else{
+                    var extraVal2= $('#extra').val();
+                    var changeMon = Number(Number(sumCount) + Number(extraVal2) - Number(str)).toFixed(2);
+                    $('.sumMon').html(''+  changeMon  +'');
+                }
+            }else{
+               if(Number(str)>Number(sumCount)){
+                 mui.alert('抹零不能超过合计价格', '提示');
+                 $('#reduce').val('');
+                 $('.sumMon').html(''+  sumCount  +'');
+               }else{
+                    var changeMon = Number(Number(sumCount) - Number(str)).toFixed(2);
+                    $('.sumMon').html(''+  changeMon  +'');
+               }
+            } 
+        }
+    }
+
+    function searchBySupplier(){
+       GLOB_SUPPLY = $("#supplier option:selected").val();
+       loadPurchase();
+    }
+
+    function searchByShops(){
+       GLOB_SHOP = $("#shops option:selected").val();
+       loadPurchase();
+    }
+    
+
+</script>
+</body>
+</html>

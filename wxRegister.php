@@ -1,0 +1,205 @@
+<?php
+error_reporting(0);
+require_once "./publicWxAction/jssdk.php"; 
+$jssdk = new JSSDK();
+$signPackage = $jssdk->GetSignPackage();
+?>
+<!DOCTYPE html>
+<html class="no-js gecko ff3 win js" lang="en">
+    
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title> 注册体验51云店</title>
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        <!-- 三级联动区域选择-->
+         <script type="text/javascript" src="js/area.js?11261027"></script>
+    </head>
+    
+    <body onload="wxregisterready()">
+        <div class="alert alert-info" id="Bindingflagdiv" style="text-align:center">
+            二维码扫描成功,正在通信
+        </div>
+        <!-- post 表单提交 隐藏-->
+        <input type="text" value="" name="boxid" id="postboxid" style="display: none">
+        <input type="text" value="" name="imei" id="postimei" style="display: none">
+       
+        
+        <div class="container">
+            <!-- 正在加载-->
+            <div id="normaldiv" style=" text-align:center">
+                <!--添加图片的一些信息等等-->
+                <p class="bg-info" style="position: relative;margin-top: 40%;">
+                    正在数据通信，请稍后.....
+                </p>
+            </div>
+            <!-- 正在加载-->
+            <!-- 一些错误信息，通信失败，二维码扫描失败 重复绑定-->
+            <div style="display: none;" id="errordiv">
+                <a type="button" class="btn btn-danger" style="position: absolute;top:70%;left:30%;width:40%;" href="home.php" id="errorBackbt">返回首页</a>
+            </div>
+            <!-- 一些错误信息，通信失败，二维码扫描失败等等-->
+            <!-- S 已经注册 是否立即绑定-->
+            <div style="display: none;" id="enactivetydiv">
+<!--                <button id="s_binding_btn" style="position: absolute;top:70%;left:30%;width:40%;"
+                class="btn btn-success" onclick="s_binding()">
+                    绑定
+                </button>-->
+                <button id="s_back_btn" style="position: absolute;top:70%;left:30%;width:40%;"
+                class="btn btn-danger" onclick="back_binding()">
+                    返回
+                </button>
+            </div>
+            <!-- E 已经注册 是否立即绑定--->
+            <!--S 未绑定时 用于信息输入 name="Project[name]"-->
+            <div style=" background: #FFF;display: none;" id="editdiv">
+                <form role="form" id="contentform" name="thisform" action="http://127.0.0.1:8080/wpserver/wx/registerByWx.do" method='post'>
+                    <!--存数imei号 隐藏-->
+                    <input type="text" class="form-control" id="imeiId" name="openid" style="display: none">
+                    <input type="text"  class="form-control" id="boxid" name="mac" style="display: none">
+                     <input type="text" value="" name="num" id="channelnumId"  style="display: none">
+                    <div id="aidinfodiv">
+                        <input type="text"  class="form-control" id="aid" name="aid">
+                    </div>
+                    <div id="userinfodiv">
+                        <div class="form-group" id="usernamediv" style="display: none">
+                            <label for="name">
+                                用户名
+                            </label>
+                            <span id="usernametips" style="display: none;color:red">
+                                &nbsp;&nbsp;&nbsp;用户名已经存在
+                            </span>
+                            <input type="text" class="form-control" name="username" id="username" 
+                            placeholder="输入用户名" onblur="validation(5,this.value)" data-toggle="tooltip" title="建议使用手机号码作为用户名">
+                        </div>
+                        <div class="form-group" id="passworddiv" style="display: none">
+                            <label for="name">
+                                密码
+                            </label>
+                            <input type="password" class="form-control" name="password" id="password"
+                            placeholder="输入密码" onblur="validation(6,this.value)" data-toggle="tooltip" title="密码用于电脑端登陆，请谨记">
+                        </div>
+                        <div class="form-group" id="confirmpassworddiv" style="display: none">
+                            <label for="name">
+                                确认密码
+                            </label>
+                            <input type="password" class="form-control" name="confirmpassword" id="confirmpassword"
+                            placeholder="再输一次密码" onblur="validation(7,this.value)"data-toggle="tooltip" title="请再输一次密码，">
+                        </div>
+                    </div>
+                    <div class="form-group" id="companydiv">
+                        <label for="name">
+                            店铺名称
+                        </label>
+                        <input type="text" class="form-control" name="shop_name" id="company" placeholder="输入店铺名称"
+                        onblur="validation(0,this.value)" data-toggle="tooltip" title="您的店铺名称，请勿超过十五个字">
+                    </div>
+                    <div class="form-group" id="namediv">
+                        <label for="name">
+                            店主姓名
+                        </label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="输入收货人姓名"
+                        onblur="validation(1,this.value)">
+                    </div>
+                    <div class="form-group" id="teldiv">
+                        <label for="name">
+                            联系方式(仅限1个手机号)
+                        </label><br>
+                         <span id="teldivtips" style="display: none;color:red">
+                               手机号已经存在，若您已经注册了云店请返回登陆
+                            </span>
+                        <input type="number" class="form-control" name="tel" id="tel"  placeholder="输入收货人电话" onblur="validation(2,this.value)">
+                    </div>
+                     <div class="form-group" id="qqdiv">
+                        <label for="name">
+                            QQ号码
+                        </label>
+                        <input type="number" class="form-control" name="qq" id="qq" placeholder="输入您的QQ号码" onblur="validation(8,this.value)">
+                    </div>
+                     <div class="form-group" id="wechatdiv">
+                        <label for="name">
+                            微信号
+                        </label>
+                        <input type="text" class="form-control" name="wechat" id="wechat"  placeholder="输入您的微信号" >
+                    </div>
+                    <label for="name">
+                        店铺地址
+                    </label>
+                    <div class="form-group-inline">
+                        <select id="s_province" name="province" class="form-control">
+                        </select>
+                        &nbsp;&nbsp;
+                    </div>
+                    <div class="form-group-inline">
+                        <select id="s_city" name="city" class="form-control">
+                        </select>
+                        &nbsp;&nbsp;
+                    </div>
+                    <div class="form-group" id="addressdiv">
+                        <select id="s_county" name="county" class="form-control">
+                        </select>
+                        &nbsp;&nbsp
+                        <textarea class="form-control"  name="address" rows="3" id="address" placeholder="输入街道地址,不超过50字" onblur="validation(3,this.value)" data-toggle="tooltip" title="店铺所在乡/镇/村/街道的详细地址，勿与以上的省/市/区重复"></textarea>
+                    </div>
+                     
+                    <script type="text/javascript">
+                        _init_area();
+                    </script>
+                    <!-- <div class="input-group">
+                    <input type="text" class="form-control" placeholder="点击定位">
+                    <span onclick="getLocation()" class="input-group-addon">¤</span>
+                    </div>-->
+                    <div class="form-group-inline" style="display:none">
+                        <label for="name">
+                            行业信息
+                        </label>
+                        <select id="stid" name="stid" class="form-control">
+                        </select>
+                        &nbsp;&nbsp;
+                    </div>
+                    <div class="form-group" id="zipcodediv" style="display:none">
+                        <label for="name">
+                            邮编
+                        </label>
+                        <input type="number" class="form-control" name="zipcode" id="zipcode" value="123456"
+                        placeholder="邮编" onblur="validation(4,this.value)">
+                    </div>
+                </form>
+                <div class="checkbox" style="display:none">
+                    <label>
+                        <input type="checkbox" id="noticecheckbox" checked=""> 我已阅读<a href="notice.html">《51云店注册前须知》</a>
+                    </label>
+                 </div>
+                <a style="right:5%; width:45%;float:left" class="btn btn-danger" href="javascript:history.go(-1);">
+                    取消
+                </a>
+                <button style="right:5%; width:45%;float:right" onclick="formResubmit()" class="btn btn-success" id="submitbtnid">
+                    提交
+                </button>
+                <br>
+                <br>
+            </div>
+            
+            
+            <!--E 未绑定时 用于信息输入-->
+        </div>
+        
+       
+        
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="js/jquery.md5.js"></script>
+        <script src="./commonJs/config.js?12111048"></script>
+        <script src="js/wxregister.js?10281520"></script>
+        <script>
+           $(function () { $("[data-toggle='tooltip']").tooltip(); });
+            var Gid = document.getElementById;
+            var showArea = function() {
+                Gid('show').innerHTML = "<h3>省" + Gid('s_province').value + " - 市" + Gid('s_city').value + " - 县/区" + Gid('s_county').value + "</h3>"
+            }
+            Gid('s_county').setAttribute('onchange', 'showArea()');
+        </script>
+    </body>
+
+</html>

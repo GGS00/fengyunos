@@ -1,0 +1,30 @@
+<div ng-controller="shopInfoCtrl as info">
+	<br>
+	<div ng-repeat="list in info.list" style="width:98%;margin-left: 1%;" id="shoplistdiv">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{list.shop_name}}</h3>
+			</div>
+			<div class="panel-body">
+				<div>
+					<span>分店老板：{{list.name}}</span>
+				</div>
+				<div>
+					<span href="tel:{{list.tel}}">联系电话：{{list.tel}}</span>
+				</div>
+				<div>
+					<span>QQ：{{list.qq}}</span>
+				</div>
+				<div><span>微信：{{list.wechat}}</span></div>
+				<div><span>创建时间：{{info.getLocalTime(list.add_time)}}</span></div>
+				<div><span>店铺地址：{{list.province+list.city+list.county+list.address}}</span></div>
+				<div style="text-align: center;padding: 3%;">
+					<!--<button type="button" class="btn btn-danger" onclick="shopunbind(" +d.resultValue[i].agent_id+ ","+d.resultValue[i].id+ ")">店铺解绑</button>-->
+					<a type="button" class="btn btn-success" href="tel:{{list.tel}}">联系分店老板</a>
+				</div>
+			</div>
+		</div>"
+	</div>
+	<div id="alertdiv" class="alert alert-danger" style="position:fixed;z-index: 9;bottom: 0px;width: 100%;margin-bottom: 0px; text-align: center;display: none">
+	</div>
+</div>

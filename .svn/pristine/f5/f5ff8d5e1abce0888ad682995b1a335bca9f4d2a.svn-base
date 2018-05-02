@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+ 
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title myRebate" style="left:78px;width:56%">推荐</h1>
+ 
+</header>
+
+<div class="mui-content">
+
+  <div class="contentHeader">
+    <div class="recommend" style="margin-left: 21px;">
+      <img src="img/muwu.jpg">
+      <div class="recommendTitle">
+        <span>店铺</span>
+      </div>
+    </div>
+    <div class="recommend">
+      <img src="img/11.jpg">
+      <div class="recommendTitle">
+        <span>商品</span>
+      </div>
+    </div>
+    <div class="recommend">
+      <img src="img/22.jpg">
+      <div class="recommendTitle">
+        <span>活动</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="contentBody" style="min-height: 700px;">
+
+    <div class="culling" onclick="toDetail()">
+      <img src="img/1.jpg">
+      <div class="cullingTitle">
+        <span class="activity">【店铺】51云店夏日大酬宾</span>
+        <div class="classify">
+          <div class="comment">    
+           <i class="fa fa-eye"></i><span class="content">2500</span>
+           <i class="fa fa-thumbs-o-up"></i><span class="content">507</span>
+           <i class="fa fa-comment-o"></i><span class="content">232</span>
+          </div>
+          <div class="shopact">
+            <span class="activityType">店铺活动</span>
+          </div>
+        </div>
+       </div>
+    </div>
+
+    <div class="culling" onclick="toDetail()">
+      <img src="img/2.jpg">
+      <div class="cullingTitle">
+        <span class="activity">【店铺】51云店夏日大酬宾</span>
+        <div class="classify">
+          <div class="comment">    
+           <i class="fa fa-eye"></i><span class="content">2500</span>
+           <i class="fa fa-thumbs-o-up"></i><span class="content">507</span>
+           <i class="fa fa-comment-o"></i><span class="content">232</span>
+          </div>
+          <div class="shopact">
+            <span class="activityType">店铺活动</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="culling" onclick="toDetail()">
+      <img src="img/3.jpg">
+      <div class="cullingTitle">
+        <span class="activity">【店铺】51云店夏日大酬宾</span>
+        <div class="classify">
+          <div class="comment">    
+           <i class="fa fa-eye"></i><span class="content">2500</span>
+           <i class="fa fa-thumbs-o-up"></i><span class="content">507</span>
+           <i class="fa fa-comment-o"></i><span class="content">232</span>
+          </div>
+          <div class="shopact">
+            <span class="activityType">店铺活动</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="contentFooter">
+    <div class="footerMenu">
+      <div class="discover">
+        <i class="fa fa-compass"></i>
+        <p>发现</p>
+      </div>
+    </div>
+    <div class="footerMenu">
+      <img src="img/add.png" style="width:50px;height:50px;margin-top:2px;" onclick="getInfo()">
+    </div>
+    <div class="footerMenu">
+      <div class="mine">
+        <i class="fa fa-user"></i>
+        <p>我的</p>
+      </div>
+    </div>
+
+  </div>
+    
+   
+</div>
+
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/mui.min.js"></script>
+<script type="text/javascript">
+  mui.init();
+  mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });
+
+  function toDetail(){
+    window.location.href="detail.html";
+  }
+
+  function getInfo(){
+    window.location.href="edit.html";
+    
+  }
+
+
+</script>
+</body>
+</html>

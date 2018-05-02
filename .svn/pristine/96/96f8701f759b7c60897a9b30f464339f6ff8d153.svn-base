@@ -1,0 +1,907 @@
+<?php
+error_reporting(0);
+require_once "./../publicWxAction/jssdk.php";
+$jssdk = new JSSDK();
+$signPackage = $jssdk->GetSignPackage();
+
+$wxAppid = "wx6f30595592155ec9";//wx29656e8801565344
+$wxSrcret = "19d00ffec9a7ce9cb08ce224f52b974c";//7497e4557f2ce8b2c0ba0a0b5edee267
+
+$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$wxAppid&secret=$wxSrcret";
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); 
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+$output = curl_exec($ch);
+curl_close($ch);
+$jsoninfo = json_decode($output, true);
+$access_token = $jsoninfo["access_token"];
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+    <link href="css/mui.picker.css" rel="stylesheet" />
+    <link href="css/mui.poppicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/main.css">    
+    <style>
+    
+    body{
+        background-color: #EBEBEB;
+        overflow-x: hidden;
+      
+    }
+
+    .mui-content{
+        background-color: #EBEBEB;
+    }
+
+    .mui-preview-image.mui-fullscreen {
+        position: fixed;
+        z-index: 20;
+        background-color: #000;
+      }
+      .mui-preview-header,
+      .mui-preview-footer {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        z-index: 10;
+      }
+      .mui-preview-header {
+        height: 44px;
+        top: 0;
+      }
+      .mui-preview-footer {
+        height: 50px;
+        bottom: 0px;
+      }
+      .mui-preview-header .mui-preview-indicator {
+        display: block;
+        line-height: 25px;
+        color: #fff;
+        text-align: center;
+        margin: 15px auto 4;
+        width: 70px;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        font-size: 16px;
+      }
+      .mui-preview-image {
+        display: none;
+        -webkit-animation-duration: 0.5s;
+        animation-duration: 0.5s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+      }
+      .mui-preview-image.mui-preview-in {
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+      }
+      .mui-preview-image.mui-preview-out {
+        background: none;
+        -webkit-animation-name: fadeOut;
+        animation-name: fadeOut;
+      }
+      .mui-preview-image.mui-preview-out .mui-preview-header,
+      .mui-preview-image.mui-preview-out .mui-preview-footer {
+        display: none;
+      }
+      .mui-zoom-scroller {
+        position: absolute;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        -webkit-backface-visibility: hidden;
+      }
+      .mui-zoom {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+      }
+      .mui-slider .mui-slider-group .mui-slider-item img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+      .mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+        width: 100%;
+      }
+      .mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+        display: inline-table;
+      }
+      .mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .mui-preview-loading {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      .mui-preview-loading.mui-active {
+        display: block;
+      }
+      .mui-preview-loading .mui-spinner-white {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -25px;
+        margin-top: -25px;
+        height: 50px;
+        width: 50px;
+      }
+      .mui-preview-image img.mui-transitioning {
+        -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+      }
+      @-webkit-keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .mui-popup-button.mui-popup-button-bold {
+          font-weight: 500;
+      }
+
+      .editPlace{
+        position:relative;
+      }
+
+      .editVersion{
+        position:relative;
+            width: 93%;
+      }
+
+      input[type=text]{
+          font-family: 微软雅黑;
+          font-size: 15px;
+          height: 36px;
+          margin-left: 6px;
+          border: none;
+          border-bottom: #3195EB 1px solid;
+          width: 70%;
+          background: #fff;
+          padding: 5px 5px 0px 10%;
+    }
+
+    .fa-search{
+          color: #77B2EC;
+          position: absolute;
+          top: 26%;
+          left: 16%;
+    }
+
+    #header{
+          position: fixed;
+          top: 0;
+          left: 0;
+    }
+       
+    </style>
+</head>
+<body class="mui-ios mui-ios-9 mui-ios-9-1">
+<header id="header" class="mui-bar mui-bar-nav editHead">
+
+    <h1 class="mui-title myRebate" style="left: 22%;color:#4D4D4D;width:56%">编辑</h1>
+    <h1 class="mui-title myRebate" style="left:63%;width:56%" onclick="saveFile()">完成</h1>
+    <button  onclick="tomain()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;"></span></button>
+</header>
+
+<div class="mui-content editContent">
+
+   <div class="editHeader">
+     <div class="edit_hed">
+       <img class="hedImg" src="">
+
+       <div class="editTitle">
+        <div style="margin-top: 6px;height: 96px;">
+          <span class="setTitle" onclick="setTitle()">点击设置标题</span>
+          <i class="fa fa-pencil" style="margin-left: 2px;"></i>
+        </div>
+
+       <div>
+        <div class="setMusic" onclick="setMusicq()">
+          <i class="fa  fa-music" style="margin-right: 8px;"></i>
+          <span class="musicName">无背景音乐</span>
+        </div>
+        <div id="changeEditType">
+          <i class="fa  fa-bullhorn" style="margin-right: 8px;"></i>
+          <span id="actype" value="点击修改类型">点击修改类型</span>
+        </div>
+       </div>
+
+       </div>
+     </div>
+     
+   </div>
+
+   <div id="editBody" style="margin-top: 174px;">
+    <div class="editPlace">
+
+      <!-- <div class="editVersion">
+        <i class="fa fa-minus-square-o deletePic" onclick="deletePic(this)"></i>
+        <img class="thumbnail" src="img/1.jpg">
+        <textarea  class="editText" placeholder="点击添加文字"></textarea>
+        <i class="fa fa-angle-up moveup"></i>
+        <i class="fa fa-angle-down movedown"></i>
+      </div> -->
+
+    </div>
+
+    <i class="fa  fa-plus-square-o addPic" onclick="operate()"></i>
+
+    <div class="operateMenu" style="display:none">
+
+      <div class="operateDiv" onclick="addTxt()">
+        <img src="img/text.png" class="operateImg">
+      </div>
+      <div  class="operateDiv" style="width:36%" onclick="addPic()">
+        <img src="img/pic.png" class="operateImg">
+      </div>
+      <div  class="operateDiv">
+        <img src="img/video.png" class="operateImg" onclick="addMovie()">
+      </div>
+
+    </div>
+
+     
+    
+   </div>
+
+
+
+   <div class="editFooter">
+
+    
+   </div>
+ 
+    
+</div>
+
+<!--音乐搜索页面 start-->
+
+<div class="mui-content musicPlay" style="padding-top:0;display:none">
+  <header id="header" class="mui-bar mui-bar-nav">
+      <i class="fa  fa-search" onclick="searchMusic()"></i>
+      <input placeholder="输入歌名或者歌手搜索" type="text" class="commentText">
+      <h1 class="mui-title myRebate" onclick="saveMusic()" style="left:80%;width:17%">完成</h1>
+      <button  onclick="backToEdit()" class="mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left" style="color:#fff;font-weight:bolder;width:8%;"><span class="mui-icon mui-icon-left-nav backtoMain" style="color: #278AF3;"></span></button>
+  </header>
+
+    <div class="mui-content" style="padding-top:0;background:#fff">
+      
+      <div class="musicHeader">
+         <audio src="" controls="controls" autoplay="autoplay" class="audioPlay" loop="loop" style="display:none"></audio>
+         <ul class="musicList">
+
+        </ul>
+
+         
+       </div>
+
+
+       <div class="musicBody">
+        
+
+         
+       </div>
+
+       <div class="musicFooter">
+
+        
+        
+       </div>
+     
+        
+    </div>
+
+</div>
+
+<!--音乐搜索页面 end-->
+
+<script src="http://cdn.bootcss.com/Sortable/1.4.2/Sortable.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.zoom.js"></script>
+<script src="js/mui.previewimage.js"></script>
+<script src="js/jquery.clickSort.js"></script>
+<script src="js/mui.picker.js"></script>
+<script src="js/mui.poppicker.js"></script>
+<script src="js/config.js"></script>
+<script type="text/javascript">
+  mui.init();
+  /*mui('#scroll').scroll({
+          indicators: true //是否显示滚动条
+      });*/
+
+  mui.previewImage();
+
+
+   /*[].forEach.call(editBody.getElementsByClassName('editPlace'), function (el){
+        new Sortable(el, { group: 'photo' });
+      });*/
+
+  wx.config({
+      appId: '<?php echo $signPackage["appId"]; ?>',
+      timestamp: '<?php echo $signPackage["timestamp"]; ?>',
+      nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+      signature: '<?php echo $signPackage["signature"]; ?>',
+      jsApiList: [
+          // 所有要调用的 API 都要加到这个列表中
+          'getLocation',
+          'chooseImage',
+          'uploadImage',
+          'downloadImage',
+          'hideAllNonBaseMenuItem'
+      ]
+  });
+
+  $('.editPlace').clickSort();
+
+  initial();
+
+   (function($, doc) {
+        $.init();
+        $.ready(function() {
+
+          var userPicker = new $.PopPicker();
+          userPicker.setData([{
+            value: '店铺',
+            text: '店铺内容'
+          }, {
+            value: '商品',
+            text: '商品内容'
+          }, {
+            value: '活动',
+            text: '活动内容'
+          }]);
+          var showUserPickerButton = doc.getElementById('changeEditType');
+          var actype = doc.getElementById('actype');
+          showUserPickerButton.addEventListener('tap', function(event) {
+            userPicker.show(function(items) {
+              actype.innerHTML = items[0].text;
+              actype.setAttribute("value", items[0].value);
+              //返回 false 可以阻止选择框的关闭
+              //return false;
+            });
+          }, false);
+
+
+
+        });
+      })(mui, document);
+
+  var images = { 
+                  localId: [], 
+                  serverId: [] 
+             };
+  var imgarr = [];
+
+  function addPic(){
+
+          wx.chooseImage({
+                  success: function (res) {
+                   /*var localIds = res.localIds;*/
+                   images.localId = res.localIds;
+                   syncUpload();
+                   
+                  }
+          });
+   }
+
+
+   var syncUpload = function() {
+                  length = images.localId.length;
+                  if(length > 1){
+
+                    mui.alert("每次只允许上传一张图片");
+
+                  }else{
+
+                    function upload() {
+                      wx.uploadImage({
+                        localId: images.localId[0],
+                        success: function(res) {
+                          downImg(res.serverId);
+                        }
+                      });
+                    }
+                    upload();
+                  }
+                  
+                 };
+
+    var downImg = function(serverId){
+             Glob_token = ("<?php echo $access_token ?>");
+             Glob_server = serverId;
+              $.ajax({
+                  /*url: "" + Comm_Config + "wx/wxUploadFile.do",*/
+                  url: "http://10000dp.com/ydserver/wx/wxUploadFile.do",              
+                  type:'POST',
+                  data:{"mediaId":Glob_server,"accessToken":Glob_token,"dir":'partner_pay'},
+                  success: function(data){
+                         var imgsrc = data.path;   
+
+                         imgarr.push(imgsrc);
+                         imgshow(imgarr);
+                         
+                  }
+              });
+              
+          };
+
+    function imgshow(data){
+      alert(imgarr)
+
+             $(".editPlace").append("<div class=\"editVersion\"><i class=\"fa fa-minus-square-o deletePic\" onclick=\"deletePic(this)\"></i><img class=\"thumbnail\" src=\"" + data + "\"><textarea  class=\"editText\" placeholder=\""+data +"\"></textarea><i class=\"fa fa-angle-up moveup\"></i><i class=\"fa fa-angle-down movedown\"></i></div> ");
+             changeUpdown();
+             operate();
+            
+                     
+    }
+
+
+   function initial(){
+    
+    var imgUrl = QueryString("imgUrl");
+
+    $(".editPlace").append("<div class=\"editVersion\"><i class=\"fa fa-minus-square-o deletePic\" onclick=\"deletePic(this)\"></i><img class=\"thumbnail\" src=\"" + imgUrl + "\"><textarea  class=\"editText\" placeholder=\"点击添加文字\"></textarea><i class=\"fa fa-angle-up moveup\"></i><i class=\"fa fa-angle-down movedown\"></i></div> ");
+
+    changeUpdown();
+
+    
+    var value = [];
+    $(".editPlace .editVersion img").each(function() {
+
+            value.push($(this).attr("src"));
+
+    });
+    for(var i = 0 ; i <value.length ; i++){
+      if(value[i] == "img/txt.png"){
+        value.splice(i,1);
+      }
+    }
+    var hedImgUrl = value[0];
+    $(".hedImg").attr("src",hedImgUrl);
+
+
+   }
+
+  function changeUpdown(){
+    if($(".editVersion").size()== 1){
+
+      $(".editVersion").find(".movedown").hide();
+      $(".editVersion").find(".moveup").hide();
+
+    }else{
+
+      $(".editVersion").find(".movedown").show();
+      $(".editVersion").find(".moveup").show();
+      $(".editVersion").first().find(".moveup").hide();
+      $(".editVersion").last().find(".movedown").hide();
+
+    }
+    
+  }
+
+   /*function playMusic(data){
+      
+      var d = JSON.parse(data).songs;    
+      $(".musicName").html(d[0].name);
+                
+   }*/
+
+   function tomain(){
+      window.location.href="index.php";
+   }
+
+   function setMusic(){
+
+     window.location.href="musicSearch.html"
+
+   }
+
+   function setTitle(){
+
+      /*e.detail.gesture.preventDefault();*/
+      var btnArray = ['取消', '保存'];
+      mui.prompt('请输入标题：',' ', ' ', btnArray, function(e) {
+        if (e.index == 1) {
+          if(e.value ==""){
+            mui.alert("标题不能为空");
+          }else{
+            $(".setTitle").html(e.value);
+          }
+          
+        } 
+      })
+   }
+
+
+   function operate(){
+   
+       $(".operateMenu").toggle();
+        toBottom();
+
+   }
+
+
+   function addTxt(){
+        
+        $(".editPlace").append("<div class=\"editVersion\"><i class=\"fa fa-minus-square-o deletePic\"  onclick=\"deletePic(this)\"></i><img class=\"thumbnail\" src=\"img/txt.png\"><textarea  class=\"editText\" placeholder=\"点击添加文字\"></textarea><i class=\"fa fa-angle-up moveup\"></i><i class=\"fa fa-angle-down movedown\"></i></div>"); 
+         changeUpdown();
+         operate();
+   }
+
+   function addMovie(){
+
+        mui.alert("上传视频暂不开放");
+
+   }
+   function deletePic(obj) {
+    var btnArray = ['否', '是'];
+
+    mui.confirm('确定删除此栏么？', '提示', btnArray, function(e) {
+      if (e.index == 1) {
+
+        var editLen = $(".editPlace .editVersion").length;
+
+        if (editLen == 1){
+
+          mui.alert("至少保留一张图片");
+
+        }else if (editLen == 2){
+          var value = [];
+          $(".editPlace .editVersion img").each(function() {
+
+            value.push($(this).attr("src"));
+
+          });
+
+          if (value.indexOf("img/txt.png") != -1 && $(obj).next().attr("src") != "img/txt.png") {
+            mui.alert("至少保留一张图片");
+
+          } else {
+            $(obj).parent().remove();
+            initial();
+            changeUpdown();
+
+          }
+        }else{
+          var value = [];
+          var txtLen= 0;
+          $(".editPlace .editVersion img").each(function() {
+
+            value.push($(this).attr("src"));
+
+          });
+          
+          var valLen = value.length;
+          for(var i =0;i <valLen; i++){
+            if(value[i]== "img/txt.png"){
+                ++txtLen;
+            }
+          }
+          if(valLen-txtLen == 1 && $(obj).next().attr("src") != "img/txt.png" ){
+
+            mui.alert("至少保留一张图片");
+
+          }else{
+
+            $(obj).parent().remove();
+            initial();
+            changeUpdown();
+
+          }
+          
+          
+        }
+
+      }
+    })
+
+  }
+
+
+  function saveFile(){
+     var editLen = $(".editPlace .editVersion").size();
+     var result = "["
+     for(var i = 0 ; i < editLen ; i++){
+        var jsonText = {};
+        jsonText["sort"] = ""+i+"";
+        var imgUrl = $(".editPlace .editVersion:eq("+i+")").find(".thumbnail").attr("src");
+        var txt = $(".editPlace .editVersion:eq("+i+")").find(".editText").val();
+        
+        if(imgUrl == "img/txt.png"){
+
+          jsonText["imgurl"] ="";
+          
+          if(txt == ""){         
+             mui.alert("文本编辑框不能为空");
+             return false;
+          }else{
+            jsonText["txt"] = txt;  
+          }
+
+        }else{
+
+          jsonText["imgurl"] = imgUrl;
+          jsonText["txt"] = txt;   
+
+        }
+             
+         
+        if(i<(editLen-1)){
+            result+=JSON.stringify(jsonText)+",";
+          }else{
+            result+=JSON.stringify(jsonText);
+          } 
+     }
+     result += "]"; 
+     console.log(result)
+     var title = $(".setTitle").html();
+     var editType = $("#actype").attr("value");
+     var pageCover = $(".hedImg").attr("src");
+     var musicUrl = $(".musicName").attr("musicurl");
+     var musicName = $(".songName").html();
+     var musicArtist = $(".musicName").attr("musicArtist");
+
+     if(title == "点击设置标题"){
+        
+        mui.alert("请设置标题");
+        return false;
+
+     }else if(editType == "点击修改类型"){
+        
+        mui.alert("请选择内容类型");
+        return false;
+
+     }
+
+    
+     if(musicUrl == undefined){
+        musicUrl = "";
+        musicName = "";
+        musicArtist = "";
+     }
+
+     console.log(musicUrl)
+     $.ajax({
+            type:"post",
+            url: ""+Comm_Config+"meiPian/addHomePage.do",  
+            data: {"agentid":"123","title":title,"musicUrl":musicUrl,"musicName":musicName,"musicArtist":musicArtist,"pageCover":pageCover,"content":result,"editType":editType}, 
+            success: function(data){
+
+              mui.alert("保存成功",function(){
+
+                window.location="index.html";
+
+              });
+
+              
+                
+            }
+        });
+
+
+    /* mui.alert("保存成功")*/
+  }
+
+  
+  function QueryString(val){
+      var uri = window.location.search;
+      var re = new RegExp("" +val+ "=([^&?]*)", "ig");
+      return ((uri.match(re))?(uri.match(re)[0].substr(val.length+1)):null);
+  }
+
+
+  function toBottom(){
+        var h = $(document).height()-$(window).height();
+        $('html,body').animate({scrollTop:h}, 400);
+        
+  }
+
+
+
+
+   function searchMusic(){
+      $(".audioPlay").attr("src","");
+      var searchText = $(".commentText").val();
+
+      if(searchText == ""){
+        mui.alert("请输入歌曲名或歌手名");
+      }else{
+        $.ajax({
+           url: "music.php",  
+           type: "POST",
+           data:{text:searchText},
+           //dataType: "json",
+           error: function(){  
+               mui.alert('哎呀~网络好像出小差了');  
+           },  
+           success: function(data,status){
+                showMusicList(unescape(data));
+           }
+       }); 
+      }
+
+   }
+
+   function showMusicList(data){
+
+      $("html,body").animate({scrollTop: 0},function(){
+      
+         $(".musicList").html('');
+         var d = JSON.parse(data).result.songs;
+         for(var i = 0;i < d.length;i++){
+
+          $(".musicList").append("<li class=\"musicContent\" index=\""+i+"\" musicId=\""+d[i].id +"\" onclick=\"chooseMusic(\'"+ d[i].id +"\',\'"+ i +"\')\"><div class=\"musicImg\"><img src=\""+ d[i].artists[0].img1v1Url +"\" class=\"artistImg\"></div><div class=\"artistInfo\"><span class=\"songName\">"+d[i].name+"</span><p class=\"musictext\">"+d[i].artists[0].name+"("+d[i].album.name+")</p></div><img src=\"img/check.png\" index = "+ i +" imgIndex = \'"+ d[i].id +"\'   musicName=\"" + d[i].name +"\"  class=\"checkImg\"></li>")
+
+         }
+      
+
+
+      });
+     
+     
+     
+
+   }
+
+   function chooseMusic(id,index){
+      $(".audioPlay").attr("src","");
+      $(".musicList .checkImg").hide().removeAttr("checked");
+      $(".musicList").find('img[index='+ index+']').show().attr("checked","checked");
+
+      $.ajax({
+           url: "music.php",  
+           type: "POST",
+           data:{id:id},
+           //dataType: "json",
+           error: function(){  
+               mui.alert('哎呀~网络好像出小差了'); 
+           },  
+           success: function(data,status){ 
+                playMusicss(unescape(data));
+           }
+       }); 
+
+   }
+
+   function playMusicss(data){
+
+      var d = JSON.parse(data).songs;
+      var musicUrl = d[0].mp3Url;
+      console.log(musicUrl);
+      if(musicUrl != null){
+          $.ajax({ 
+          url: musicUrl, 
+          type: 'GET', 
+          dataType:"jsonp",
+          complete: function(response) { 
+          if(response.status == 200) { 
+          $(".audioPlay").attr("src",musicUrl);
+          } else { 
+            mui.alert("因版权限制暂不支持设置");
+            $(".musicList .checkImg").hide().removeAttr("checked");
+            $(".audioPlay").attr("src","");
+          } 
+          } 
+        }); 
+        }else{
+           mui.alert("因版权限制暂不支持设置");
+          $(".musicList .checkImg").hide().removeAttr("checked");
+          $(".audioPlay").attr("src","");
+        }
+      
+      
+   }
+
+
+
+   function saveMusic(){
+    var musicName = $(".musicList").find(".checkImg[checked=checked]").attr("musicName");
+
+     if(musicName){
+       var musicArtist = $(".musictext").html().split("(")[0];
+       var musicUrl = $(".audioPlay").attr("src");
+       backToEdit();
+       $(".audioPlay").attr("src","");
+       $(".musicName").html(musicName);
+       $(".musicName").attr("musicUrl",musicUrl);
+       $(".musicName").attr("musicArtist",musicArtist);
+
+     }else{
+
+       mui.alert("请先选择歌曲");
+
+     }
+     
+   }
+
+   function backToEdit(){
+
+    $(".audioPlay").attr("src","");
+
+    $(".editContent").show();
+
+    $(".editHead").show();
+
+    $(".musicPlay").hide();
+
+
+   }
+
+   function setMusicq(){
+
+    $(".editContent").hide();
+
+    $(".editHead").hide();
+
+    $(".musicPlay").show();
+
+    $(".musicList").html('');
+    
+    $(".commentText").val('');
+
+  }
+  
+
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+{
+    "resultValue": [
+        {
+            "id": 8,
+            "title": "51云店夏日大酬宾",
+            "title_img_url": "img/1.jpg",
+            "music_url": "mp3.url",
+            "img_url": "img/1.jpg",
+            "content": "",
+            "sort": "0",
+            "shop_id": null,
+            "agent_id": null,
+            "create_time": 1476003347000,
+            "edit_type": "店铺"
+        },{
+            "id": 8,
+            "title": "51云店夏日大酬宾",
+            "title_img_url": "img/2.jpg",
+            "music_url": "mp3.url",
+            "img_url": "img/1.jpg",
+            "content": "",
+            "sort": "0",
+            "shop_id": null,
+            "agent_id": null,
+            "create_time": 1476003347000,
+            "edit_type": "店铺"
+        },{
+            "id": 8,
+            "title": "51云店夏日大酬宾",
+            "title_img_url": "img/3.jpg",
+            "music_url": "mp3.url",
+            "img_url": "img/1.jpg",
+            "content": "",
+            "sort": "0",
+            "shop_id": null,
+            "agent_id": null,
+            "create_time": 1476003347000,
+            "edit_type": "店铺"
+        },{
+            "id": 8,
+            "title": "51云店夏日大酬宾",
+            "title_img_url": "img/3.jpg",
+            "music_url": "mp3.url",
+            "img_url": "img/1.jpg",
+            "content": "",
+            "sort": "0",
+            "shop_id": null,
+            "agent_id": null,
+            "create_time": 1476003347000,
+            "edit_type": "店铺"
+        },{
+            "id": 8,
+            "title": "51云店夏日大酬宾",
+            "title_img_url": "img/3.jpg",
+            "music_url": "mp3.url",
+            "img_url": "img/1.jpg",
+            "content": "",
+            "sort": "0",
+            "shop_id": null,
+            "agent_id": null,
+            "create_time": 1476003347000,
+            "edit_type": "店铺"
+        }
+    ],
+    "msg": "查询成功!"
+}

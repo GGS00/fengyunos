@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>云店商品库</title>
+        <link href="//cdn.bootcss.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/indexphp.css?09181736" rel="stylesheet">
+        <link href="css/ydyuan.css?09181736" rel="stylesheet">
+        <link href="//cdn.bootcss.com/Swiper/3.1.0/css/swiper.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+
+    </head>
+    <body ng-app="myapp" ng-controller="publicController">
+        <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <!--顶部标签栏-->
+                    <header class="bar bar-nav">
+                        <div id="segmentedControl" class="segmented-control"  ng-init="list = ['订货网货源', '第三方货源', ' 店主自营']">
+                            <a ng-click="change($index)" ng-repeat="l in list" class="control-item {{show[$index]?'title_active':''}}" ng-bind="l"></a>
+                        </div>
+                    </header>
+                    <!--顶部工具栏-->
+                    <div id="header" class="swiper-container-horizontal swiper-container-free-mode" style="position: fixed;top:44px">
+                        <input ng-show="searchBox" ng-model="searchName" style="width:100%;padding-left:4%;outline:none; border:0;" placeholder="输入想要搜索的商品">
+                        <div class="test" ng-show="searchBox" ng-click="shopSearch()">
+                            <i class="icon-search"></i>
+                        </div>   
+                        <div class="swiper-wrapper" ng-show="bandBox" ng-init="otherList" style="transition-duration: 0ms; -webkit-transition-duration: 0ms; transform: translate3d(0px, 0px, 0px); -webkit-transform: translate3d(0px, 0px, 0px);">
+                            <div ng-click="bandChange($index, list.supply)" class="swiper-slide {{bandShow[$index]?'swiper_active':''}}"  ng-repeat="list in otherList">{{list.name}}</div>
+                        </div>
+                    </div>
+                    <!--商品列表-->
+                    <div style='margin-top: 88px;margin-bottom: 100px;display:none' id="listbox">
+                        <h3 ng-show="notFound" class="text-center">没有相关商品</h3>
+                        <ul class="table-view" id="wrapper">
+                            <li id="scroller" class="table-view-cell" ng-repeat="list in shopItem" lazyjs >
+                                <div class="goodsImg">
+                                    <img class="lazy" ng-src="source/yundian.png" data-original="{{list.litpic}}"  />
+                                </div>
+                                <div class="goodsInfo">
+                                    <div class="goods_text">
+                                        <span class='ellipsis' ng-bind="list.goods_name"><span style="float:left;width:100%;font-size:90%;color:#d43f3a" ng-bind="list.goods_describe"></span></span>
+                                        <span class="list-pricelabel">参考进货价：￥</span><span class="list-pricenumber"ng-bind="list.wholesale_price"></span>
+                                        <span class="list-spanlabel" ng-show="searchBox"><small>数据来源于51订货网</small></span>
+                                        <span class="list-spanico" ng-show="nowFlag == 0" ng-click="addareafun(list.base_id, 0, list.is_show)"><i class="icon-plus-sign icon-large "></i></span>
+                                        <span class="list-spanico" ng-show=" nowFlag != 0 && list.seq == 0" ng-click="addareafun(list.base_id, 1, list.is_show)"><i class="icon-plus-sign icon-large "></i></span>
+                                        <span class="list-spanico" ng-show=" nowFlag != 0 && list.seq != 0" ng-click="removearea(list.base_id, list.seq)" style="color:#298dcd"><i class="icon-minus-sign icon-large "></i></span>
+                                    </div>
+                                </div>
+                            </li>       
+                        </ul>
+                    </div>
+                    <!--底部导航栏-->
+                    <div class="block-footer">
+                        <div class="public-block-4" onclick="hrefPoint(1)">
+                            <div class="footer-nomal">
+                                <i class="icon-th"></i>
+                                <span>首页</span>
+                            </div>
+                        </div>
+
+                        <div class="public-block-4" onclick="hrefPoint(2)">
+                            <div class="footer-achive">
+                                <i class=" icon-briefcase"></i>
+                                <span>市场</span>
+                            </div>
+                        </div>
+
+                        <div class="public-block-4" onclick="hrefPoint(3)">
+                            <div class="footer-nomal">
+                                <i class=" icon-info-sign"></i>
+                                <span>动态</span>
+                            </div>
+                        </div>
+
+                        <div class="public-block-4" onclick="hrefPoint(4)">
+                            <div class="footer-nomal">
+                                <i class=" icon-heart-empty"></i>
+                                <span>我的</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <!-- 查找页面-->
+                    <header class="bar bar-nav" style="text-align:center">
+                        <h4 id="areatitle" style="color:#FFF;">选择添加到的专区</h4>
+                        <h4 style="position: fixed;right:0px;top:0px;color:#FFF;margin-right:4%" ng-click="pageReturn()">取消</h4>
+                    </header>
+                    <div class="row" id="areaTitle" style="margin-top:44px">        
+                        <span class="areablockitem"  ng-repeat="list in areaItem" ng-click="addYshop(goodsBaseId, doFlag, list.seq, list.name, list.param)" >{{list.name}}</span>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery.lazyload/1.9.0/jquery.lazyload.min.js"></script>
+        <script src="//cdn.bootcss.com/Swiper/3.1.0/js/swiper.jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/angular.js/1.4.7/angular.min.js"></script>
+        <script src="./commonJs/config.js?12111048"></script>
+        <script type="text/javascript">
+                                    window.onload = function() {
+                                        var mySwiper1 = new Swiper('#header', {
+                                            slidesPerView: 5,
+                                        });
+                                    }
+                                    $('.carousel').carousel({
+                                        interval: false
+                                    });
+
+                                    function hrefPoint(index)
+                                    {
+                                        var randomstr = GetRandomNum();
+                                        switch (index)
+                                        {
+                                            case 1:
+                                                {
+                                                    window.location.href = "index.php?" + randomstr + "";
+                                                    break;
+                                                }
+                                            case 2:
+                                                {
+                                                    window.location.href = "ydyuan.html?" + randomstr + "";
+                                                    break;
+                                                }
+                                            case 3:
+                                                {
+                                                    window.location.href = "ydinfo.php?" + randomstr + "";
+                                                    break;
+                                                }
+                                            case 4:
+                                                {
+                                                    window.location.href = "ydmyinfo.html?" + randomstr + "";
+                                                    break;
+                                                }
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    function GetRandomNum()
+                                    {
+                                        var Min = 0;
+                                        var Max = 10000;
+                                        var Range = Max - Min;
+                                        var Rand = Math.random();
+                                        return(Min + Math.round(Rand * Range));
+                                    }
+
+        </script>
+        <script>
+
+
+                    var myapp = angular.module('myapp', []);
+                    myapp.controller('publicController', function($scope, $http, $timeout) {
+                        var sessionStorage = window.sessionStorage;
+                        if (null == sessionStorage["sessionAid"]) {
+
+                        } else {
+                            var GLOB_ALIASID = sessionStorage ["sessionAid"];
+                            var GLOB_AID = sessionStorage ["sessionAlias"];
+                            var token = sessionStorage ["sessionistoken"];
+                        }
+
+
+
+                        var pages = 1;
+                        $scope.nowFlag;
+                        var nowSupply;
+                        $scope.shopItem = [];
+
+                        $scope.change = function(index) {
+                            $scope.show = [0, 0, 0];
+                            $scope.show[index] = 1
+                            if (index == 0) {
+                                $scope.nowFlag = 0;
+                                pages = 1;
+                                $scope.notFound = false;
+                                $scope.shopItem = [];
+                                $scope.bandBox = false;
+                                $scope.shopGoodsList(pages);
+                            }
+                            if (index == 1) {
+                                $scope.nowFlag = 1;
+                                pages = 1;
+                                $scope.notFound = false;
+                                $scope.bandBox = true;
+                                $scope.searchBox = false;
+                                $scope.bandChange(0, 3);
+                            }
+                            if (index == 2) {
+                                $scope.nowFlag = 2;
+                                pages = 1;
+                                $scope.notFound = false;
+                                $scope.shopItem = [];
+                                $scope.bandBox = false;
+                                $scope.searchBox = false;
+                                $scope.selfGoodsList(pages);
+                            }
+                        }
+
+
+                        //51订货网商品加载需要js   
+
+                        $scope.$on('finish', function() {
+                            $("img.lazy").lazyload({
+                                effect: "fadeIn",
+                            })
+                        })
+
+
+
+                        $scope.shopGoodsList = function(pages) {
+                            $scope.searchBox = true;
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getUnInOnSaleGoodsList.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "page": pages,
+                                    "alias": GLOB_AID
+                                }
+                            }).success(function(data) {
+                                var d = eval(data)
+                                for (var i = 0; i < d.resultValue.length; i++) {
+                                    $scope.shopItem.push(d.resultValue[i]);
+                                }
+                                $("#listbox").show();
+                            })
+                        }
+
+                        $scope.shopSearch = function() {
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getUnInOnSaleGoodsList.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "page": 1,
+                                    "name": $scope.searchName,
+                                    "alias": GLOB_AID
+                                }
+                            }).success(function(data) {
+                                if (data.resultValue == null) {
+                                    $scope.notFound = true;
+                                    $scope.shopItem = data.resultValue;
+                                } else {
+                                    $scope.notFound = false;
+                                    $scope.shopItem = data.resultValue;
+                                }
+                            })
+                        }
+                        //第三方商品加载所需js              
+                        $scope.otherList = [{name: '淘宝网', supply: "3"}, {name: '京东', supply: "2"}, {name: '苏宁', supply: "6"}, {name: '国美', supply: "7"}, {name: '一号店', supply: "8"}, {name: '我买网', supply: "5"}, {name: '其他老板分享商品', supply: "10"}]
+                        $scope.bandChange = function(index, supply) {
+                            pages = 1;
+                            nowSupply = supply;
+                            $scope.shopItem = [];
+                            $scope.bandShow = [0, 0, 0];
+                            $scope.bandShow[index] = 1;
+                            //10表示是其他店老板分享的商品库
+                            if (nowSupply == 10) {
+                                $scope.otherAgendGoodsList(pages)
+                            } else {
+                                $scope.otherGoodsList(pages, nowSupply)
+                            }
+                        }
+                        $scope.otherAgendGoodsList = function(pages) {
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getAgentShareGoodsList.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "page": pages,
+                                    "alias": GLOB_AID,
+                                }
+                            }).success(function(data) {
+                                var d = eval(data)
+                                for (var i = 0; i < d.resultValue.length; i++) {
+                                    $scope.shopItem.push(d.resultValue[i]);
+                                }
+                            })
+                        }
+                        $scope.otherGoodsList = function(pages, supply) {
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getOtherGoodsList.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "page": pages,
+                                    "alias": GLOB_AID,
+                                    "supplyid": supply
+                                }
+                            }).success(function(data) {
+                                var d = eval(data)
+                                for (var i = 0; i < d.resultValue.length; i++) {
+                                    $scope.shopItem.push(d.resultValue[i]);
+                                }
+                            })
+                        }
+                        //店主自营商品加载所需js              
+                        $scope.selfGoodsList = function(pages) {
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getPersonalGoodsList.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "page": pages,
+                                    "alias": GLOB_AID
+                                }
+                            }).success(function(data) {
+                                var d = eval(data)
+                                for (var i = 0; i < d.resultValue.length; i++) {
+                                    $scope.shopItem.push(d.resultValue[i]);
+                                }
+                            })
+                        }
+
+
+                        $(window).scroll(function() {
+                            var scrollTop = $(this).scrollTop();
+                            var scrollHeight = $(document).height();
+                            var windowHeight = $(this).height();
+                            if (scrollTop + windowHeight == scrollHeight) {
+                                switch ($scope.nowFlag)
+                                {
+                                    case 0:
+                                        pages++;
+                                        $scope.shopGoodsList(pages);
+                                        break;
+                                    case 1:
+                                        pages++;
+                                        if (nowSupply == 10) {
+                                            $scope.otherAgendGoodsList(pages)
+                                        } else {
+                                            $scope.otherGoodsList(pages, nowSupply);
+                                        }
+                                      
+                                        break;
+                                    case 2:
+                                        pages++;
+                                        $scope.selfGoodsList(pages);
+                                        break;
+
+                                }
+                            }
+                        });
+
+                        $scope.change(0);
+
+
+
+                        $scope.addareafun = function(baseid, do_num, is_show) {
+                            $scope.goodsBaseId = baseid
+                            $scope.doFlag = do_num
+                            $scope.is_show = is_show
+                            $("#myCarousel").carousel('next');
+                            $http({
+                                method: "GET",
+                                url: "" + Comm_Config + "wx/getAreaListByAgentNoPage.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "alias": 1
+                                }
+                            }).success(function(data) {
+                                $scope.areaItem = data.resultValue;
+                            })
+                        }
+
+                        $scope.pageReturn = function() {
+                            $("#myCarousel").carousel('prev');
+                        }
+
+
+                        $scope.addYshop = function(baseid, doFlag, seq, name, param) {
+                            if (!doFlag) {
+                                $http({
+                                    method: "post",
+                                    url: "" + Comm_Config + "wx/addGoodsInArea.do",
+                                    params: {
+                                        "agentid": GLOB_ALIASID,
+                                        "baseid": baseid,
+                                        "areaseq": seq,
+                                        "alias": GLOB_AID,
+                                        "is_show": $scope.is_show,
+                                        "name": name,
+                                        "param": param,
+                                        "token": token
+                                    }
+                                }).success(function(data) {
+                                    $("#myCarousel").carousel('prev');
+                                    $scope.change($scope.nowFlag);
+                                })
+                            } else {
+                                $http({
+                                    method: "post",
+                                    url: "" + Comm_Config + "wx/addPersonalGoodsInArea.do",
+                                    params: {
+                                        "agentid": GLOB_ALIASID,
+                                        "baseid": baseid,
+                                        "seq": seq,
+                                        "alias": GLOB_AID,
+                                        "name": name,
+                                        "param": param,
+                                        "token": token
+                                    }
+                                }).success(function(data) {
+                                    $("#myCarousel").carousel('prev');
+                                    $scope.change($scope.nowFlag);
+                                })
+                            }
+                        }
+
+                        $scope.removearea = function(baseid, seq) {
+                            $http({
+                                method: "post",
+                                url: "" + Comm_Config + "wx/removePersonalGoodsInArea.do",
+                                params: {
+                                    "agentid": GLOB_ALIASID,
+                                    "baseid": baseid,
+                                    "seq": seq,
+                                    "alias": GLOB_AID,
+                                    "token": token
+                                }
+                            }).success(function(data) {
+                                $scope.change($scope.nowFlag);
+                            })
+                        }
+
+
+
+                    })
+
+                    myapp.directive('lazyjs', function($timeout) {
+                        return {
+                            restrict: 'A',
+                            link: function(scope, element, attr) {
+                                if (scope.$last) {
+                                    //根据controller的关系是选择$emit或者$broadcast
+                                    $timeout(function() {
+                                        scope.$emit('finish');
+                                    })
+                                }
+                            }
+                        };
+                    })
+
+
+
+        </script>
+    </body>
+</html>

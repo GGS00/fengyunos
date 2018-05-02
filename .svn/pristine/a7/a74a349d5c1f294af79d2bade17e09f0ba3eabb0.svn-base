@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>51云店微信版-店铺管理</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="//cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//cdn.bootcss.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+        
+        
+        <style>
+            body
+            {
+                font-family: 微软雅黑;
+            }
+        </style>
+    </head>
+
+    <body onload="getshoplist()">
+        <br>
+        <div style="width:98%;margin-left: 1%;" id="shoplistdiv">
+
+        </div>
+        <div id="alertdiv" class="alert alert-danger" style="position:fixed;z-index: 9;bottom: 0px;width: 100%;margin-bottom: 0px; text-align: center;display: none">
+        </div>
+
+        <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <script src="js/shopcommand.js?01281418"></script>
+        <script src="./commonJs/config.js?12111048"></script>
+    </body>
+</html>

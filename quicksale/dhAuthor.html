@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>51云店授权登录</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <link href="lib/weui.css?09181736" rel="stylesheet">
+        <link href="lib/author.css?09181736" rel="stylesheet">
+    </head>
+    <body>
+        <div class="authoractive" id="authoractiveid">
+            <div class="top_header">
+                <img src="lib/dian.png" class="head_img">
+                <span class="head_span">“云店快销”由51云店开发，提供您的51订货网的以下权限，即可继续操作</span>
+            </div>
+            <div class="author_input">
+                <label>
+                    <input type="checkbox" checked disabled="disabled"> 获得您的51订货网的公开信息（店铺名、手机号、姓名）
+                </label>
+            </div>
+            <div class="author_btn">
+                <a href="#" class="weui_btn weui_btn_primary" id="activeBtn">确认登录</a>
+            </div>
+        </div>
+        <div class="authorunactive" id="loading_img">
+            <img src="lib/diangary.png" class="logo_img">
+            <div id="authordspan" style="display:none">
+                <span class="logo_span">您已授权51云店获取您订货网的信息</span>
+                <span class="logo_span">自动登录中</span>
+            </div>
+        </div>
+        <div class="authorunactive" id="autherror" style="display:none">
+            <br> <br> <br><br> <br>
+           <i class="weui_icon_msg weui_icon_warn"></i>
+            <div id="errorspan" >
+                <span class="erro_span">抱歉！51订货网信息授权失败，请稍后再试!</span>
+            </div>
+
+        </div>
+
+
+        <!-- loading toast -->
+        <div id="loadingToast" class="weui_loading_toast" >
+            <div class="weui_mask_transparent"></div>
+            <div class="weui_toast">
+                <div class="weui_loading">
+                    <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+                    <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+                </div>
+                <p class="weui_toast_content">数据加载中</p>
+            </div>
+        </div>
+        
+        
+        
+        <!--隐藏的iframe-->
+        <iframe id="iframe" style="display:none"></iframe>
+
+    </body>
+    <script src="http://cdn.bootcss.com/jquery/1.10.1/jquery.min.js"></script>
+    <script src="./../commonJs/config.js?12231542"></script>
+    <script src="lib/author.js?03281508"></script>
+    <script src="lib/zepto.min.js"></script>
+</html>

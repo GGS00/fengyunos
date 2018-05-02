@@ -1,0 +1,80 @@
+.img-item-left {
+    vertical-align: middle;
+    margin-right: 16px;
+}
+
+.record-item-right {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}
+
+.color-fdb03b {
+    color: #fdb03b;
+}
+
+label select {
+    display: inline;
+    width: 80%;
+}
+
+label span {
+    position: relative;
+    top: 6px;
+}
+
+.goods-item-right {
+    position: absolute;
+    right: -5px;
+    top: 4px;
+}
+
+.total-price {
+    height: 100%;
+    width: 60%;
+    float: left;
+    background-color: #fff;
+    text-align: center;
+    line-height: 50px;
+
+}
+
+.ok {
+    color:#fff;
+    font-size: 20px;
+    height: 100%;
+    width: 40%;
+    float: left;
+    background-color: #3385FF;
+    text-align: center;
+    line-height: 50px;
+}
+.extra-price{
+    height: 100%;
+    width: 50%;
+    float: left;
+    line-height: 50px;
+}
+.add-price{
+    height: 100%;
+    width: 50%;
+    float: left;
+    line-height: 50px;
+}
+.extra-price label{
+    padding: 0px;
+    width: 40%;
+    margin-top: 17px;
+}
+.extra-price input{
+    width: 60% !important;
+    padding: 0px;
+    margin-top: 14px;
+    border-bottom: solid 1px #a9a9a9 !important;
+}
+.seach-div{
+
+    width: 100%;
+    padding: 9px 0px;
+}
+
